@@ -1,0 +1,11 @@
+.loginButtons {
+  font-size: 40px;
+}
+.logged {
+  display: none;
+}
+.main {
+  margin: -45px 0 0 0;
+  height: 250px;
+  background-image: url('ct_002.jpg');
+}
