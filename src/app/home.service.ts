@@ -10,6 +10,6 @@ export class HomeService {
   }
 
   getTop5Books() {
-    return this.http.get('http://192.168.0.131:3001/book/gettop5');
+    return this.http.get('http://192.168.0.131:3001/book/top/0/5');
   }
 }
