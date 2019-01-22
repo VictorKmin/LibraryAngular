@@ -9,11 +9,21 @@
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
   <div style="float: right">
-    <i class="fas fa-sign-in-alt loginButtons" [ngClass]="{'logged': token}" > SIGN IN</i>
-    <i class="fas fa-sign-out-alt loginButtons"  [ngClass]="{'logged': !token}" (click)="signOut()"> SIGN OUT </i>
+    <i class="fas fa-sign-in-alt loginButtons" [ngClass]="{'logged': token}" (click)="signIn()"> SIGN IN</i>
+    <i class="fas fa-sign-out-alt loginButtons" [ngClass]="{'logged': !token}" (click)="signOut()"> SIGN OUT </i>
   </div>
-
-
 </div>
+
+<div class="loginForm">
+  <form #f="ngForm" (ngSubmit)="loginUser(email.value, password.value)" *ngIf="isLoginClicked">
+    <input type="email" value="test@t.com" name="email" required ngModel #email="ngModel">
+    <input type="password" value="test" name="password" required ngModel #password="ngModel">
+    <input type="submit" value="LOGIN">
+  </form>
+  <div class="error" *ngIf="isErrorPresent">
+    {{isErrorPresent}}
+  </div>
+</div>
+
 
 <router-outlet></router-outlet>

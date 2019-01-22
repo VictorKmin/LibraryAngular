@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HomeService} from '../home.service';
+import {BookService} from '../services/book.service';
 import {Response} from '../Response';
 
 
@@ -10,13 +10,13 @@ import {Response} from '../Response';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private homeService: HomeService) {
+  constructor(private bookService: BookService) {
   }
 
   books: any;
 
   ngOnInit() {
-    this.homeService.getTop5Books().subscribe((books: Response) => {
+    this.bookService.getTop5Books().subscribe((books: Response) => {
       console.log(books);
       this.books = books.message;
     });

@@ -12,6 +12,7 @@ export class TopBooksComponent implements OnInit {
   type_of_book;
   id;
   countOfVotes;
+  image;
 
   constructor() {
   }
@@ -19,14 +20,13 @@ export class TopBooksComponent implements OnInit {
   @Input() book: any;
 
   ngOnInit() {
+    console.log(this.book);
     this.title = this.book.bookInfo.title;
     this.id = this.book.id;
     this.type_of_book = this.book.bookInfo.type_of_book;
     this.avgStar = this.book.avgStar;
     this.countOfVotes = this.book.countOfVotes;
+    this.image = this.book.bookInfo.image
   }
 
-  getBookInfo() {
-
-  }
 }

@@ -1,11 +1,30 @@
 .loginButtons {
   font-size: 40px;
 }
+
 .logged {
   display: none;
 }
+
 .main {
   margin: -45px 0 0 0;
   height: 250px;
   background-image: url('Abstract_002.jpg');
+}
+
+.loginForm {
+  text-align: center;
+  width: 20%;
+  margin: auto;
+}
+
+.loginForm form input {
+  text-align: center;
+}
+
+.error {
+  position: relative;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.44) 0%, rgba(0, 0, 0, 0.24) 35%, rgba(0, 0, 0, 0) 100%);
+  height: 40px;
+  width: 100%;
 }

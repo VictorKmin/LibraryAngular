@@ -2,13 +2,24 @@
 
 
 .book {
-  display: block;
+  width: 300px;
+  height: 450px;
+  display: inline-block;
+  background-color: green;
+  margin: 30px;
+}
+
+.book:hover {
+  -webkit-box-shadow: 0px 0px 229px -24px rgba(255, 255, 1, 0.71);
+  -moz-box-shadow: 0px 0px 229px -24px rgba(255, 255, 1, 0.71);
+  box-shadow: 0px 0px 229px -24px rgba(255, 255, 1, 0.71);
 }
 .stars {
   display: block;
 }
-
-
+.title {
+font-size: 2em;
+}
 
 
 fieldset, label { margin: 0; padding: 0; }

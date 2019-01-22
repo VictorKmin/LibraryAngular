@@ -1,0 +1,19 @@
+.main {
+  margin: auto;
+  display: block;
+  width: 90%;
+}
+
+.basicInfo {
+  position: relative;
+  width: 75%;
+  float: left;
+  background-color: greenyellow;
+}
+
+.statistic {
+  position: relative;
+  width: 25%;
+  background-color: #FFED85;
+  float: left;
+}

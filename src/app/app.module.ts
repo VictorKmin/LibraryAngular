@@ -2,12 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import {HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 // import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
-import {HomeService} from './home.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HomeService} from './services/home.service';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
 import { TopBooksComponent } from './top-books/top-books.component';
 import { BookComponent } from './book/book.component';
 
@@ -24,6 +25,7 @@ import { BookComponent } from './book/book.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     // SocketIoModule.forRoot(config)
   ],
   providers: [
