@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Comment} from "../Comment";
 
 @Component({
   selector: 'app-comment',
@@ -7,12 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class CommentComponent implements OnInit {
 
-  // book_id: 1
-  // comment: "Good"
-  // created_at: "2019-01-14T15:23:11.000Z"
-  // id: 1
-  // user_id: 1
-  @Input() comment;
+  @Input() comment: Comment;
 
   commentText;
   date;
@@ -21,7 +17,8 @@ export class CommentComponent implements OnInit {
 
   ngOnInit() {
     this.commentText = this.comment.comment;
-    this.date = this.comment.created_at;
+    this.date = new Date(this.comment.created_at).toDateString();
+    // this.date = new Date(this.comment.created_at).toUTCString();
     this.user = this.comment.user_id;
     console.log(this.comment);
   }

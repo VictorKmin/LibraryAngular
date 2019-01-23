@@ -27,6 +27,8 @@ export class BookComponent implements OnInit {
   type_of_content?: any;
   type_of_file?: any;
   user_id: number;
+  image: any;
+  isReading;
 
   constructor(
     private bookService: BookService,
@@ -39,7 +41,7 @@ export class BookComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get("id");
     this.bookService.getBookInfo(this.id).subscribe((resp: Response) => {
       this.book = resp.message;
-
+      console.log(this.book);
       this.author = this.book.author;
       this.countOfComments = this.book.countOfComments;
       this.publisher = this.book.publisher;
@@ -51,6 +53,8 @@ export class BookComponent implements OnInit {
       this.type_of_content = this.book.type_of_content;
       this.type_of_file = this.book.type_of_file;
       this.user_id = this.book.user_id;
+      this.image = 'http://192.168.0.131:3001' + this.book.image;
+      this.isReading = this.book.is_reading;
     })
   }
 
@@ -58,7 +62,7 @@ export class BookComponent implements OnInit {
     this.commentService.getAllComments(this.id).subscribe((resp: Response) => {
       if (resp.success) {
         this.comments = resp.message
-      }else {
+      } else {
         // TODO ERROR
       }
     })

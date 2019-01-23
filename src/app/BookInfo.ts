@@ -10,5 +10,7 @@ export interface BookInfo {
   type_of_book: string;
   type_of_content?: any;
   type_of_file?: any;
-  user_id: number
+  user_id: number;
+  image: any;
+  is_reading: Boolean;
 }

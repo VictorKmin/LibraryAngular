@@ -27,6 +27,11 @@
   </div>
 
   <div class="statistic">
+    <img src="{{image}}" alt="{{title}}" class="image">
+
+    <button *ngIf="isReading">This book reading until</button>
+    <button *ngIf="!isReading">I want read this book</button>
+    <br>
     <button (click)="allBookComments()"> See {{countOfComments}} comments</button>
   </div>
 

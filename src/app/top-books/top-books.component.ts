@@ -26,7 +26,7 @@ export class TopBooksComponent implements OnInit {
     this.type_of_book = this.book.bookInfo.type_of_book;
     this.avgStar = this.book.avgStar;
     this.countOfVotes = this.book.countOfVotes;
-    this.image = this.book.bookInfo.image
+    this.image = 'http://192.168.0.131:3001' + this.book.bookInfo.image;
   }
 
 }

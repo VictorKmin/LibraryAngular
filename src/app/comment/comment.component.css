@@ -1,0 +1,10 @@
+.comment {
+  height: 70px;
+  display: block;
+  background-color: rgba(250, 235, 215, 0.5);
+  margin: 20px
+}
+
+.date {
+  float: right;
+}

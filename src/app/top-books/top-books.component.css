@@ -20,6 +20,11 @@
 .title {
 font-size: 2em;
 }
+.image {
+  /*position: relative;*/
+  width: 250px;
+  height: 250px;
+}
 
 
 fieldset, label { margin: 0; padding: 0; }
