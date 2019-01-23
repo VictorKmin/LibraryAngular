@@ -19,15 +19,18 @@ export class AppComponent {
   token = localStorage.getItem('token');
 
   signOut() {
-    console.log('OUT');
-    this.homeService.logout();
-    localStorage.removeItem('token');
-    localStorage.removeItem('refresh_token');
+    this.homeService.logout().subscribe((value: Response) => {
+      if (value.message) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('refresh_token');
+      } else {
+        this.isErrorPresent = value.message;
+      }
+    });
   }
 
   signIn() {
-    this.isLoginClicked = !this.isLoginClicked;
-    console.log('IN');
+    this.isLoginClicked = true;
   }
 
   loginUser(email, password) {

@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class BookService {
 
-  constructor(private http: HttpClient, ) {
+  constructor(private http: HttpClient) {
   }
 
   getBookInfo(id) {

@@ -7,10 +7,13 @@ import { FormsModule } from '@angular/forms';
 
 // import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import {HomeService} from './services/home.service';
+import {BookService} from "./services/book.service";
+import {CommentService} from "./services/comment.service";
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TopBooksComponent } from './top-books/top-books.component';
 import { BookComponent } from './book/book.component';
+import { CommentComponent } from './comment/comment.component';
 
 // const config: SocketIoConfig = {url: 'http://192.168.0.131:5000', options: {}};
 
@@ -19,7 +22,8 @@ import { BookComponent } from './book/book.component';
     AppComponent,
     HomeComponent,
     TopBooksComponent,
-    BookComponent
+    BookComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,8 @@ import { BookComponent } from './book/book.component';
   ],
   providers: [
     HomeService,
+    BookService,
+    CommentService
   ],
   bootstrap: [AppComponent]
 })

@@ -27,7 +27,17 @@
   </div>
 
   <div class="statistic">
-    See {{countOfComments}} comments
+    <button (click)="allBookComments()"> See {{countOfComments}} comments</button>
   </div>
+
+  <form #comment="ngForm">
+    <input type="text" name="comment" required ngModel #comment="ngModel">
+    <input type="submit" value="Leave comment" (click)="createComment(comment.value)">
+  </form>
+
+  <app-comment
+    *ngFor=" let comment of comments"
+    [comment]="comment">
+  </app-comment>
 
 </div>
