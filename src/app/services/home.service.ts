@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Hosts} from "../Hosts";
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,13 @@ export class HomeService {
   }
 
   login(email, password) {
-    return this.http.post('http://192.168.0.131:3001/login', {email, password})
+    return this.http.post(`${Hosts.API_HOST}/login`, {email, password})
   }
 
   logout() {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('authorization', localStorage.getItem('token'));
-    return this.http.delete('http://192.168.0.131:3001/logout', {headers})
+    return this.http.delete(`${Hosts.API_HOST}/logout`, {headers})
   }
 }

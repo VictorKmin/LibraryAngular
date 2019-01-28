@@ -1,9 +1,3 @@
-.main {
-  margin: auto;
-  display: block;
-  width: 75%;
-}
-
 .basicInfo {
   position: relative;
   width: 75%;
@@ -22,4 +16,33 @@
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+.summary {
+  margin-top: 10px;
+}
+
+.commentButton {
+  background-color: #c2c201;
+}
+
+.readBook {
+  background-color: #3290c2;
+  border: 0;
+  width: 100%;
+  cursor: pointer;
+  height: 40px;
+}
+
+.readBook {
+  position: relative;
+  transition: .7s;
+}
+
+.readBook:hover {
+  background-color: #33b0e3;
+}
+
+.bookIsReading {
+  color: #b40000;
 }

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Hosts} from "../Hosts";
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,24 @@ export class BookService {
   }
 
   getBookInfo(id) {
-    return this.http.get(`http://192.168.0.131:3001/book/${id}`);
+    return this.http.get(`${Hosts.API_HOST}/book/${id}`);
   }
 
   getTop5Books() {
-    return this.http.get('http://192.168.0.131:3001/book/top/0/5');
+    return this.http.get(`${Hosts.API_HOST}/book/top/0/5`);
+  }
+
+  readBook(bookId) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.post(`${Hosts.API_HOST}/book/read/${bookId}`, {}, {headers});
+  }
+
+  download(bookId) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/book/download/${bookId}`, {headers});
   }
 }

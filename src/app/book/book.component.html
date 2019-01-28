@@ -1,48 +1,66 @@
-<p>
-  <br>
-  {{subject}}
-  <br>
-  <br>
-  {{type_of_book}}
-  <br>
-  {{type_of_content}}
-  <br>
-  {{type_of_file}}
-  <br>
-  {{user_id}}
-</p>
-<div class="main">
-
-  <div class="basicInfo">
-    <h1> {{title}} </h1>
-    Author: {{author}}
-    <br>
-    Publisher: {{publisher}}
-    <div class="summary">
-      {{summary}}
+<div class="container">
+  <!--<div *ngIf="!isAllBook">-->
+    <div class="basicInfo">
+      <h1> {{book.title}} </h1>
+      <b>Author: </b>{{book.author}}
+      <br>
+      <b>Publisher: </b>{{book.publisher}}
+      <br>
+      <b>Subject: </b>{{book.subject}}
+      <div class="summary">
+        {{book.summary}}
+      </div>
+      <br>
+      <div *ngIf="tags">
+        <b>Tags: </b>
+        <span *ngFor="let tag of tags">
+        <a style="cursor: pointer" routerLink='/search/tag/{{tag}}'>{{tag}}, </a>
+      </span>
+      </div>
+      <br>
     </div>
-    <br>
-    Tags: {{tags}}
-    <br>
+    <div class="statistic">
+      <img src="{{image}}" alt="{{book.title}}" class="image">
+
+      <div *ngIf='isTokenPreset'>
+        <!--FOR DIGITAL BOOKS-->
+        <div *ngIf="book.is_digital">
+          <p *ngFor="let link of links">
+            <a href="{{API_HOST + link.location}}">Download {{link.type_of_file}}</a>
+          </p>
+        </div>
+        <!--FOR HAND BOOKS-->
+        <div *ngIf="!book.is_digital" class="bookIsReading">
+          <span *ngIf="book.is_reading">This book reading until {{timeToEnd}}</span>
+          <br>
+          <span *ngIf="book.is_reading">{{book.user}} read this book</span>
+          <button *ngIf="!book.is_reading" (click)="readThisBook()" class="readBook"><span>I want read this book</span>
+          </button>
+        </div>
+      </div>
+      <br>
+      <a class="btn waves-effect waves-green commentButton" (click)="allBookComments()">See {{book.countOfComments}}
+        comments</a>
+    </div>
+
+    <form #comment="ngForm" *ngIf="isTokenPreset">
+      <input type="text" name="comment" required ngModel #comment="ngModel">
+      <button class="btn waves-effect waves-light" type="submit" name="action" (click)="createComment(comment.value)">
+        Submit
+      </button>
+    </form>
+
+    <app-comment
+      *ngFor=" let comment of comments"
+      [comment]="comment">
+    </app-comment>
   </div>
-
-  <div class="statistic">
-    <img src="{{image}}" alt="{{title}}" class="image">
-
-    <button *ngIf="isReading">This book reading until</button>
-    <button *ngIf="!isReading">I want read this book</button>
-    <br>
-    <button (click)="allBookComments()"> See {{countOfComments}} comments</button>
-  </div>
-
-  <form #comment="ngForm">
-    <input type="text" name="comment" required ngModel #comment="ngModel">
-    <input type="submit" value="Leave comment" (click)="createComment(comment.value)">
-  </form>
-
-  <app-comment
-    *ngFor=" let comment of comments"
-    [comment]="comment">
-  </app-comment>
-
-</div>
+  <!--<div *ngIf="isAllBook">-->
+    <!--<div class="books-wrapper">-->
+      <!--<app-books-->
+        <!--*ngFor=" let book of allTagsBooks"-->
+        <!--[book]="book"-->
+      <!--&gt;</app-books>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

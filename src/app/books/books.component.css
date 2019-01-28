@@ -1,35 +1,48 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
-
 .book {
   width: 300px;
   height: 450px;
   display: inline-block;
-  background-color: green;
+  background-color: #f2f2f2;
+  border: 2px solid #FFED85;
   margin: 30px;
 }
 
 .book:hover {
-  -webkit-box-shadow: 0px 0px 229px -24px rgba(255, 255, 1, 0.71);
-  -moz-box-shadow: 0px 0px 229px -24px rgba(255, 255, 1, 0.71);
-  box-shadow: 0px 0px 229px -24px rgba(255, 255, 1, 0.71);
+  -webkit-box-shadow: 0px 0px 229px -24px rgba(163, 176, 167, 0.25);
+  -moz-box-shadow: 0px 0px 229px -24px rgba(163, 176, 167, 0.25);
+  box-shadow: 0px 0px 229px -24px rgba(163, 176, 167, 0.25);
 }
+
 .stars {
   display: block;
 }
+
 .title {
-font-size: 2em;
+  font-size: 2em;
+  cursor: pointer;
 }
+
 .image {
-  /*position: relative;*/
   width: 250px;
   height: 250px;
+  cursor: pointer;
 }
 
+fieldset, label {
+  margin: 0;
+  padding: 0;
+}
 
-fieldset, label { margin: 0; padding: 0; }
-body{ margin: 20px; }
-h1 { font-size: 1.5em; margin: 10px; }
+body {
+  margin: 20px;
+}
+
+h1 {
+  font-size: 1.5em;
+  margin: 10px;
+}
 
 /****** Style Star Rating Widget *****/
 
@@ -38,7 +51,10 @@ h1 { font-size: 1.5em; margin: 10px; }
   float: left;
 }
 
-.rating > input { display: none; }
+.rating > input {
+  display: none;
+}
+
 .rating > label:before {
   margin: 5px;
   font-size: 1.25em;
@@ -61,9 +77,15 @@ h1 { font-size: 1.5em; margin: 10px; }
 
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+.rating:not(:checked) > label:hover ~ label {
+  color: #FFD700;
+}
+
+/* hover previous stars in list */
 
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+.rating > input:checked ~ label:hover ~ label {
+  color: #FFED85;
+}

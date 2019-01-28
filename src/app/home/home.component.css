@@ -1,9 +1,3 @@
-.loginButtons {
-  font-size: 40px;
-}
-.logged {
-  display: none;
-}
 .books-wrapper {
   display: flex;
   align-items: center;

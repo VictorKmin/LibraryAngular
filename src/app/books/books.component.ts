@@ -1,11 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Hosts} from "../Hosts";
 
 @Component({
-  selector: 'app-top-books',
-  templateUrl: './top-books.component.html',
-  styleUrls: ['./top-books.component.css']
+  selector: 'app-books',
+  templateUrl: './books.component.html',
+  styleUrls: ['./books.component.css']
 })
-export class TopBooksComponent implements OnInit {
+export class BooksComponent implements OnInit {
 
   title;
   avgStar;
@@ -22,11 +23,11 @@ export class TopBooksComponent implements OnInit {
   ngOnInit() {
     console.log(this.book);
     this.title = this.book.bookInfo.title;
-    this.id = this.book.id;
+    this.id = this.book.book_id;
     this.type_of_book = this.book.bookInfo.type_of_book;
     this.avgStar = this.book.avgStar;
     this.countOfVotes = this.book.countOfVotes;
-    this.image = 'http://192.168.0.131:3001' + this.book.bookInfo.image;
+    this.image = Hosts.API_HOST + this.book.bookInfo.image;
   }
 
 }

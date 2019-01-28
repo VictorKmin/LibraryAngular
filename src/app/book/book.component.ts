@@ -4,6 +4,8 @@ import {CommentService} from "../services/comment.service";
 import {ActivatedRoute} from "@angular/router";
 import {Response} from "../Response";
 import {BookInfo} from "../BookInfo";
+import {Digital} from "../Digital";
+import {Hosts} from "../Hosts";
 
 
 @Component({
@@ -13,22 +15,17 @@ import {BookInfo} from "../BookInfo";
 })
 export class BookComponent implements OnInit {
 
+  links: Digital;
   book: BookInfo;
   comments: Array<any>;
-  author: string;
-  countOfComments: number;
   id: any;
-  publisher: string;
-  subject?: any;
-  summary?: any;
-  tags?: any;
-  title: string;
-  type_of_book: string;
-  type_of_content?: any;
-  type_of_file?: any;
-  user_id: number;
   image: any;
-  isReading;
+  timeToEnd?: string;
+  isTokenPreset = localStorage.getItem('token');
+  API_HOST = Hosts.API_HOST;
+  tags: any;
+  // allTagsBooks: Array<any> = [];
+  // isAllBook = false;
 
   constructor(
     private bookService: BookService,
@@ -39,23 +36,18 @@ export class BookComponent implements OnInit {
   ngOnInit() {
     // Get param from URL /book/:id
     this.id = this.route.snapshot.paramMap.get("id");
+
     this.bookService.getBookInfo(this.id).subscribe((resp: Response) => {
       this.book = resp.message;
       console.log(this.book);
-      this.author = this.book.author;
-      this.countOfComments = this.book.countOfComments;
-      this.publisher = this.book.publisher;
-      this.subject = this.book.subject;
-      this.summary = this.book.summary;
-      this.tags = this.book.tags;
-      this.title = this.book.title;
-      this.type_of_book = this.book.type_of_book;
-      this.type_of_content = this.book.type_of_content;
-      this.type_of_file = this.book.type_of_file;
-      this.user_id = this.book.user_id;
-      this.image = 'http://192.168.0.131:3001' + this.book.image;
-      this.isReading = this.book.is_reading;
-    })
+      this.image = this.API_HOST + this.book.image;
+      this.timeToEnd = new Date(this.book.backTime).toLocaleDateString();
+      this.tags = this.book.tags.split(' ');
+      console.log(this.tags);
+      if (this.book.is_digital) {
+        this.downloadBook();
+      }
+    });
   }
 
   allBookComments() {
@@ -69,8 +61,24 @@ export class BookComponent implements OnInit {
   }
 
   createComment(comment) {
-    this.commentService.createComment(comment, this.id).subscribe(value => {
+    if (comment === '') {
+      throw new Error('OOOPS')
+    } else {
+      this.commentService.createComment(comment, this.id).subscribe(value => {
+        console.log(value);
+      })
+    }
+  }
+
+  readThisBook() {
+    this.bookService.readBook(this.id).subscribe(value => {
       console.log(value);
+    })
+  }
+
+  downloadBook() {
+    this.bookService.download(this.id).subscribe((resp: Response) => {
+      this.links = resp.message;
     })
   }
 }

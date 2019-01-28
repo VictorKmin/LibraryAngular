@@ -9,11 +9,13 @@ import { FormsModule } from '@angular/forms';
 import {HomeService} from './services/home.service';
 import {BookService} from "./services/book.service";
 import {CommentService} from "./services/comment.service";
+import {SearchService} from "./services/search.service";
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { TopBooksComponent } from './top-books/top-books.component';
+import { BooksComponent } from './books/books.component';
 import { BookComponent } from './book/book.component';
 import { CommentComponent } from './comment/comment.component';
+import { TagSearchComponent } from './tag-search/tag-search.component';
 
 // const config: SocketIoConfig = {url: 'http://192.168.0.131:5000', options: {}};
 
@@ -21,9 +23,10 @@ import { CommentComponent } from './comment/comment.component';
   declarations: [
     AppComponent,
     HomeComponent,
-    TopBooksComponent,
+    BooksComponent,
     BookComponent,
-    CommentComponent
+    CommentComponent,
+    TagSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { CommentComponent } from './comment/comment.component';
   providers: [
     HomeService,
     BookService,
-    CommentService
+    CommentService,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })

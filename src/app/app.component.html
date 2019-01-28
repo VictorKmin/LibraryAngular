@@ -1,14 +1,14 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="main">
-  <div style="text-align:center">
-    <h2 style="padding-top: 60px">
+  <div style="text-align:left">
+    <h2 class="mainText">
       Welcome to {{ title }}!
     </h2>
   </div>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
-  <div style="float: right">
+  <div>
     <i class="fas fa-sign-in-alt loginButtons" [ngClass]="{'logged': token}" (click)="signIn()"> SIGN IN</i>
     <i class="fas fa-sign-out-alt loginButtons" [ngClass]="{'logged': !token}" (click)="signOut()"> SIGN OUT </i>
   </div>
@@ -25,5 +25,4 @@
   </div>
 </div>
 
-
-<router-outlet></router-outlet>
+ <router-outlet></router-outlet>

@@ -1,11 +1,11 @@
-<div class="book" routerLink='/book/{{id}}'>
-  <span class="title">
+<div class="book">
+  <span class="title"  routerLink='/book/{{id}}'>
     {{title}}
   </span>
   <br>
   {{type_of_book}}
   <br>
-  <img src="{{image}}" alt="{{title}}" class="image">
+  <img src="{{image}}" alt="{{title}}" class="image"  routerLink='/book/{{id}}'>
   <div class="stars">
     {{avgStar}} STARS
     <br>

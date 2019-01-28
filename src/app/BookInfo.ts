@@ -3,14 +3,16 @@ export interface BookInfo {
   countOfComments: number;
   id: number;
   publisher: string;
-  subject?: any;
+  subject?: string;
   summary?: any;
   tags?: any;
   title: string;
-  type_of_book: string;
+  is_digital: boolean;
   type_of_content?: any;
   type_of_file?: any;
   user_id: number;
   image: any;
-  is_reading: Boolean;
+  is_reading: boolean;
+  user?: string,
+  backTime? : string
 }

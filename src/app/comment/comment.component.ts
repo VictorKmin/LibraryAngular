@@ -19,8 +19,7 @@ export class CommentComponent implements OnInit {
     this.commentText = this.comment.comment;
     this.date = new Date(this.comment.created_at).toDateString();
     // this.date = new Date(this.comment.created_at).toUTCString();
-    this.user = this.comment.user_id;
-    console.log(this.comment);
+    this.user = this.comment.User.name
   }
 
 }
