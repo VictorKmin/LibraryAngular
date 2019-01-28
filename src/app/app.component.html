@@ -2,7 +2,7 @@
 <div class="main">
   <div style="text-align:left">
     <h2 class="mainText">
-      Welcome to {{ title }}!
+      Welcome to {{title}}!
     </h2>
   </div>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
@@ -12,6 +12,13 @@
     <i class="fas fa-sign-in-alt loginButtons" [ngClass]="{'logged': token}" (click)="signIn()"> SIGN IN</i>
     <i class="fas fa-sign-out-alt loginButtons" [ngClass]="{'logged': !token}" (click)="signOut()"> SIGN OUT </i>
   </div>
+</div>
+
+<div class="fullSearch">
+  <form (ngSubmit)="search(word.value)">
+    <input type="text" name="word" ngModel #word="ngModel" placeholder="Search">
+    <i class="fas fa-search" (click)="search(word.value)"></i>
+  </form>
 </div>
 
 <div class="loginForm">

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchService} from "../services/search.service";
 import {ActivatedRoute} from "@angular/router";
-import {Response} from "../Response";
+import {Response} from "../models/Response";
 
 @Component({
   selector: 'app-tag-search',

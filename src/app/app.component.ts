@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
+import {Response} from "./models/Response";
 import {HomeService} from "./services/home.service";
-import {Response} from "./Response";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,10 @@ export class AppComponent {
   private isLoginClicked: boolean = false;
   private isErrorPresent: any;
 
-  constructor(private homeService: HomeService) {
+  constructor(
+    private homeService: HomeService,
+    private router: Router
+  ) {
   }
 
   title = 'UkrInSofT library';
@@ -31,6 +35,10 @@ export class AppComponent {
 
   signIn() {
     this.isLoginClicked = true;
+  }
+
+  search(word: string) {
+    this.router.navigateByUrl(`/search/${word}`)
   }
 
   loginUser(email, password) {

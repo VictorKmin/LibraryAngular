@@ -42,7 +42,17 @@
   width: 100%;
 }
 
-.container {
-  width: 75%;
-  color: white;
+.fullSearch{
+  width: 250px;
+  margin-left: 75%;
+}
+.fullSearch form input{
+  width: 200px;
+}
+.fa-search {
+  color: #9f9f9f;
+  font-size: 20px;
+}
+.fa-search:hover {
+  color: black;
 }

@@ -11,22 +11,24 @@ import {BookService} from "./services/book.service";
 import {CommentService} from "./services/comment.service";
 import {SearchService} from "./services/search.service";
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { TopBooksComponent } from './top-books/top-books.component';
 import { BooksComponent } from './books/books.component';
 import { BookComponent } from './book/book.component';
 import { CommentComponent } from './comment/comment.component';
 import { TagSearchComponent } from './tag-search/tag-search.component';
+import { WordSearchComponent } from './word-search/word-search.component';
 
 // const config: SocketIoConfig = {url: 'http://192.168.0.131:5000', options: {}};
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    TopBooksComponent,
     BooksComponent,
     BookComponent,
     CommentComponent,
-    TagSearchComponent
+    TagSearchComponent,
+    WordSearchComponent
   ],
   imports: [
     BrowserModule,

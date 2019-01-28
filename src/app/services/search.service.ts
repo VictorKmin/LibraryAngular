@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Hosts} from "../Hosts";
+import {HttpClient} from "@angular/common/http";
+import {Hosts} from "../models/Hosts";
 
 @Injectable({
   providedIn: 'root'
@@ -13,4 +13,9 @@ export class SearchService {
   searchByTag(tag) {
     return this.http.get(`${Hosts.API_HOST}/search/tag/${tag}`)
   }
+
+  searchByOneWord(word) {
+    return this.http.get(`${Hosts.API_HOST}/search/?word=${word}`)
+  }
+
 }

@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {BookService} from "../services/book.service";
 import {CommentService} from "../services/comment.service";
 import {ActivatedRoute} from "@angular/router";
-import {Response} from "../Response";
-import {BookInfo} from "../BookInfo";
-import {Digital} from "../Digital";
-import {Hosts} from "../Hosts";
+import {Response} from "../models/Response";
+import {BookInfo} from "../models/BookInfo";
+import {Digital} from "../models/Digital";
+import {Hosts} from "../models/Hosts";
 
 
 @Component({
