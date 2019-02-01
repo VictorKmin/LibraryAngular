@@ -1,0 +1,53 @@
+<div class="container">
+  <form class="upload-form" #bookForm="ngForm" (ngSubmit)="addBook(bookForm)">
+
+    <label>* Title:</label>
+    <input type="text" name="title" required ngModel #title='ngModel' placeholder="Robinson Crouse">
+    <br>
+
+    <label>* Author:</label>
+    <input type="text" name="author" required ngModel #author='ngModel' placeholder="Daniel Defoe">
+    <br>
+
+    <label>* Publisher:</label>
+    <input type="text" name="publisher" required ngModel #publisher='ngModel' placeholder="William Taylor">
+    <br>
+
+    <label>* Summary:</label>
+    <input type="text" name="summary" required ngModel #summary='ngModel'
+           placeholder="Epistolary, confessional, and didactic in form, the book is presented as an autobiography of the title character...">
+    <br>
+
+    <label>*Tags:</label>
+    <input type="text" name="tags" required ngModel #tags='ngModel' placeholder="Friday, Island, Robinson">
+    <br>
+
+    <label>Subject:</label>
+    <input type="text" name="tags" ngModel #tags='ngModel' placeholder="Adventure">
+    <br>
+
+    <label>Type of book:</label>
+    <select style="display:inline-block;" (change)="changeBookType($event.target)">
+      <option *ngFor="let type of types">
+        {{type}}
+      </option>
+    </select>
+    <br>
+
+    <span *ngIf="bookType === 'digital'">
+      <label> * File: </label>
+      <br>
+      <input type="file" required name="file" ngModel #file='ngModel'>
+    </span>
+    <br>
+
+    <label>* Photo:</label>
+    <br>
+    <input type="file" required name="photo" ngModel #photo='ngModel'>
+    <br>
+    <br>
+
+    <input type="submit" value="Add book" style="width: 200px;" [disabled]="!bookForm.valid">
+  </form>
+</div>
+

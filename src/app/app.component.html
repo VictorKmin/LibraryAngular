@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="main">
   <div style="text-align:left">
-    <h2 class="mainText">
+    <h2 class="mainText" routerLink="/">
       Welcome to {{title}}!
     </h2>
   </div>
@@ -9,6 +9,8 @@
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
   <div>
+    <i class="fab fa-fort-awesome" routerLink="/"> HOME PAGE </i>
+
     <i class="fas fa-sign-in-alt loginButtons" [ngClass]="{'logged': token}" (click)="signIn()"> SIGN IN</i>
     <i class="fas fa-sign-out-alt loginButtons" [ngClass]="{'logged': !token}" (click)="signOut()"> SIGN OUT </i>
   </div>
@@ -22,14 +24,18 @@
 </div>
 
 <div class="loginForm">
-  <form #f="ngForm" (ngSubmit)="loginUser(email.value, password.value)" *ngIf="isLoginClicked">
-    <input type="email" value="test@t.com" name="email" required ngModel #email="ngModel">
-    <input type="password" value="test" name="password" required ngModel #password="ngModel">
-    <input type="submit" value="LOGIN">
+  <form (ngSubmit)="loginUser(email.value, password.value)" *ngIf="isLoginClicked" #loginForm = "ngForm">
+    <input type="email" name="email" required ngModel #email="ngModel" placeholder="HR system email">
+    <input type="password" name="password" required ngModel #password="ngModel" placeholder="HR system password">
+    <button class="btn" [disabled]="!loginForm.valid"> <span> LOGIN </span></button>
   </form>
   <div class="error" *ngIf="isErrorPresent">
     {{isErrorPresent}}
   </div>
 </div>
+
+<button class="btn" routerLink="/allbooks"> Show all books</button>
+<button class="btn" routerLink="/upload" *ngIf="token">Add new book</button>
+<br>
 
  <router-outlet></router-outlet>

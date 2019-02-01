@@ -24,6 +24,8 @@ export class BookComponent implements OnInit {
   isTokenPreset = localStorage.getItem('token');
   API_HOST = Hosts.API_HOST;
   tags: any;
+  userIdWhoRead;
+
   // allTagsBooks: Array<any> = [];
   // isAllBook = false;
 
@@ -47,6 +49,9 @@ export class BookComponent implements OnInit {
       if (this.book.is_digital) {
         this.downloadBook();
       }
+      if (localStorage.getItem("userID")) {
+        this.userIdWhoRead = localStorage.getItem("userID");
+      }
     });
   }
 
@@ -61,13 +66,9 @@ export class BookComponent implements OnInit {
   }
 
   createComment(comment) {
-    if (comment === '') {
-      throw new Error('OOOPS')
-    } else {
-      this.commentService.createComment(comment, this.id).subscribe(value => {
-        console.log(value);
-      })
-    }
+    this.commentService.createComment(comment, this.id).subscribe(value => {
+      console.log(value);
+    })
   }
 
   readThisBook() {
@@ -79,6 +80,18 @@ export class BookComponent implements OnInit {
   downloadBook() {
     this.bookService.download(this.id).subscribe((resp: Response) => {
       this.links = resp.message;
+    })
+  }
+
+  sillRead(bookId, userId) {
+    this.bookService.stillReadingBook(bookId, userId).subscribe((value: Response) => {
+      console.log(value);
+    })
+  }
+
+  returnBook(bookId) {
+    this.bookService.returnBook(bookId).subscribe((value: Response) => {
+      console.log(value);
     })
   }
 }

@@ -5,7 +5,7 @@ export interface BookInfo {
   publisher: string;
   subject?: string;
   summary?: any;
-  tags?: any;
+  tags?: string;
   title: string;
   is_digital: boolean;
   type_of_content?: any;
@@ -13,6 +13,7 @@ export interface BookInfo {
   user_id: number;
   image: any;
   is_reading: boolean;
-  user?: string,
+  userName?: string,
+  userIdWhoRead?: number,
   backTime? : string
 }

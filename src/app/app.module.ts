@@ -17,6 +17,8 @@ import { BookComponent } from './book/book.component';
 import { CommentComponent } from './comment/comment.component';
 import { TagSearchComponent } from './tag-search/tag-search.component';
 import { WordSearchComponent } from './word-search/word-search.component';
+import { AllBooksComponent } from './all-books/all-books.component';
+import { UploadBookComponent } from './upload-book/upload-book.component';
 
 // const config: SocketIoConfig = {url: 'http://192.168.0.131:5000', options: {}};
 
@@ -28,7 +30,9 @@ import { WordSearchComponent } from './word-search/word-search.component';
     BookComponent,
     CommentComponent,
     TagSearchComponent,
-    WordSearchComponent
+    WordSearchComponent,
+    AllBooksComponent,
+    UploadBookComponent
   ],
   imports: [
     BrowserModule,

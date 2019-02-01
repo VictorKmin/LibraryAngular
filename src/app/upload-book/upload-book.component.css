@@ -1,0 +1,13 @@
+.upload-form {
+  width: 75%;
+  float: left;
+  font-weight: bold;
+}
+
+.upload-form label {
+  color: #4a4b4c;
+}
+
+.upload-form .disabled {
+  color: red;
+}

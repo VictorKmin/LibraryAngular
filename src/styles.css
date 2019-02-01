@@ -3,8 +3,12 @@ body {
   background-color: #f7f7f7;
 }
 
-
 .container {
   width: 75%;
   background-color: white;
+}
+
+.books-header-text {
+  font-size: 30px;
+  color: #2f3435;
 }

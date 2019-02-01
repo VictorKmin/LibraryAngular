@@ -2,13 +2,11 @@
   position: relative;
   width: 75%;
   float: left;
-  background-color: rgba(106, 164, 35, 0.05);
 }
 
 .statistic {
   position: relative;
   width: 25%;
-  background-color: rgba(255, 237, 133, 0.1);
   float: left;
 }
 
@@ -45,4 +43,16 @@
 
 .bookIsReading {
   color: #b40000;
+}
+
+.still-read {
+  background-color: #c29600;
+  width: 80%;
+  margin-top: 10px;
+}
+
+.return-book {
+  background-color: #13ac02;
+  width: 80%;
+  margin-top: 10px;
 }
