@@ -43,7 +43,8 @@
 
     <label>* Photo:</label>
     <br>
-    <input type="file" required name="photo" ngModel #photo='ngModel'>
+    <input type="file" required name="photo" ngModel #photo='ngModel'
+           (change)="handleFileInput($event.target.files)">
     <br>
     <br>
 

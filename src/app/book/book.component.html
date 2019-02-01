@@ -50,16 +50,17 @@
   </div>
 
   <form #comment="ngForm" *ngIf="isTokenPreset">
-    <input type="text" name="comment" required ngModel #comment="ngModel">
+    <input type="text" name="comment" required ngModel #comment="ngModel" placeholder="You can leave comment here">
     <button class="btn waves-effect waves-light" type="submit" name="action"
             [disabled]="!comment.valid"
             (click)="createComment(comment.value)">
       Submit
     </button>
   </form>
-
-  <app-comment
-    *ngFor=" let comment of comments"
-    [comment]="comment">
-  </app-comment>
+  <div class="allComments">
+    <app-comment
+      *ngFor=" let comment of comments"
+      [comment]="comment">
+    </app-comment>
+  </div>
 </div>
