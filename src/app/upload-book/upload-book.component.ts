@@ -10,14 +10,12 @@ export class UploadBookComponent implements OnInit {
 
   types = ['handbook', 'digital'];
   bookType: string;
-  fileToUpload: File = null;
-
-  constructor(private fileUploadService: FileUploadService) {
-  }
-
+  photoToUpload: File = null;
   fielSize;
   chankSize = .1 * 1024 * 1024;
 
+  constructor(private fileUploadService: FileUploadService) {
+  }
 
   ngOnInit() {
   }
@@ -85,21 +83,14 @@ export class UploadBookComponent implements OnInit {
 
   addBook(value) {
     console.log(value.value);
-
-    // this.uploadFileToActivity();
+    this.fileUploadService.postFile( this.photoToUpload).subscribe(res => {
+      console.log(res);
+    })
   }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-
-    console.log(this.fileToUpload);
+  handleFileInput(file) {
+    console.log(file.target.files[0]);
+    this.photoToUpload = file.target.files[0];
   }
 
-  uploadFileToActivity() {
-    this.fileUploadService.postFile(this.fileToUpload).subscribe(data => {
-      console.log(data);
-    }, error => {
-      console.log(error);
-    });
-  }
 }
