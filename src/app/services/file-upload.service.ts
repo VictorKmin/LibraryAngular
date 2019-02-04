@@ -18,7 +18,6 @@ export class FileUploadService {
 
 
   postFile(fileToUpload: File) {
-
     const formData: FormData = new FormData();
     formData.append('photo', fileToUpload);
     formData.append('title', 'helloTitle');
