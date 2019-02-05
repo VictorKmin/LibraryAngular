@@ -8,7 +8,7 @@ import {Hosts} from "../models/Hosts";
 export class BookService {
 
   headers = new HttpHeaders()
-    .set('Content-Type', 'application/json')
+    // .set('Content-Type', 'application/json')
     .set('authorization', localStorage.getItem('token'));
 
   constructor(private http: HttpClient) {
@@ -42,5 +42,15 @@ export class BookService {
 
   returnBook(bookId) {
     return this.http.delete(`${Hosts.API_HOST}/book/return/${bookId}`, {headers: this.headers})
+  }
+
+
+  postFile(photoOfBook: File, fileOfBook: File, body) {
+    const formData: FormData = new FormData();
+    formData.append('photo', photoOfBook);
+    formData.append('file', fileOfBook);
+    formData.append('info', JSON.stringify(body));
+    return this.http
+      .post(`${Hosts.API_HOST}/book`, formData, {headers: this.headers})
   }
 }

@@ -11,8 +11,8 @@
   <div>
     <i class="fab fa-fort-awesome" routerLink="/"> HOME PAGE </i>
 
-    <i class="fas fa-sign-in-alt loginButtons" [ngClass]="{'logged': token}" (click)="signIn()"> SIGN IN</i>
-    <i class="fas fa-sign-out-alt loginButtons" [ngClass]="{'logged': !token}" (click)="signOut()"> SIGN OUT </i>
+    <i class="fas fa-sign-in-alt loginButtons" *ngIf="!(isAuth | async)" (click)="signIn()"> SIGN IN</i>
+    <i class="fas fa-sign-out-alt loginButtons"  *ngIf="isAuth | async" (click)="signOut()"> SIGN OUT </i>
   </div>
 </div>
 

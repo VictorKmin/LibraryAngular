@@ -23,31 +23,33 @@
     <br>
 
     <label>Subject:</label>
-    <input type="text" name="tags" ngModel #tags='ngModel' placeholder="Adventure">
+    <input type="text" name="tags" ngModel #subject='ngModel' placeholder="Adventure">
     <br>
 
-    <label>Type of book:</label>
-    <select style="display:inline-block;" (change)="changeBookType($event.target)">
+    <label>*Type of book:</label>
+    <select style="display:inline-block;"
+            required ngModel name="typeOfBook" #type="ngModel"
+            (change)="changeBookType($event.target)">
       <option *ngFor="let type of types">
         {{type}}
       </option>
     </select>
     <br>
-
+    <span *ngIf="bookType === 'handbook' || bookType === 'digital'">
+      <label>* Photo:</label>
+      <br>
+      <input type="file" required name="photo" ngModel #photo='ngModel'
+             (change)="photoInput($event)">
+    </span>
+    <br>
     <span *ngIf="bookType === 'digital'">
       <label> * File: </label>
       <br>
-      <input type="file" required name="file" ngModel #file='ngModel'>
+      <input type="file" required name="file" ngModel #file='ngModel'
+             (change)="fileInput($event)">
     </span>
     <br>
-
-    <label>* Photo:</label>
     <br>
-    <input type="file" required name="photo" ngModel #photo='ngModel'
-           (change)="handleFileInput($event)">
-    <br>
-    <br>
-
     <input type="submit" value="Add book" style="width: 200px;" [disabled]="!bookForm.valid">
   </form>
 </div>

@@ -22,12 +22,12 @@ export class BooksComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.book);
-    this.title = this.book.bookInfo.title;
-    this.id = this.book.book_id;
-    this.type_of_book = this.book.bookInfo.type_of_book;
+    this.title = this.book.title;
+    this.id = this.book.id;
+    this.type_of_book = this.book.type_of_book;
     this.avgStar = this.book.avgStar;
     this.countOfVotes = this.book.countOfVotes;
-    this.image = Hosts.API_HOST + this.book.bookInfo.image;
+    this.image = Hosts.API_HOST + this.book.image;
   }
 
 }
