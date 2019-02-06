@@ -36,7 +36,7 @@
         <button *ngIf="!book.is_reading" (click)="readThisBook()" class="readBook">
           <span>I want read this book</span>
         </button>
-        <div *ngIf="book.userIdWhoRead == userIdWhoRead && book.is_reading">
+        <div *ngIf="book.userIdWhoRead == userId && book.is_reading">
           <button class="btn still-read" (click)="sillRead(book.id, book.userIdWhoRead)">I still reading this</button>
           <button class="btn return-book" (click)="returnBook(book.id)">Return book</button>
         </div>

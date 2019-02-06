@@ -9,8 +9,6 @@ import {BehaviorSubject} from "rxjs";
 })
 export class UserService {
 
-
-
   userDetail = new BehaviorSubject<any>({});
 
   constructor(private http: HttpClient) {

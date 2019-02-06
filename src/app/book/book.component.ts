@@ -6,6 +6,7 @@ import {Response} from "../models/Response";
 import {BookInfo} from "../models/BookInfo";
 import {Digital} from "../models/Digital";
 import {Hosts} from "../models/Hosts";
+import {UserService} from "../services/user.service";
 
 
 @Component({
@@ -25,14 +26,22 @@ export class BookComponent implements OnInit {
   API_HOST = Hosts.API_HOST;
   tags: any;
   userIdWhoRead;
+  userId;
 
   constructor(
     private bookService: BookService,
     private commentService: CommentService,
+    private userService: UserService,
     private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+
+    this.userService.userDetail.subscribe(user => {
+      if (user.success) {
+        this.userId = user.message.id;
+      }
+    });
     // Get param from URL /book/:id
     this.id = this.route.snapshot.paramMap.get("id");
 
@@ -51,7 +60,7 @@ export class BookComponent implements OnInit {
 
   allBookComments() {
     this.commentService.getAllComments(this.id).subscribe((resp: Response) => {
-        this.comments = resp.message
+      this.comments = resp.message
     })
   }
 
