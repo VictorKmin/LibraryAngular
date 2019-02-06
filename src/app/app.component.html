@@ -15,7 +15,7 @@
     <i class="fas fa-sign-out-alt loginButtons"  *ngIf="isAuth | async" (click)="signOut()"> SIGN OUT </i>
   </div>
 </div>
-
+{{userInfo | json}}
 <div class="fullSearch">
   <form (ngSubmit)="search(word.value)">
     <input type="text" name="word" ngModel #word="ngModel" placeholder="Search">
@@ -35,7 +35,7 @@
 </div>
 
 <button class="btn" routerLink="/allbooks"> Show all books</button>
-<button class="btn" routerLink="/upload" *ngIf="token">Add new book</button>
+<button class="btn" routerLink="/upload" *ngIf="isAuth">Add new book</button>
 <br>
 
  <router-outlet></router-outlet>

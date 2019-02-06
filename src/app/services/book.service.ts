@@ -8,13 +8,13 @@ import {Hosts} from "../models/Hosts";
 export class BookService {
 
   headers = new HttpHeaders()
-    // .set('Content-Type', 'application/json')
     .set('authorization', localStorage.getItem('token'));
 
   constructor(private http: HttpClient) {
   }
 
   getBookInfo(id) {
+
     return this.http.get(`${Hosts.API_HOST}/book/${id}`);
   }
 

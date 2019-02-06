@@ -26,9 +26,6 @@ export class BookComponent implements OnInit {
   tags: any;
   userIdWhoRead;
 
-  // allTagsBooks: Array<any> = [];
-  // isAllBook = false;
-
   constructor(
     private bookService: BookService,
     private commentService: CommentService,
@@ -45,23 +42,16 @@ export class BookComponent implements OnInit {
       this.image = this.API_HOST + this.book.image;
       this.timeToEnd = new Date(this.book.backTime).toLocaleDateString();
       this.tags = this.book.tags.split(' ');
-      console.log(this.tags);
+      this.userIdWhoRead = this.book.userIdWhoRead;
       if (this.book.is_digital) {
         this.downloadBook();
-      }
-      if (localStorage.getItem("userID")) {
-        this.userIdWhoRead = localStorage.getItem("userID");
       }
     });
   }
 
   allBookComments() {
     this.commentService.getAllComments(this.id).subscribe((resp: Response) => {
-      if (resp.success) {
         this.comments = resp.message
-      } else {
-        // TODO ERROR
-      }
     })
   }
 

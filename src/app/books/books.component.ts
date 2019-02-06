@@ -21,7 +21,6 @@ export class BooksComponent implements OnInit {
   @Input() book: any;
 
   ngOnInit() {
-    console.log(this.book);
     this.title = this.book.title;
     this.id = this.book.id;
     this.type_of_book = this.book.type_of_book;
