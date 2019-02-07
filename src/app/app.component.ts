@@ -65,20 +65,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.error('ON INIT HERE');
     this.isAuth.subscribe(isLogged => {
-      console.log(isLogged);
       console.log(this.userInfo);
       if (isLogged) {
         this.userService.getUserInfo().subscribe(user => {
-          console.log(user);
           this.userService.userDetail.next(user)
         });
       }
     });
 
     this.userService.userDetail.subscribe((res) => {
-      console.log(res);
       if (res.success) {
         console.log(res);
         this.userInfo = res;

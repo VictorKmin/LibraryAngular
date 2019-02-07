@@ -2,15 +2,18 @@
   <form class="upload-form" #bookForm="ngForm" (ngSubmit)="addBook(bookForm)">
 
     <label>* Title:</label>
-    <input type="text" name="title" required ngModel #title='ngModel' placeholder="Robinson Crouse">
+    <input type="text" name="title" required ngModel #title='ngModel'
+           placeholder="Robinson Crouse">
     <br>
 
     <label>* Author:</label>
-    <input type="text" name="author" required ngModel #author='ngModel' placeholder="Daniel Defoe">
+    <input type="text" name="author" required ngModel #author='ngModel'
+           placeholder="Daniel Defoe">
     <br>
 
     <label>* Publisher:</label>
-    <input type="text" name="publisher" required ngModel #publisher='ngModel' placeholder="William Taylor">
+    <input type="text" name="publisher" required ngModel #publisher='ngModel'
+           placeholder="William Taylor">
     <br>
 
     <label>* Summary:</label>
@@ -19,11 +22,13 @@
     <br>
 
     <label>*Tags:</label>
-    <input type="text" name="tags" required ngModel #tags='ngModel' placeholder="Friday, Island, Robinson">
+    <input type="text" name="tags" required ngModel #tags='ngModel'
+           placeholder="Friday Island Robinson">
     <br>
 
     <label>Subject:</label>
-    <input type="text" name="tags" ngModel #subject='ngModel' placeholder="Adventure">
+    <input type="text" name="subject" ngModel #subject='ngModel'
+           placeholder="Adventure">
     <br>
 
     <label>*Type of book:</label>

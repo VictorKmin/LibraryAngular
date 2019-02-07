@@ -1,5 +1,63 @@
 <div class="container">
   <div class="basicInfo">
+
+
+    <!--THIS BLOCK OF CODE JUST FOR ADMIN USER-->
+    <div *ngIf="userRole == 1">
+      <button (click)="showDelete()">DELETE BOOK</button>
+      <button *ngIf="book.is_reading" (click)="showNotReading()">Book not reading already</button>
+      <button (click)="showUpdate()">Change info</button>
+
+      <!--Buttons for delete book-->
+      <div *ngIf="isDeleteClicked">
+        DELETE THIS BOOK ? <br>
+        <button (click)="deleteBook()"> YES. Destroy it!</button>
+        <button (click)="showDelete()"> No. It's just miss click </button>
+      </div>
+
+      <div *ngIf="isReadingClicked">
+        This book already in office ? <br>
+        <button (click)="bookReturned()"> YES. Already here!</button>
+        <button (click)="showNotReading()"> No. Some man still read this </button>
+      </div>
+
+      <!--Form for updating book-->
+      <form #newInfo="ngForm" *ngIf="isUpdateClicked">
+        Title:
+        <input type="text" name="title"  ngModel placeholder="{{book.title}}">
+        Author:
+        <input type="text" name="author"  ngModel placeholder="{{book.author}}">
+        Publisher:
+        <input type="text" name="publisher"  ngModel placeholder="{{book.publisher}}">
+        Summary:
+        <input type="text" name="summary"  ngModel placeholder="{{book.summary}}">
+        Tags:
+        <input type="text" name="tags"  ngModel placeholder="{{book.tags}}">
+        Subject:
+        <input type="text" name="subject"  ngModel placeholder="{{book.subject}}">
+        Type
+        <select style="display:block;" ngModel name="typeOfBook"
+                (change)="changeBookType($event.target)">
+          <option value="handbook"> handbook </option>
+          <option value="digital"> digital</option>
+        </select>
+        Photo
+        <input type="file"  name="photo" ngModel
+               (change)="photoInput($event)">
+        <br>
+        File
+        <input *ngIf="isBookDigital" type="file" required name="file" ngModel
+               (change)="fileInput($event)">
+        <br>
+        <button type="submit"
+                [disabled]="!newInfo.valid"
+                (click)="updateBook(newInfo.value)">
+          Submit
+        </button>
+      </form>
+    </div>
+<!--FINISH OF ADMIN CODE-->
+
     <h1> {{book.title}} </h1>
     <b>Author: </b>{{book.author}}
     <br>
@@ -23,13 +81,13 @@
 
     <div *ngIf='isTokenPreset'>
       <!--FOR DIGITAL BOOKS-->
-      <div *ngIf="book.is_digital">
+      <div *ngIf="is_digital">
         <p *ngFor="let link of links">
           <a href="{{API_HOST + link.location}}">Download {{link.type_of_file}}</a>
         </p>
       </div>
       <!--FOR HAND BOOKS-->
-      <div *ngIf="!book.is_digital" class="bookIsReading">
+      <div *ngIf="!is_digital" class="bookIsReading">
         <span *ngIf="book.is_reading">This book reading until {{timeToEnd}}</span>
         <br>
         <span *ngIf="book.is_reading">{{book.userName}} read this book</span>

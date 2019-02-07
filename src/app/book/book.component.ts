@@ -25,8 +25,16 @@ export class BookComponent implements OnInit {
   isTokenPreset = localStorage.getItem('token');
   API_HOST = Hosts.API_HOST;
   tags: any;
+  is_digital;
   userIdWhoRead;
   userId;
+  userRole;
+  isUpdateClicked = false;
+  isDeleteClicked = false;
+  isBookDigital = this.is_digital;
+  photoOfBook: File = null;
+  fileOfBook: File = null;
+  isReadingClicked = false;
 
   constructor(
     private bookService: BookService,
@@ -40,6 +48,7 @@ export class BookComponent implements OnInit {
     this.userService.userDetail.subscribe(user => {
       if (user.success) {
         this.userId = user.message.id;
+        this.userRole = user.message.role;
       }
     });
     // Get param from URL /book/:id
@@ -51,6 +60,7 @@ export class BookComponent implements OnInit {
       this.image = this.API_HOST + this.book.image;
       this.timeToEnd = new Date(this.book.backTime).toLocaleDateString();
       this.tags = this.book.tags.split(' ');
+      this.is_digital = this.book.is_digital;
       this.userIdWhoRead = this.book.userIdWhoRead;
       if (this.book.is_digital) {
         this.downloadBook();
@@ -92,5 +102,51 @@ export class BookComponent implements OnInit {
     this.bookService.returnBook(bookId).subscribe((value: Response) => {
       console.log(value);
     })
+  }
+
+  showNotReading() {
+    this.isReadingClicked = !this.isReadingClicked
+  }
+
+  showDelete() {
+    this.isDeleteClicked = !this.isDeleteClicked
+  }
+
+  deleteBook() {
+    this.bookService.deleteBook(this.book.id).subscribe(value => {
+      console.log(value);
+    })
+  }
+
+  showUpdate() {
+    this.isUpdateClicked = !this.isUpdateClicked;
+  }
+
+  updateBook(form) {
+    console.log(form);
+    if (!this.isBookDigital) {
+      this.fileOfBook = null
+    }
+    this.bookService.updateBook(this.book.id, this.photoOfBook, this.fileOfBook, form).subscribe(value => {
+      console.log(value);
+    });
+    this.isUpdateClicked = false;
+  }
+
+  changeBookType(target) {
+    this.isBookDigital = target.value === 'digital';
+  }
+
+  photoInput(file) {
+    this.photoOfBook = file.target.files[0];
+  }
+
+  fileInput(file) {
+    this.fileOfBook = file.target.files[0];
+  }
+
+  bookReturned() {
+    console.log('TODO')
+    // TODO
   }
 }
