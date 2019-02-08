@@ -6,3 +6,19 @@
   {{commentText}}
 </div>
 
+<div *ngIf="userRole == 1">
+  <button (click)="showDelete()">DELETE COMMENT</button>
+  <button (click)="showUpdate()">CHANGE COMMENT</button>
+
+  <div *ngIf="isDeleteClicked">
+    Are you sure?
+    <button (click)="deleteComment()">Yes. It's bad comment</button>
+    <button (click)="showDelete()"> No no no</button>
+  </div>
+  <div *ngIf="isUpdateClicked">
+    <form #newComment="ngForm" (ngSubmit)="updateComment(newComment.value)">
+      <input type="text" name="comment" ngModel placeholder="{{commentText}}">
+      <button type="submit">OK</button>
+    </form>
+  </div>
+</div>

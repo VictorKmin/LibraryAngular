@@ -11,7 +11,6 @@ export class CommentService {
   }
 
   createComment(comment, id) {
-
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('authorization', localStorage.getItem('token'));
@@ -20,5 +19,20 @@ export class CommentService {
 
   getAllComments(bookId) {
     return this.http.get(`${Hosts.API_HOST}/comment?id=${bookId}`);
+  }
+
+
+  deleteComment(id) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.delete(`${Hosts.API_HOST}/comment/${id}`, {headers})
+  }
+
+  updateComment(id: number, newComment: any) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.patch(`${Hosts.API_HOST}/comment/${id}`, {comment: newComment},{headers})
   }
 }

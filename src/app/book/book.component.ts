@@ -18,23 +18,33 @@ export class BookComponent implements OnInit {
 
   links: Digital;
   book: BookInfo;
-  comments: Array<any>;
-  id: any;
+  //info about book
+  is_digital: boolean;
+  is_reading: boolean;
+  userIdWhoRead;
   image: any;
   timeToEnd?: string;
-  isTokenPreset = localStorage.getItem('token');
-  API_HOST = Hosts.API_HOST;
   tags: any;
-  is_digital;
-  userIdWhoRead;
+  isBookDigital = this.is_digital;
+  id: any;
+  title: string;
+  author: string;
+  publisher: string;
+  summary: any;
+  subject: string;
+  countOfComments: number;
+  isLogged = !!localStorage.getItem('token');
+
   userId;
   userRole;
+  comments: Array<any>;
+  isTokenPreset = localStorage.getItem('token');
+  API_HOST = Hosts.API_HOST;
   isUpdateClicked = false;
   isDeleteClicked = false;
-  isBookDigital = this.is_digital;
+  isReadingClicked = false;
   photoOfBook: File = null;
   fileOfBook: File = null;
-  isReadingClicked = false;
 
   constructor(
     private bookService: BookService,
@@ -45,12 +55,15 @@ export class BookComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userService.userDetail.subscribe(user => {
-      if (user.success) {
-        this.userId = user.message.id;
-        this.userRole = user.message.role;
-      }
-    });
+    if (this.isLogged) {
+      this.userService.userDetail.subscribe(user => {
+        if (user.success) {
+          this.userId = user.message.id;
+          this.userRole = user.message.role;
+        }
+      });
+    }
+
     // Get param from URL /book/:id
     this.id = this.route.snapshot.paramMap.get("id");
 
@@ -61,7 +74,14 @@ export class BookComponent implements OnInit {
       this.timeToEnd = new Date(this.book.backTime).toLocaleDateString();
       this.tags = this.book.tags.split(' ');
       this.is_digital = this.book.is_digital;
+      this.is_reading = this.book.is_reading;
       this.userIdWhoRead = this.book.userIdWhoRead;
+      this.title = this.book.title;
+      this.author = this.book.author;
+      this.publisher = this.book.publisher;
+      this.summary = this.book.summary;
+      this.subject = this.book.subject;
+      this.countOfComments = this.book.countOfComments;
       if (this.book.is_digital) {
         this.downloadBook();
       }

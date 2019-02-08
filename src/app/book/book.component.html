@@ -5,67 +5,63 @@
     <!--THIS BLOCK OF CODE JUST FOR ADMIN USER-->
     <div *ngIf="userRole == 1">
       <button (click)="showDelete()">DELETE BOOK</button>
-      <button *ngIf="book.is_reading" (click)="showNotReading()">Book not reading already</button>
+      <button *ngIf="is_reading" (click)="showNotReading()">Book not reading already</button>
       <button (click)="showUpdate()">Change info</button>
 
       <!--Buttons for delete book-->
       <div *ngIf="isDeleteClicked">
         DELETE THIS BOOK ? <br>
         <button (click)="deleteBook()"> YES. Destroy it!</button>
-        <button (click)="showDelete()"> No. It's just miss click </button>
+        <button (click)="showDelete()"> No. It's just miss click</button>
       </div>
 
       <div *ngIf="isReadingClicked">
         This book already in office ? <br>
         <button (click)="bookReturned()"> YES. Already here!</button>
-        <button (click)="showNotReading()"> No. Some man still read this </button>
+        <button (click)="showNotReading()"> No. Some man still read this</button>
       </div>
 
       <!--Form for updating book-->
-      <form #newInfo="ngForm" *ngIf="isUpdateClicked">
+      <form #newInfo="ngForm" *ngIf="isUpdateClicked" (ngSubmit)="updateBook(newInfo.value)">
         Title:
-        <input type="text" name="title"  ngModel placeholder="{{book.title}}">
+        <input type="text" name="title" ngModel placeholder="{{title}}">
         Author:
-        <input type="text" name="author"  ngModel placeholder="{{book.author}}">
+        <input type="text" name="author" ngModel placeholder="{{author}}">
         Publisher:
-        <input type="text" name="publisher"  ngModel placeholder="{{book.publisher}}">
+        <input type="text" name="publisher" ngModel placeholder="{{publisher}}">
         Summary:
-        <input type="text" name="summary"  ngModel placeholder="{{book.summary}}">
+        <input type="text" name="summary" ngModel placeholder="{{summary}}">
         Tags:
-        <input type="text" name="tags"  ngModel placeholder="{{book.tags}}">
+        <input type="text" name="tags" ngModel placeholder="{{book.tags}}">
         Subject:
-        <input type="text" name="subject"  ngModel placeholder="{{book.subject}}">
+        <input type="text" name="subject" ngModel placeholder="{{subject}}">
         Type
         <select style="display:block;" ngModel name="typeOfBook"
                 (change)="changeBookType($event.target)">
-          <option value="handbook"> handbook </option>
+          <option value="handbook"> handbook</option>
           <option value="digital"> digital</option>
         </select>
         Photo
-        <input type="file"  name="photo" ngModel
+        <input type="file" name="photo" ngModel
                (change)="photoInput($event)">
         <br>
         File
-        <input *ngIf="isBookDigital" type="file" required name="file" ngModel
+        <input *ngIf="isBookDigital" type="file" name="file" ngModel
                (change)="fileInput($event)">
         <br>
-        <button type="submit"
-                [disabled]="!newInfo.valid"
-                (click)="updateBook(newInfo.value)">
-          Submit
-        </button>
+        <button type="submit" [disabled]="!newInfo.valid"> Submit </button>
       </form>
     </div>
-<!--FINISH OF ADMIN CODE-->
+    <!--FINISH OF ADMIN CODE-->
 
-    <h1> {{book.title}} </h1>
-    <b>Author: </b>{{book.author}}
+    <h1> {{title}} </h1>
+    <b>Author: </b>{{author}}
     <br>
-    <b>Publisher: </b>{{book.publisher}}
+    <b>Publisher: </b>{{publisher}}
     <br>
-    <b>Subject: </b>{{book.subject}}
+    <b>Subject: </b>{{subject}}
     <div class="summary">
-      {{book.summary}}
+      {{summary}}
     </div>
     <br>
     <div *ngIf="tags">
@@ -77,7 +73,7 @@
     <br>
   </div>
   <div class="statistic">
-    <img src="{{image}}" alt="{{book.title}}" class="image">
+    <img src="{{image}}" alt="{{title}}" class="image">
 
     <div *ngIf='isTokenPreset'>
       <!--FOR DIGITAL BOOKS-->
@@ -88,14 +84,14 @@
       </div>
       <!--FOR HAND BOOKS-->
       <div *ngIf="!is_digital" class="bookIsReading">
-        <span *ngIf="book.is_reading">This book reading until {{timeToEnd}}</span>
+        <span *ngIf="is_reading">This book reading until {{timeToEnd}}</span>
         <br>
-        <span *ngIf="book.is_reading">{{book.userName}} read this book</span>
-        <button *ngIf="!book.is_reading" (click)="readThisBook()" class="readBook">
+        <span *ngIf="is_reading">{{book.userName}} read this book</span>
+        <button *ngIf="!is_reading" (click)="readThisBook()" class="readBook">
           <span>I want read this book</span>
         </button>
-        <div *ngIf="book.userIdWhoRead == userId && book.is_reading">
-          <button class="btn still-read" (click)="sillRead(book.id, book.userIdWhoRead)">I still reading this</button>
+        <div *ngIf="userIdWhoRead == userId && is_reading">
+          <button class="btn still-read" (click)="sillRead(book.id, userIdWhoRead)">I still reading this</button>
           <button class="btn return-book" (click)="returnBook(book.id)">Return book</button>
         </div>
       </div>
@@ -103,7 +99,7 @@
     <br>
     <a class="btn waves-effect waves-green commentButton"
        (click)="allBookComments()">
-      See {{book.countOfComments}} comments
+      See {{countOfComments}} comments
     </a>
   </div>
 
