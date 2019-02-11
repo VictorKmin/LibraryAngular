@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   isToken = !!localStorage.getItem('token');
   isAuth = new BehaviorSubject<boolean>(this.isToken);
   userInfo = {};
+  userRole: number;
 
   constructor(
     private homeService: HomeService,
@@ -74,10 +75,11 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.userService.userDetail.subscribe((res) => {
+    this.userService.userDetail.subscribe((res : Response) => {
       if (res.success) {
+        this.userRole = res.message.role;
         console.log(res);
-        this.userInfo = res;
+        this.userInfo = res.message;
       }
     })
   }

@@ -1,0 +1,31 @@
+<button (click)="showReadingActvt()" *ngIf="!isReadingClicked">Reading Activity</button>
+<button (click)="hideReadingInfo()" *ngIf="isReadingClicked">>Hide reading info</button>
+
+<button (click)="showCommentActvt()" *ngIf="!isCommentClicked">Comment Activity</button>
+<button (click)="hideCommentInfo()" *ngIf="isCommentClicked">Hide comment info</button>
+
+<button (click)="showRatingActvt()" *ngIf="!isRatingClicked">Rating Activity</button>
+<button (click)="hideRatingInfo()" *ngIf="isRatingClicked">Hide rating info</button>
+
+
+<div *ngIf="isReadingClicked">
+  <div *ngFor="let reading of readStatistic">
+    {{reading | json}}
+  </div>
+  <button (click)="hideReadingInfo()">Hide reading info</button>
+</div>
+
+<div *ngIf="isCommentClicked">
+  <div *ngFor="let comment of commentStatistic">
+    {{comment | json}}
+  </div>
+  <button (click)="hideCommentInfo()">Hide comment info</button>
+</div>
+
+<div *ngIf="isRatingClicked">
+  <div *ngFor="let rating of ratingStatistic">
+    {{rating | json}}
+  </div>
+  <button (click)="hideRatingInfo()">Hide rating info</button>
+</div>
+

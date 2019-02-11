@@ -1,0 +1,20 @@
+<button (click)="showTopReadedBooks()" *ngIf="!isTopReadedClicked">Show most readed books</button>
+<button (click)="hideTopReadedBooks()" *ngIf="isTopReadedClicked">Hide most readed books</button>
+
+<button (click)="showTopUsers()" *ngIf="!isTopUsersClicked"> Show most readed users</button>
+<button (click)="hideTopUsers()" *ngIf="isTopUsersClicked"> Hide most readed users</button>
+
+<div *ngIf="isTopReadedClicked">
+  <div *ngFor="let book of topBooks">
+    {{book | json}}
+  </div>
+  <button (click)="hideTopReadedBooks()">Hide</button>
+</div>
+
+
+<div *ngIf="isTopUsersClicked">
+  <div *ngFor="let user of topUsers">
+    {{user | json}}
+  </div>
+  <button (click)="hideTopUsers()"> Hide</button>
+</div>

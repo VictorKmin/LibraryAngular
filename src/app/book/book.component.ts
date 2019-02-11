@@ -40,11 +40,12 @@ export class BookComponent implements OnInit {
   comments: Array<any>;
   isTokenPreset = localStorage.getItem('token');
   API_HOST = Hosts.API_HOST;
+  photoOfBook: File = null;
+  fileOfBook: File = null;
+
   isUpdateClicked = false;
   isDeleteClicked = false;
   isReadingClicked = false;
-  photoOfBook: File = null;
-  fileOfBook: File = null;
 
   constructor(
     private bookService: BookService,
@@ -54,6 +55,8 @@ export class BookComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Get param from URL /book/:id
+    this.id = this.route.snapshot.paramMap.get("id");
 
     if (this.isLogged) {
       this.userService.userDetail.subscribe(user => {
@@ -63,10 +66,6 @@ export class BookComponent implements OnInit {
         }
       });
     }
-
-    // Get param from URL /book/:id
-    this.id = this.route.snapshot.paramMap.get("id");
-
     this.bookService.getBookInfo(this.id).subscribe((resp: Response) => {
       this.book = resp.message;
       console.log(this.book);
@@ -82,6 +81,7 @@ export class BookComponent implements OnInit {
       this.summary = this.book.summary;
       this.subject = this.book.subject;
       this.countOfComments = this.book.countOfComments;
+      // Bad practice. TODO normal
       if (this.book.is_digital) {
         this.downloadBook();
       }
@@ -112,8 +112,8 @@ export class BookComponent implements OnInit {
     })
   }
 
-  sillRead(bookId, userId) {
-    this.bookService.stillReadingBook(bookId, userId).subscribe((value: Response) => {
+  sillRead(bookId) {
+    this.bookService.stillReadingBook(bookId).subscribe((value: Response) => {
       console.log(value);
     })
   }
@@ -167,6 +167,6 @@ export class BookComponent implements OnInit {
 
   bookReturned() {
     console.log('TODO')
-    // TODO
+    // TODO return book admin method
   }
 }

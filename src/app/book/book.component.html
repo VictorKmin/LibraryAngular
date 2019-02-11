@@ -7,6 +7,7 @@
       <button (click)="showDelete()">DELETE BOOK</button>
       <button *ngIf="is_reading" (click)="showNotReading()">Book not reading already</button>
       <button (click)="showUpdate()">Change info</button>
+      <button routerLink="/bookstat/{{id}}">Show book activity</button>
 
       <!--Buttons for delete book-->
       <div *ngIf="isDeleteClicked">
@@ -49,7 +50,7 @@
         <input *ngIf="isBookDigital" type="file" name="file" ngModel
                (change)="fileInput($event)">
         <br>
-        <button type="submit" [disabled]="!newInfo.valid"> Submit </button>
+        <button type="submit" [disabled]="!newInfo.valid"> Submit</button>
       </form>
     </div>
     <!--FINISH OF ADMIN CODE-->
@@ -91,8 +92,8 @@
           <span>I want read this book</span>
         </button>
         <div *ngIf="userIdWhoRead == userId && is_reading">
-          <button class="btn still-read" (click)="sillRead(book.id, userIdWhoRead)">I still reading this</button>
-          <button class="btn return-book" (click)="returnBook(book.id)">Return book</button>
+          <button class="btn still-read" (click)="sillRead(id)">I still reading this</button>
+          <button class="btn return-book" (click)="returnBook(id)">Return book</button>
         </div>
       </div>
     </div>

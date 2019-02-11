@@ -36,8 +36,8 @@ export class BookService {
     return this.http.get(`${Hosts.API_HOST}/book`);
   }
 
-  stillReadingBook(bookId, userId) {
-    return this.http.patch(`${Hosts.API_HOST}/book`, {bookId, userId})
+  stillReadingBook(bookId) {
+    return this.http.patch(`${Hosts.API_HOST}/book`, {bookId}, {headers: this.headers})
   }
 
   returnBook(bookId) {
