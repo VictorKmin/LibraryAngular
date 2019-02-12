@@ -13,15 +13,15 @@ export class StatisticService {
   constructor(private http: HttpClient) {
   }
 
-  getReadingActivity(bookId: number) {
+  getReadingActivityById(bookId: number) {
     return this.http.get(`${Hosts.API_HOST}/activity/reading/${bookId}`, {headers: this.headers})
   }
 
-  getCommentActivity(bookId: number) {
+  getCommentActivityById(bookId: number) {
     return this.http.get(`${Hosts.API_HOST}/activity/comment/${bookId}`, {headers: this.headers})
   }
 
-  getRatingActivity(bookId: number) {
+  getRatingActivityById(bookId: number) {
     return this.http.get(`${Hosts.API_HOST}/activity/rating/${bookId}`, {headers: this.headers})
   }
 
@@ -31,5 +31,17 @@ export class StatisticService {
 
   getTopUsers(limit) {
     return this.http.get(`${Hosts.API_HOST}/activity/topusers/${limit}`, {headers: this.headers})
+  }
+
+  getAllReadingInfo() {
+    return this.http.get(`${Hosts.API_HOST}/activity/reading`, {headers: this.headers})
+  }
+
+  getAllCommentInfo() {
+    return this.http.get(`${Hosts.API_HOST}/activity/comment`, {headers: this.headers})
+  }
+
+  getAllRatingInfo() {
+    return this.http.get(`${Hosts.API_HOST}/activity/rating`, {headers: this.headers})
   }
 }

@@ -1,20 +1,90 @@
 <button (click)="showTopReadedBooks()" *ngIf="!isTopReadedClicked">Show most readed books</button>
-<button (click)="hideTopReadedBooks()" *ngIf="isTopReadedClicked">Hide most readed books</button>
+<button (click)="hideTopReadedBooks()"
+        *ngIf="isTopReadedClicked"
+        [ngClass]="{'active': isTopReadedClicked}">Hide most readed books</button>
 
-<button (click)="showTopUsers()" *ngIf="!isTopUsersClicked"> Show most readed users</button>
-<button (click)="hideTopUsers()" *ngIf="isTopUsersClicked"> Hide most readed users</button>
+<button (click)="showTopUsers()" *ngIf="!isTopUsersClicked">Show most readed users</button>
+<button (click)="hideTopUsers()"
+        *ngIf="isTopUsersClicked"
+        [ngClass]="{'active': isTopUsersClicked}">Hide most readed users</button>
 
+<button (click)="showAllReadingInfo()" *ngIf="!isAllReadStatClicked">Show all reading statistic</button>
+<button (click)="hideReadingInfo()"
+        *ngIf="isAllReadStatClicked"
+        [ngClass]="{'active': isAllReadStatClicked}">Hide all reading statistic</button>
+
+<button (click)="showAllCommentInfo()" *ngIf="!isAllCommentClicked">Show all comment statistic</button>
+<button (click)="hideCommentInfo()"
+        *ngIf="isAllCommentClicked"
+        [ngClass]="{'active': isAllCommentClicked}">Hide all comment statistic</button>
+
+<button (click)="showAllRatingInfo()" *ngIf="!isAllRatingClicked">Show all rating statistic</button>
+<button (click)="hideRatingInfo()"
+        *ngIf="isAllRatingClicked"
+        [ngClass]="{'active': isAllRatingClicked}">Hide all raring statistic</button>
+
+<!--TOP BOOKS -->
 <div *ngIf="isTopReadedClicked">
-  <div *ngFor="let book of topBooks">
-    {{book | json}}
+  <div *ngFor="let book of topBooks" class="single-info">
+    Book title: <b>{{book.Book.title}}</b><br>
+    This book reading <b>{{book.countOfRead}}</b> times
+    <br>
+    <button routerLink="/book/{{book.Book.id}}">Go to book info</button>
   </div>
   <button (click)="hideTopReadedBooks()">Hide</button>
 </div>
 
-
+<!--TOP USERS-->
 <div *ngIf="isTopUsersClicked">
-  <div *ngFor="let user of topUsers">
-    {{user | json}}
+  <div *ngFor="let user of topUsers" class="single-info">
+    User <b>{{user.User.name}}</b> read <b>{{user.countOfRead}}</b> books for all time
   </div>
   <button (click)="hideTopUsers()"> Hide</button>
+</div>
+
+<!--ALL READING ACTIVITY-->
+<div *ngIf="isAllReadStatClicked">
+  <div *ngFor="let reading of readStatistic" class="single-info">
+    <!--{{reading | json}}-->
+    User <b>{{reading.User.name}}</b>
+    <span *ngIf="reading.take_read"> <b> take </b> book <b>{{reading.Book.title}}</b> for reading</span>
+    <span *ngIf="reading.continue_read"> <b> continue </b> read book <b>{{reading.Book.title}}</b></span>
+    <span *ngIf="reading.get_back"><b> return </b> book <b>{{reading.Book.title}}</b> to office</span>
+    <br>
+    <b>{{reading.created_at | date}}</b>
+    <br>
+    <button routerLink="/book/{{reading.book_id}}">Go to book info</button>
+  </div>
+  <button (click)="hideReadingInfo()">Hide reading info</button>
+</div>
+
+<!--ALL COMMENT ACTIVITY-->
+<div *ngIf="isAllCommentClicked">
+  <div *ngFor="let comment of commentStatistic" class="single-info">
+    <!--{{comment | json}}-->
+    User <b>{{comment.User.name}}</b>
+    <!--When comment is created-->
+    <span *ngIf="comment.is_create"> <b> create new</b>  comment </span>
+    <!--When comment is updated-->
+    <span *ngIf="comment.is_update"> <b> update</b> comment <u>"{{comment.old_comment}}"</u> to </span>
+    <u>"{{comment.new_comment}}"</u> to book <b>{{comment.Book.title}}</b>.
+    <br>
+    <b>{{comment.created_at | date}}</b>
+    <br>
+    <button routerLink="/book/{{comment.book_id}}">Go to book info</button>
+  </div>
+  <button (click)="hideCommentInfo()">Hide comment info</button>
+</div>
+
+<!--ALL RATING ACTIVITY-->
+<div *ngIf="isAllRatingClicked">
+  <div *ngFor="let rating of ratingStatistic" class="single-info">
+    <!--{{rating | json}}-->
+    User <b>{{rating.User.name}}</b> rate book <b>{{rating.Book.title}}</b> on <b>{{rating.star}} </b> stars
+    <br>
+    <b>{{rating.created_at | date}}</b>
+    <br>
+    <button routerLink="/book/{{rating.book_id}}">Go to book info</button>
+  </div>
+  <button (click)="hideRatingInfo()">Hide rating info</button>
 </div>

@@ -11,8 +11,14 @@ export class StatisticComponent implements OnInit {
 
   isTopReadedClicked = false;
   isTopUsersClicked = false;
+  isAllReadStatClicked = false;
+  isAllCommentClicked = false;
+  isAllRatingClicked = false;
   topBooks;
   topUsers;
+  readStatistic;
+  commentStatistic;
+  ratingStatistic;
 
   constructor(private statisticService: StatisticService) {
   }
@@ -21,7 +27,7 @@ export class StatisticComponent implements OnInit {
   }
 
   showTopReadedBooks() {
-    this.isTopReadedClicked = !this.isTopReadedClicked;
+    this.isTopReadedClicked = true;
     // 10 is hardcoded limit of books from database
     this.statisticService.getTopReadedBooks(10).subscribe((resp: Response) => {
       if (resp.success) {
@@ -31,12 +37,36 @@ export class StatisticComponent implements OnInit {
   }
 
   showTopUsers() {
-    this.isTopUsersClicked = !this.isTopUsersClicked;
+    this.isTopUsersClicked = true;
     // 10 is hardcoded limit of users from database
     this.statisticService.getTopUsers(10).subscribe((resp: Response) => {
       if (resp.success) {
         this.topUsers = resp.message
       }
+    })
+  }
+
+  showAllReadingInfo() {
+    this.isAllReadStatClicked = true;
+    this.statisticService.getAllReadingInfo().subscribe((resp: Response) => {
+      console.log(resp.message);
+      this.readStatistic = resp.message
+    })
+  }
+
+  showAllCommentInfo() {
+    this.isAllCommentClicked = true;
+    this.statisticService.getAllCommentInfo().subscribe((resp: Response) => {
+      console.log(resp.message);
+      this.commentStatistic = resp.message;
+    })
+  }
+
+  showAllRatingInfo() {
+    this.isAllRatingClicked = true;
+    this.statisticService.getAllRatingInfo().subscribe((resp: Response) => {
+      console.log(resp.message);
+      this.ratingStatistic = resp.message;
     })
   }
 
@@ -46,5 +76,17 @@ export class StatisticComponent implements OnInit {
 
   hideTopUsers() {
     this.isTopUsersClicked = false
+  }
+
+  hideReadingInfo() {
+    this.isAllReadStatClicked = false;
+  }
+
+  hideCommentInfo() {
+    this.isAllCommentClicked = false;
+  }
+
+  hideRatingInfo() {
+    this.isAllRatingClicked = false;
   }
 }

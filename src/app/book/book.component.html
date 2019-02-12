@@ -3,20 +3,31 @@
 
 
     <!--THIS BLOCK OF CODE JUST FOR ADMIN USER-->
-    <div *ngIf="userRole == 1">
-      <button (click)="showDelete()">DELETE BOOK</button>
-      <button *ngIf="is_reading" (click)="showNotReading()">Book not reading already</button>
-      <button (click)="showUpdate()">Change info</button>
-      <button routerLink="/bookstat/{{id}}">Show book activity</button>
+    <div *ngIf="userRole == 1" class="admin-panel">
+      <button (click)="showDelete()" [ngClass]="{'active': isDeleteClicked}">DELETE BOOK</button>
+
+      <button *ngIf="is_reading" (click)="showNotReading()"
+              [ngClass]="{'active': isReadingClicked}">Book not reading already
+      </button>
+
+      <button (click)="showUpdate()"
+              [ngClass]="{'active': isUpdateClicked}">Change info
+      </button>
+
+      <button (click)="showStat()"
+              [ngClass]="{'active': isShowStat}">Show book activity
+      </button>
+      <br>
+      <app-book-statistic *ngIf="isShowStat"></app-book-statistic>
 
       <!--Buttons for delete book-->
-      <div *ngIf="isDeleteClicked">
+      <div *ngIf="isDeleteClicked" class="admin-panel">
         DELETE THIS BOOK ? <br>
         <button (click)="deleteBook()"> YES. Destroy it!</button>
         <button (click)="showDelete()"> No. It's just miss click</button>
       </div>
 
-      <div *ngIf="isReadingClicked">
+      <div *ngIf="isReadingClicked" class="admin-panel">
         This book already in office ? <br>
         <button (click)="bookReturned()"> YES. Already here!</button>
         <button (click)="showNotReading()"> No. Some man still read this</button>

@@ -1,30 +1,55 @@
 <button (click)="showReadingActvt()" *ngIf="!isReadingClicked">Reading Activity</button>
-<button (click)="hideReadingInfo()" *ngIf="isReadingClicked">>Hide reading info</button>
+<button (click)="hideReadingInfo()"
+        *ngIf="isReadingClicked"
+        [ngClass]="{'active': isReadingClicked}">Hide reading info</button>
 
 <button (click)="showCommentActvt()" *ngIf="!isCommentClicked">Comment Activity</button>
-<button (click)="hideCommentInfo()" *ngIf="isCommentClicked">Hide comment info</button>
+<button (click)="hideCommentInfo()"
+        *ngIf="isCommentClicked"
+        [ngClass]="{'active': isCommentClicked}">Hide comment info</button>
 
 <button (click)="showRatingActvt()" *ngIf="!isRatingClicked">Rating Activity</button>
-<button (click)="hideRatingInfo()" *ngIf="isRatingClicked">Hide rating info</button>
+<button (click)="hideRatingInfo()"
+        *ngIf="isRatingClicked"
+        [ngClass]="{'active': isRatingClicked}">Hide rating info</button>
 
-
+<!--READING ACTIVITY-->
 <div *ngIf="isReadingClicked">
-  <div *ngFor="let reading of readStatistic">
-    {{reading | json}}
+  <div *ngFor="let reading of readStatistic" class="single-info">
+    <!--{{reading | json}}-->
+    User <b>{{reading.User.name}}</b>
+    <span *ngIf="reading.take_read"> <b> take </b> book for reading</span>
+    <span *ngIf="reading.continue_read"> <b> continue </b> read book</span>
+    <span *ngIf="reading.get_back"><b> return </b> book to office</span>
+    <br>
+    <b>{{reading.created_at | date}}</b>
   </div>
   <button (click)="hideReadingInfo()">Hide reading info</button>
 </div>
 
+<!--COMMENT ACTIVITY-->
 <div *ngIf="isCommentClicked">
-  <div *ngFor="let comment of commentStatistic">
-    {{comment | json}}
+  <div *ngFor="let comment of commentStatistic" class="single-info">
+    <!--{{comment | json}}-->
+    User <b>{{comment.User.name}}</b>
+    <!--When comment is created-->
+    <span *ngIf="comment.is_create"> <b> create new</b>  comment </span>
+    <!--When comment is updated-->
+    <span *ngIf="comment.is_update"> <b> update</b> comment <u>"{{comment.old_comment}}"</u> to </span>
+    <u>"{{comment.new_comment}}"</u>.
+    <br>
+    <b>{{comment.created_at | date}}</b>
   </div>
   <button (click)="hideCommentInfo()">Hide comment info</button>
 </div>
 
+<!--RATING ACTIVITY-->
 <div *ngIf="isRatingClicked">
-  <div *ngFor="let rating of ratingStatistic">
-    {{rating | json}}
+  <div *ngFor="let rating of ratingStatistic" class="single-info">
+    <!--{{rating | json}}-->
+    User <b>{{rating.User.name}}</b> rate it on <b>{{rating.star}} </b> stars
+    <br>
+    <b>{{rating.created_at | date}}</b>
   </div>
   <button (click)="hideRatingInfo()">Hide rating info</button>
 </div>

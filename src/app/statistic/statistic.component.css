@@ -1,0 +1,16 @@
+.single-info {
+  background-color: #e9e9e9;
+  margin: 20px;
+  padding: 5px 0;
+}
+
+button {
+  padding: 10px;
+  margin: 20px
+}
+
+.active {
+  -webkit-box-shadow: 0px 0px 46px -1px rgba(58, 167, 186, 1);
+  -moz-box-shadow: 0px 0px 46px -1px rgba(58, 167, 186, 1);
+  box-shadow: 0px 0px 46px -1px rgba(58, 167, 186, 1);
+}

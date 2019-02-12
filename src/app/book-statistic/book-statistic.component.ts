@@ -29,7 +29,7 @@ export class BookStatisticComponent implements OnInit {
 
   showReadingActvt() {
     this.isReadingClicked = true;
-    this.statisticService.getReadingActivity(this.bookId).subscribe((resp: Response) => {
+    this.statisticService.getReadingActivityById(this.bookId).subscribe((resp: Response) => {
       console.log(resp.message);
       this.readStatistic = resp.message;
     })
@@ -37,7 +37,7 @@ export class BookStatisticComponent implements OnInit {
 
   showCommentActvt() {
     this.isCommentClicked = true;
-    this.statisticService.getCommentActivity(this.bookId).subscribe((resp: Response) => {
+    this.statisticService.getCommentActivityById(this.bookId).subscribe((resp: Response) => {
       console.log(resp.message);
       this.commentStatistic = resp.message;
     })
@@ -46,7 +46,7 @@ export class BookStatisticComponent implements OnInit {
   showRatingActvt() {
     this.isRatingClicked = true;
 
-    this.statisticService.getRatingActivity(this.bookId).subscribe((resp: Response) => {
+    this.statisticService.getRatingActivityById(this.bookId).subscribe((resp: Response) => {
       console.log(resp.message);
       this.ratingStatistic = resp.message;
     })

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {BookService} from "../services/book.service";
 import {CommentService} from "../services/comment.service";
 import {ActivatedRoute} from "@angular/router";
@@ -15,6 +15,9 @@ import {UserService} from "../services/user.service";
   styleUrls: ['./book.component.css']
 })
 export class BookComponent implements OnInit {
+
+
+  @Output() onSendMessage: EventEmitter<any> = new EventEmitter();
 
   links: Digital;
   book: BookInfo;
@@ -46,6 +49,7 @@ export class BookComponent implements OnInit {
   isUpdateClicked = false;
   isDeleteClicked = false;
   isReadingClicked = false;
+  private isShowStat = false;
 
   constructor(
     private bookService: BookService,
@@ -168,5 +172,9 @@ export class BookComponent implements OnInit {
   bookReturned() {
     console.log('TODO')
     // TODO return book admin method
+  }
+
+  showStat() {
+    this.isShowStat  = !this.isShowStat
   }
 }

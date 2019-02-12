@@ -36,7 +36,7 @@
 
 <button class="btn" routerLink="/allbooks"> Show all books</button>
 <button class="btn" routerLink="/upload" *ngIf="isAuth">Add new book</button>
-<div *ngIf="userRole == 1">
+<div *ngIf="userRole == 1" class="admin-panel">
   <button routerLink="/statistic">To basic statistic page</button>
 </div>
 <br>
