@@ -14,7 +14,6 @@ export class BookService {
   }
 
   getBookInfo(id) {
-
     return this.http.get(`${Hosts.API_HOST}/book/${id}`);
   }
 

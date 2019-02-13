@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-// import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 import {HomeService} from './services/home.service';
 import {BookService} from "./services/book.service";
 import {CommentService} from "./services/comment.service";
@@ -22,7 +21,9 @@ import { UploadBookComponent } from './upload-book/upload-book.component';
 import { BookStatisticComponent } from './book-statistic/book-statistic.component';
 import { StatisticComponent } from './statistic/statistic.component';
 
-// const config: SocketIoConfig = {url: 'http://192.168.0.131:5000', options: {}};
+import {Hosts} from "./models/Hosts";
+import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
+const config: SocketIoConfig = {url: Hosts.API_HOST, options: {}};
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { StatisticComponent } from './statistic/statistic.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    // SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     HomeService,

@@ -12,8 +12,8 @@ import {UserService} from "./services/user.service";
 })
 export class AppComponent implements OnInit {
 
-  private isLoginClicked: boolean = false;
-  private isErrorPresent: any;
+  isLoginClicked: boolean = false;
+  isErrorPresent: any;
   title = 'UkrInSofT library';
   isToken = !!localStorage.getItem('token');
   isAuth = new BehaviorSubject<boolean>(this.isToken);
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.userService.userDetail.subscribe((res : Response) => {
+    this.userService.userDetail.subscribe((res: Response) => {
       if (res.success) {
         this.userRole = res.message.role;
         console.log(res);

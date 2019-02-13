@@ -85,23 +85,26 @@ export class BookComponent implements OnInit {
       this.summary = this.book.summary;
       this.subject = this.book.subject;
       this.countOfComments = this.book.countOfComments;
-      // Bad practice. TODO normal
       if (this.book.is_digital) {
         this.downloadBook();
       }
+      this.allBookComments()
     });
   }
 
+  getNewestComments() {
+
+  }
+
   allBookComments() {
-    this.commentService.getAllComments(this.id).subscribe((resp: Response) => {
-      this.comments = resp.message
-    })
+    this.commentService.getAllComments(this.id)
   }
 
   createComment(comment) {
-    this.commentService.createComment(comment, this.id).subscribe(value => {
+    this.commentService.createComment(comment, this.id)
+      .subscribe(value => {
       console.log(value);
-    })
+    });
   }
 
   readThisBook() {

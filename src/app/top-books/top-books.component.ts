@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {BookService} from '../services/book.service';
 import {Response} from '../models/Response';
 
-
 @Component({
   selector: 'app-top-books',
   templateUrl: './top-books.component.html',
