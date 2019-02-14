@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Hosts} from "../models/Hosts";
+import {Socket} from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,17 @@ export class BookService {
   headers = new HttpHeaders()
     .set('authorization', localStorage.getItem('token'));
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private socket: Socket) {
   }
 
   getBookInfo(id) {
-    return this.http.get(`${Hosts.API_HOST}/book/${id}`);
+    // return this.http.get(`${Hosts.API_HOST}/book/${id}`);
+    this.socket.emit('getBook', id);
+
+  }
+
+  bookInfo() {
+    return this.socket.fromEvent('book')
   }
 
   getTop5Books() {
@@ -62,6 +69,8 @@ export class BookService {
     formData.append('photo', photoOfBook);
     formData.append('file', fileOfBook);
     formData.append('info', JSON.stringify(bookInfo));
-    return this.http.put(`${Hosts.API_HOST}/book/${bookId}`, formData, {headers: this.headers})
+    this.http.put(`${Hosts.API_HOST}/book/${bookId}`, formData, {headers: this.headers}).subscribe(value => {
+      console.log(value);
+    })
   }
 }

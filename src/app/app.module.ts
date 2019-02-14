@@ -37,7 +37,7 @@ const config: SocketIoConfig = {url: Hosts.API_HOST, options: {}};
     AllBooksComponent,
     UploadBookComponent,
     BookStatisticComponent,
-    StatisticComponent
+    StatisticComponent,
   ],
   imports: [
     BrowserModule,

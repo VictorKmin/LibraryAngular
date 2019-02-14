@@ -52,15 +52,10 @@ export class CommentComponent implements OnInit {
   }
 
   deleteComment() {
-    this.commentService.deleteComment(this.comment.id).subscribe(value => {
-      console.log(value);
-    });
+    this.commentService.deleteComment(this.comment.id)
   }
 
   updateComment(newComment) {
-    this.commentService.updateComment(this.comment.id, newComment.comment).subscribe(value => {
-      console.log(value);
-    });
-    console.log(newComment);
+    this.commentService.updateComment(this.comment.id, newComment.comment)
   }
 }

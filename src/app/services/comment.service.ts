@@ -1,63 +1,45 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Hosts} from "../models/Hosts";
 import {Socket} from 'ngx-socket-io';
+import {Hosts} from "../models/Hosts";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
 
-  bookId: number;
-
   constructor(private http: HttpClient, private socket: Socket) {
   }
 
+  token = localStorage.getItem('token');
+
+  showComments() {
+    return this.socket.fromEvent('comments')
+  }
+
   createComment(comment, bookId) {
-    this.bookId = bookId;
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('authorization', localStorage.getItem('token'));
     this.http.post(`${Hosts.API_HOST}/comment`, {comment, bookId}, {headers}).subscribe(value => {
       console.log(value);
     });
-
-    // const token = localStorage.getItem('token');
-    // this.socket.emit('createComment', {comment, bookId: id, token});
-    return this.socket.fromEvent('allComments');
   }
 
-  getAllComments(bookId) {
-    this.bookId = bookId;
-    // socket.on('buildChart', async body => {
-    //   socket.emit('charts', await getFullStat(body));
-    //   socket.emit('timeLine', await getDaysCount(body.roomId));
-    // });
-
-    // const token = localStorage.getItem('token');
-    this.socket.emit('allComments', {bookId});
+  getNewestCommentsComments(bookId, limit) {
+    this.socket.emit('getComments', {bookId, limit});
   }
-
 
   deleteComment(id) {
-    // const headers = new HttpHeaders()
-    //   .set('Content-Type', 'application/json')
-    //   .set('authorization', localStorage.getItem('token'));
-    // return this.http.delete(`${Hosts.API_HOST}/comment/${id}`, {headers})
-
-    const token = localStorage.getItem('token');
-    this.socket.emit('deleteComment', {commentId: id, token, bookId: this.bookId});
-    return this.socket.fromEvent('allComments');
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', localStorage.getItem('token'));
+    this.http.delete(`${Hosts.API_HOST}/comment/${id}`, {headers}).subscribe(value => {
+      console.log(value);
+    });
   }
 
-  updateComment(id: number, newComment: any) {
-    // const headers = new HttpHeaders()
-    //   .set('Content-Type', 'application/json')
-    //   .set('authorization', localStorage.getItem('token'));
-    // return this.http.patch(`${Hosts.API_HOST}/comment/${id}`, {comment: newComment},{headers})
-
-    const token = localStorage.getItem('token');
-    this.socket.emit('updateComment', {commentId: id, comment: newComment, token});
-    return this.socket.fromEvent('allComments');
+  updateComment(commentId: number, newComment: any) {
+    this.socket.emit('updateComment', {commentId, newComment, token: this.token});
   }
 }

@@ -16,7 +16,6 @@ import {UserService} from "../services/user.service";
 })
 export class BookComponent implements OnInit {
 
-
   @Output() onSendMessage: EventEmitter<any> = new EventEmitter();
 
   links: Digital;
@@ -36,6 +35,7 @@ export class BookComponent implements OnInit {
   summary: any;
   subject: string;
   countOfComments: number;
+  commentLimit: number = 5;
   isLogged = !!localStorage.getItem('token');
 
   userId;
@@ -49,7 +49,7 @@ export class BookComponent implements OnInit {
   isUpdateClicked = false;
   isDeleteClicked = false;
   isReadingClicked = false;
-  private isShowStat = false;
+  isShowStat = false;
 
   constructor(
     private bookService: BookService,
@@ -70,8 +70,9 @@ export class BookComponent implements OnInit {
         }
       });
     }
-    this.bookService.getBookInfo(this.id).subscribe((resp: Response) => {
-      this.book = resp.message;
+    this.bookService.getBookInfo(this.id);
+      this.bookService.bookInfo().subscribe((resp: any) => {
+      this.book = resp;
       console.log(this.book);
       this.image = this.API_HOST + this.book.image;
       this.timeToEnd = new Date(this.book.backTime).toLocaleDateString();
@@ -88,23 +89,22 @@ export class BookComponent implements OnInit {
       if (this.book.is_digital) {
         this.downloadBook();
       }
-      this.allBookComments()
+      this.commentService.getNewestCommentsComments(this.id, this.commentLimit);
+      this.commentService.showComments().subscribe((comm: any) => {
+        this.comments = comm;
+      })
     });
   }
 
-  getNewestComments() {
-
-  }
 
   allBookComments() {
-    this.commentService.getAllComments(this.id)
+    // new limit of comments
+    this.commentLimit = this.commentLimit + 5;
+    this.commentService.getNewestCommentsComments(this.id, this.commentLimit)
   }
 
   createComment(comment) {
     this.commentService.createComment(comment, this.id)
-      .subscribe(value => {
-      console.log(value);
-    });
   }
 
   readThisBook() {
@@ -150,13 +150,11 @@ export class BookComponent implements OnInit {
   }
 
   updateBook(form) {
-    console.log(form);
+    // console.log(form);
     if (!this.isBookDigital) {
       this.fileOfBook = null
     }
-    this.bookService.updateBook(this.book.id, this.photoOfBook, this.fileOfBook, form).subscribe(value => {
-      console.log(value);
-    });
+    this.bookService.updateBook(this.book.id, this.photoOfBook, this.fileOfBook, form);
     this.isUpdateClicked = false;
   }
 
@@ -178,6 +176,6 @@ export class BookComponent implements OnInit {
   }
 
   showStat() {
-    this.isShowStat  = !this.isShowStat
+    this.isShowStat = !this.isShowStat
   }
 }

@@ -109,10 +109,6 @@
       </div>
     </div>
     <br>
-    <a class="btn waves-effect waves-green commentButton"
-       (click)="allBookComments()">
-      See {{countOfComments}} comments
-    </a>
   </div>
 
   <form #comment="ngForm" *ngIf="isTokenPreset">
@@ -123,10 +119,15 @@
       Submit
     </button>
   </form>
+
   <div class="allComments">
     <app-comment
       *ngFor=" let comment of comments"
       [comment]="comment">
     </app-comment>
+    <a class="btn waves-effect waves-green commentButton"
+       (click)="allBookComments()">
+      See {{countOfComments}} comments
+    </a>
   </div>
 </div>
