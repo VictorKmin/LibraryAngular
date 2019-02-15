@@ -91,6 +91,7 @@ export class BookComponent implements OnInit {
       }
       this.commentService.getNewestCommentsComments(this.id, this.commentLimit);
       this.commentService.showComments().subscribe((comm: any) => {
+        console.log(comm);
         this.comments = comm;
       })
     });

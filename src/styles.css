@@ -4,11 +4,11 @@ body {
 }
 
 .container {
-  width: 75%;
+  width: 92%;
   background-color: white;
 }
 
 .books-header-text {
-  font-size: 30px;
+  font-size: 20px;
   color: #2f3435;
 }

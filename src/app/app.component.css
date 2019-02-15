@@ -11,13 +11,11 @@
 }
 
 .main {
-  margin: -45px 0 0 0;
-  height: 150px;
+  margin: 45px auto 0;
+  padding-top: 30px;
   color: #838787;
-  /*background-color: #e9e9e9;*/
-  border-bottom: 2px solid #adacb4;
-  background: url('header11.jpg') no-repeat;
   background-size: 100%;
+  width: 95%;
 }
 
 .fa-fort-awesome {
@@ -69,7 +67,17 @@
   color: black;
 }
 
-.admin-panel button {
-  margin: 10px;
-  padding: 5px;
+.btn {
+  margin-right: 20px;
+  background-color: #78b8fc;
+  color: black;
+  font-weight: bold;
+  border: 0px;
+}
+
+.home-page-btn {
+  width: 237px;
+  height: 63px;
+  display: inline-block;
+  background-image: url('new-logo.png');
 }

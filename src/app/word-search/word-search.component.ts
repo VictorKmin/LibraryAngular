@@ -23,7 +23,6 @@ export class WordSearchComponent implements OnInit {
    * When we have param "word" - we call method search book with search word
    */
   ngOnInit() {
-    console.log(this.route.params);
     this.route.params.subscribe(params => {
       console.log(params);
       if (params.word) {
