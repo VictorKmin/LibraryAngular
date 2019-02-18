@@ -24,10 +24,33 @@ export class BookService {
     return this.socket.fromEvent('book')
   }
 
-  getTop5Books() {
-    // 0 is number of page, 5 is limit to search.
-    // Maybe soon we will doing pagination
-    return this.http.get(`${Hosts.API_HOST}/book/top/0/5`);
+  topBooks() {
+    return this.socket.fromEvent('topBooks')
+  }
+
+  // Top 5 By Rating
+  getTopByRating(page) {
+    console.log('TOP BY RATING')
+    // 1 is number of page, 5 is limit to search.
+   this.http.get(`${Hosts.API_HOST}/book/topByRating/${page}/5`).subscribe(value => {
+     // console.log(value);
+   })
+  }
+
+  getTopByReading(page) {
+    console.log('TOP BY READING')
+
+    this.http.get(`${Hosts.API_HOST}/book/topByReading/${page}/5`).subscribe(value => {
+      // console.log(value);
+    })
+  }
+
+  getTopByComments(page) {
+    console.log('TOP BY COMMENTS')
+
+    this.http.get(`${Hosts.API_HOST}/book/topByComments/${page}/5`).subscribe(value => {
+      // console.log(value);
+    })
   }
 
   readBook(bookId) {
@@ -38,8 +61,9 @@ export class BookService {
     return this.http.get(`${Hosts.API_HOST}/book/download/${bookId}`, {headers: this.headers});
   }
 
-  getAllBooks() {
-    return this.http.get(`${Hosts.API_HOST}/book`);
+  getAllBooks(page) {
+    // 10 - offset count
+    return this.http.get(`${Hosts.API_HOST}/book/${page}/10`);
   }
 
   stillReadingBook(bookId) {

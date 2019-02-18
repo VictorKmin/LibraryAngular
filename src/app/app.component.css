@@ -52,17 +52,20 @@
   margin: 20px 0px;
 }
 
-.fullSearch{
+.fullSearch {
   width: 250px;
   margin-left: 75%;
 }
-.fullSearch form input{
+
+.fullSearch form input {
   width: 200px;
 }
+
 .fa-search {
   color: #9f9f9f;
   font-size: 20px;
 }
+
 .fa-search:hover {
   color: black;
 }
@@ -73,6 +76,29 @@
   color: black;
   font-weight: bold;
   border: 0px;
+}
+
+.small-btn {
+  margin: 10px 10px 0 0;
+  background-color: white;
+  color: black;
+  font-weight: normal;
+  font-size: 15px;
+  border: 0px;
+  border-bottom: 2px solid #33b0e3;
+  cursor: pointer;
+}
+
+.small-btn:hover {
+  border-bottom: 2px solid white;
+}
+
+.clicked {
+  background-color: rgba(71, 167, 253, 0.47);
+}
+
+.small-clicked {
+  border-bottom: 2px solid rgba(52, 197, 249, 0.51);
 }
 
 .home-page-btn {

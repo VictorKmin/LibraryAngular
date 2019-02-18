@@ -1,6 +1,10 @@
 .books-wrapper {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
+}
+.pagination {
+  display: inline-block;
+  margin: 20px;
 }

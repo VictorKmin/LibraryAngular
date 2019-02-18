@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StatisticService} from "../services/statistic.service";
 import {Response} from "../models/Response";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-statistic',
@@ -9,11 +10,9 @@ import {Response} from "../models/Response";
 })
 export class StatisticComponent implements OnInit {
 
-  isTopReadedClicked = false;
-  isTopUsersClicked = false;
-  isAllReadStatClicked = false;
-  isAllCommentClicked = false;
-  isAllRatingClicked = false;
+  whatClicked = localStorage.getItem('statisticClicked');
+  whatStatClicked = new BehaviorSubject<string>(this.whatClicked);
+
   topBooks;
   topUsers;
   readStatistic;
@@ -24,10 +23,26 @@ export class StatisticComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.whatClicked === 'topBooks') {
+      this.showTopReadedBooks()
+    }
+    if (this.whatClicked === 'topUsers') {
+      this.showTopUsers()
+    }
+    if (this.whatClicked === 'reading') {
+      this.showAllReadingInfo()
+    }
+    if (this.whatClicked === 'comment') {
+      this.showAllCommentInfo()
+    }
+    if (this.whatClicked === 'rating') {
+      this.showAllRatingInfo()
+    }
   }
 
   showTopReadedBooks() {
-    this.isTopReadedClicked = true;
+    localStorage.setItem('statisticClicked', 'topBooks');
+    this.whatStatClicked.next('topBooks');
     // 10 is hardcoded limit of books from database
     this.statisticService.getTopReadedBooks(10).subscribe((resp: Response) => {
       if (resp.success) {
@@ -37,7 +52,8 @@ export class StatisticComponent implements OnInit {
   }
 
   showTopUsers() {
-    this.isTopUsersClicked = true;
+    localStorage.setItem('statisticClicked', 'topUsers');
+    this.whatStatClicked.next('topUsers');
     // 10 is hardcoded limit of users from database
     this.statisticService.getTopUsers(10).subscribe((resp: Response) => {
       if (resp.success) {
@@ -47,7 +63,8 @@ export class StatisticComponent implements OnInit {
   }
 
   showAllReadingInfo() {
-    this.isAllReadStatClicked = true;
+    localStorage.setItem('statisticClicked', 'reading');
+    this.whatStatClicked.next('reading');
     this.statisticService.getAllReadingInfo().subscribe((resp: Response) => {
       console.log(resp.message);
       this.readStatistic = resp.message
@@ -55,7 +72,8 @@ export class StatisticComponent implements OnInit {
   }
 
   showAllCommentInfo() {
-    this.isAllCommentClicked = true;
+    localStorage.setItem('statisticClicked', 'comment');
+    this.whatStatClicked.next('comment');
     this.statisticService.getAllCommentInfo().subscribe((resp: Response) => {
       console.log(resp.message);
       this.commentStatistic = resp.message;
@@ -63,30 +81,11 @@ export class StatisticComponent implements OnInit {
   }
 
   showAllRatingInfo() {
-    this.isAllRatingClicked = true;
+    localStorage.setItem('statisticClicked', 'rating');
+    this.whatStatClicked.next('rating');
     this.statisticService.getAllRatingInfo().subscribe((resp: Response) => {
       console.log(resp.message);
       this.ratingStatistic = resp.message;
     })
-  }
-
-  hideTopReadedBooks() {
-    this.isTopReadedClicked = false
-  }
-
-  hideTopUsers() {
-    this.isTopUsersClicked = false
-  }
-
-  hideReadingInfo() {
-    this.isAllReadStatClicked = false;
-  }
-
-  hideCommentInfo() {
-    this.isAllCommentClicked = false;
-  }
-
-  hideRatingInfo() {
-    this.isAllRatingClicked = false;
   }
 }

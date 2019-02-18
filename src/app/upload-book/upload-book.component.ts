@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {BookService} from "../services/book.service";
+import {Response} from "../models/Response";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-upload-book',
@@ -13,7 +15,9 @@ export class UploadBookComponent {
   photoOfBook: File = null;
   fileOfBook: File = null;
 
-  constructor(private bookService: BookService) {
+  constructor(
+    private bookService: BookService,
+    private router: Router) {
   }
 
   changeBookType(type) {
@@ -25,8 +29,11 @@ export class UploadBookComponent {
     if (this.bookType !== 'digital') {
       this.fileOfBook = null
     }
-    this.bookService.postFile(this.photoOfBook, this.fileOfBook, form.value).subscribe(res => {
-      console.log(res);
+    this.bookService.postFile(this.photoOfBook, this.fileOfBook, form.value).subscribe((res: Response) => {
+      if (res.success) {
+        const bookId = res.message;
+        this.router.navigateByUrl(`/book/${bookId}`);
+      }
     })
   }
 

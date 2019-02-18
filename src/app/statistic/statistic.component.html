@@ -1,49 +1,47 @@
-<button (click)="showTopReadedBooks()" *ngIf="!isTopReadedClicked">Show most readed books</button>
-<button (click)="hideTopReadedBooks()"
-        *ngIf="isTopReadedClicked"
-        [ngClass]="{'active': isTopReadedClicked}">Hide most readed books</button>
+<button (click)="showTopReadedBooks()"
+        [ngClass]="{'active': (whatStatClicked | async) === 'topBooks'}">
+  Show most readed books
+</button>
 
-<button (click)="showTopUsers()" *ngIf="!isTopUsersClicked">Show most readed users</button>
-<button (click)="hideTopUsers()"
-        *ngIf="isTopUsersClicked"
-        [ngClass]="{'active': isTopUsersClicked}">Hide most readed users</button>
+<button (click)="showTopUsers()"
+        [ngClass]="{'active': (whatStatClicked | async) === 'topUsers'}">
+  Show most readed users
+</button>
 
-<button (click)="showAllReadingInfo()" *ngIf="!isAllReadStatClicked">Show all reading statistic</button>
-<button (click)="hideReadingInfo()"
-        *ngIf="isAllReadStatClicked"
-        [ngClass]="{'active': isAllReadStatClicked}">Hide all reading statistic</button>
+<button (click)="showAllReadingInfo()"
+        [ngClass]="{'active': (whatStatClicked | async) === 'reading'}">
+  Show all reading statistic
+</button>
 
-<button (click)="showAllCommentInfo()" *ngIf="!isAllCommentClicked">Show all comment statistic</button>
-<button (click)="hideCommentInfo()"
-        *ngIf="isAllCommentClicked"
-        [ngClass]="{'active': isAllCommentClicked}">Hide all comment statistic</button>
+<button (click)="showAllCommentInfo()"
+        [ngClass]="{'active': (whatStatClicked | async) === 'comment'}">
+  Show all comment statistic
+</button>
 
-<button (click)="showAllRatingInfo()" *ngIf="!isAllRatingClicked">Show all rating statistic</button>
-<button (click)="hideRatingInfo()"
-        *ngIf="isAllRatingClicked"
-        [ngClass]="{'active': isAllRatingClicked}">Hide all raring statistic</button>
+<button (click)="showAllRatingInfo()"
+        [ngClass]="{'active': (whatStatClicked | async) === 'rating'}">
+  Show all rating statistic
+</button>
 
 <!--TOP BOOKS -->
-<div *ngIf="isTopReadedClicked">
+<div *ngIf="(whatStatClicked | async) === 'topBooks'">
   <div *ngFor="let book of topBooks" class="single-info">
     Book title: <b>{{book.Book.title}}</b><br>
     This book reading <b>{{book.countOfRead}}</b> times
     <br>
     <button routerLink="/book/{{book.Book.id}}">Go to book info</button>
   </div>
-  <button (click)="hideTopReadedBooks()">Hide</button>
 </div>
 
 <!--TOP USERS-->
-<div *ngIf="isTopUsersClicked">
+<div *ngIf="(whatStatClicked | async) === 'topUsers'">
   <div *ngFor="let user of topUsers" class="single-info">
     User <b>{{user.User.name}}</b> read <b>{{user.countOfRead}}</b> books for all time
   </div>
-  <button (click)="hideTopUsers()"> Hide</button>
 </div>
 
 <!--ALL READING ACTIVITY-->
-<div *ngIf="isAllReadStatClicked">
+<div *ngIf="(whatStatClicked | async) === 'reading'">
   <div *ngFor="let reading of readStatistic" class="single-info">
     <!--{{reading | json}}-->
     User <b>{{reading.User.name}}</b>
@@ -55,11 +53,10 @@
     <br>
     <button routerLink="/book/{{reading.book_id}}">Go to book info</button>
   </div>
-  <button (click)="hideReadingInfo()">Hide reading info</button>
 </div>
 
 <!--ALL COMMENT ACTIVITY-->
-<div *ngIf="isAllCommentClicked">
+<div *ngIf="(whatStatClicked | async) === 'comment'">
   <div *ngFor="let comment of commentStatistic" class="single-info">
     <!--{{comment | json}}-->
     User <b>{{comment.User.name}}</b>
@@ -73,11 +70,10 @@
     <br>
     <button routerLink="/book/{{comment.book_id}}">Go to book info</button>
   </div>
-  <button (click)="hideCommentInfo()">Hide comment info</button>
 </div>
 
 <!--ALL RATING ACTIVITY-->
-<div *ngIf="isAllRatingClicked">
+<div *ngIf="(whatStatClicked | async) === 'rating'">
   <div *ngFor="let rating of ratingStatistic" class="single-info">
     <!--{{rating | json}}-->
     User <b>{{rating.User.name}}</b> rate book <b>{{rating.Book.title}}</b> on <b>{{rating.star}} </b> stars
@@ -86,5 +82,4 @@
     <br>
     <button routerLink="/book/{{rating.book_id}}">Go to book info</button>
   </div>
-  <button (click)="hideRatingInfo()">Hide rating info</button>
 </div>

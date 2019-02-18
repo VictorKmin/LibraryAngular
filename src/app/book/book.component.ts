@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {BookService} from "../services/book.service";
 import {CommentService} from "../services/comment.service";
 import {ActivatedRoute} from "@angular/router";
+import {Router} from "@angular/router";
 import {Response} from "../models/Response";
 import {BookInfo} from "../models/BookInfo";
 import {Digital} from "../models/Digital";
@@ -55,12 +56,13 @@ export class BookComponent implements OnInit {
     private bookService: BookService,
     private commentService: CommentService,
     private userService: UserService,
-    private route: ActivatedRoute) {
+    private activatedRouter: ActivatedRoute,
+    private router: Router) {
   }
 
   ngOnInit() {
     // Get param from URL /book/:id
-    this.id = this.route.snapshot.paramMap.get("id");
+    this.id = this.activatedRouter.snapshot.paramMap.get("id");
 
     if (this.isLogged) {
       this.userService.userDetail.subscribe(user => {
@@ -71,7 +73,7 @@ export class BookComponent implements OnInit {
       });
     }
     this.bookService.getBookInfo(this.id);
-      this.bookService.bookInfo().subscribe((resp: any) => {
+    this.bookService.bookInfo().subscribe((resp: any) => {
       this.book = resp;
       console.log(this.book);
       this.image = this.API_HOST + this.book.image;
@@ -141,8 +143,10 @@ export class BookComponent implements OnInit {
   }
 
   deleteBook() {
-    this.bookService.deleteBook(this.book.id).subscribe(value => {
-      console.log(value);
+    this.bookService.deleteBook(this.book.id).subscribe((value: Response) => {
+      if (value.success) {
+        this.router.navigateByUrl('/')
+      }
     })
   }
 

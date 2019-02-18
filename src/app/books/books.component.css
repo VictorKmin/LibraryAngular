@@ -5,7 +5,7 @@
   height: 350px;
   display: inline-block;
   background-color: #f2f2f2;
-  border: 2px solid #FFED85;
+  border: 1px solid #FFED85;
   margin: 10px;
 }
 
@@ -25,8 +25,8 @@
 }
 
 .image {
-  width: 150px;
   height: 150px;
+  max-width: 100%;
   cursor: pointer;
 }
 

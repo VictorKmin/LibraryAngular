@@ -3,11 +3,13 @@
   <div class="books-header-text">
     <i class="fas fa-book"> TOP 5 BOOKS</i>
   </div>
-  <br>
   <div class="books-wrapper">
     <app-books
       *ngFor=" let book of books"
       [book]="book"
     ></app-books>
+  </div>
+  <div *ngFor="let page of pages" class="pagination">
+    <button (click)="changePage(page)">{{page}}</button>
   </div>
 </div>

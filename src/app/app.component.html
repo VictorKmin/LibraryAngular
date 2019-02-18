@@ -26,10 +26,33 @@
       </div>
     </div>
 
-    <button class="btn" routerLink="/"> Top Five</button>
-    <button class="btn" routerLink="/allbooks"> All Books</button>
-    <button class="btn" routerLink="/upload" *ngIf="isAuth">Add New Book</button>
-    <button class="btn" *ngIf="userRole == 1" routerLink="/statistic">To statistic page</button>
+    <!--TOP 5-->
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber === 1}"
+            routerLink="/" (click)="mainButtonClick(1)"> Top Five
+    </button>
+    <!--ALL BOOKS-->
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber === 2}"
+            routerLink="/allbooks" (click)="mainButtonClick(2)"> All Books
+    </button>
+    <!--ADD NEW BOOK-->
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber === 3}"
+            routerLink="/upload" *ngIf="isAuth" (click)="mainButtonClick(3)">Add New Book
+    </button>
+    <!--STATISTIC (Just for admin)-->
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber === 4}"
+            routerLink="/statistic" *ngIf="userRole == 1" (click)="mainButtonClick(4)">To statistic page
+    </button>
+    <div *ngIf="clickedButtonNumber === 1">
+      <button class="small-btn"
+              [ngClass]="{'small-clicked': (whatTopClicked | async) === 'rating'|| !(whatTopClicked | async) }"
+              (click)="topByRating()">Top 5 by rating</button>
+      <button class="small-btn"
+              [ngClass]="{'small-clicked': (whatTopClicked | async) === 'comment'}"
+              (click)="topByComments()">Top 5 by comments</button>
+      <button class="small-btn"
+              [ngClass]="{'small-clicked': (whatTopClicked | async) === 'reading'}"
+              (click)="topByReading()">Top 5 by reading</button>
+    </div>
     <br>
   </div>
   <router-outlet></router-outlet>

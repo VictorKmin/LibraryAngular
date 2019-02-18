@@ -4,6 +4,7 @@ import {HomeService} from "./services/home.service";
 import {Router} from '@angular/router';
 import {BehaviorSubject} from "rxjs";
 import {UserService} from "./services/user.service";
+import {BookService} from "./services/book.service";
 
 @Component({
   selector: 'app-root',
@@ -14,15 +15,19 @@ export class AppComponent implements OnInit {
 
   isLoginClicked: boolean = false;
   isErrorPresent: any;
-  title = 'UkrInSofT library';
+  clickedButtonNumber: number = 1;
   isToken = !!localStorage.getItem('token');
   isAuth = new BehaviorSubject<boolean>(this.isToken);
+  whatClicked = localStorage.getItem('topClicked');
+  whatTopClicked = new BehaviorSubject<string>(this.whatClicked);
+
   userInfo = {};
   userRole: number;
 
   constructor(
     private homeService: HomeService,
     private userService: UserService,
+    private bookService: BookService,
     private router: Router
   ) {
   }
@@ -66,6 +71,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    console.log(this.router.url);
     this.isAuth.subscribe(isLogged => {
       console.log(this.userInfo);
       if (isLogged) {
@@ -82,5 +89,27 @@ export class AppComponent implements OnInit {
         this.userInfo = res.message;
       }
     })
+  }
+
+  mainButtonClick(buttonNumber) {
+    this.clickedButtonNumber = buttonNumber;
+  }
+
+  topByComments() {
+    localStorage.setItem('topClicked', 'comment');
+    this.whatTopClicked.next('comment');
+    this.bookService.getTopByComments(1);
+  }
+
+  topByReading() {
+    localStorage.setItem('topClicked', 'reading');
+    this.whatTopClicked.next('reading');
+    this.bookService.getTopByReading(1);
+  }
+
+  topByRating() {
+    localStorage.setItem('topClicked', 'rating');
+    this.whatTopClicked.next('rating');
+    this.bookService.getTopByRating(1);
   }
 }
