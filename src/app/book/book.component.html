@@ -29,7 +29,7 @@
 
       <div *ngIf="isReadingClicked" class="admin-panel">
         This book already in office ? <br>
-        <button (click)="bookReturned()"> YES. Already here!</button>
+        <button (click)="returnBook(id)"> YES. Already here!</button>
         <button (click)="showNotReading()"> No. Some man still read this</button>
       </div>
 
@@ -103,9 +103,12 @@
           <span>I want read this book</span>
         </button>
         <div *ngIf="userIdWhoRead == userId && is_reading">
-          <button class="btn still-read" (click)="sillRead(id)">I still reading this</button>
+          <button class="btn still-read" *ngIf="!is_delaying" (click)="sillRead(id)">I still reading this</button>
           <button class="btn return-book" (click)="returnBook(id)">Return book</button>
         </div>
+      </div>
+      <div align="center" class="commentCount">
+        This book have {{countOfComments}} comments
       </div>
     </div>
     <br>
@@ -126,8 +129,9 @@
       [comment]="comment">
     </app-comment>
     <a class="btn waves-effect waves-green commentButton"
+       *ngIf="(countOfComments > commentPaginationCount) && (countOfComments > commentLimit)"
        (click)="allBookComments()">
-      See {{countOfComments}} comments
+      Get next {{commentPaginationCount}} comments
     </a>
   </div>
 </div>

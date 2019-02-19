@@ -1,45 +1,40 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Socket} from 'ngx-socket-io';
-import {Hosts} from "../models/Hosts";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
+  commentLimit: number;
 
-  constructor(private http: HttpClient, private socket: Socket) {
+  constructor(private socket: Socket) {
   }
-
-  token = localStorage.getItem('token');
 
   showComments() {
     return this.socket.fromEvent('comments')
   }
 
-  createComment(comment, bookId) {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('authorization', localStorage.getItem('token'));
-    this.http.post(`${Hosts.API_HOST}/comment`, {comment, bookId}, {headers}).subscribe(value => {
-      console.log(value);
-    });
-  }
-
-  getNewestCommentsComments(bookId, limit) {
+  getNewestComments(bookId, limit) {
+    this.commentLimit = limit;
+    console.log(this.commentLimit);
     this.socket.emit('getComments', {bookId, limit});
   }
 
-  deleteComment(id) {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('authorization', localStorage.getItem('token'));
-    this.http.delete(`${Hosts.API_HOST}/comment/${id}`, {headers}).subscribe(value => {
-      console.log(value);
-    });
+  createComment(comment, bookId) {
+    const token = localStorage.getItem('token');
+    this.socket.emit('createComment',
+      {comment, bookId, token, limit: this.commentLimit});
+  }
+
+  deleteComment(commentId) {
+    const token = localStorage.getItem('token');
+    this.socket.emit('deleteComment',
+      {commentId, token, limit: this.commentLimit})
   }
 
   updateComment(commentId: number, newComment: any) {
-    this.socket.emit('updateComment', {commentId, newComment, token: this.token});
+    const token = localStorage.getItem('token');
+    this.socket.emit('updateComment',
+      {commentId, token, newComment, limit: this.commentLimit})
   }
 }

@@ -7,6 +7,7 @@
   background-color: #f2f2f2;
   border: 1px solid #FFED85;
   margin: 10px;
+  cursor: pointer;
 }
 
 .book:hover {
@@ -21,13 +22,15 @@
 
 .title {
   font-size: 1.5em;
-  cursor: pointer;
 }
 
 .image {
   height: 150px;
   max-width: 100%;
-  cursor: pointer;
+}
+
+.commentCount {
+  margin: 0 auto;
 }
 
 fieldset, label {

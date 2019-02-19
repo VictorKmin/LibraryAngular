@@ -36,7 +36,7 @@
     </button>
     <!--ADD NEW BOOK-->
     <button class="btn" [ngClass]="{'clicked': clickedButtonNumber === 3}"
-            routerLink="/upload" *ngIf="isAuth" (click)="mainButtonClick(3)">Add New Book
+            routerLink="/upload" *ngIf="isAuth | async" (click)="mainButtonClick(3)">Add New Book
     </button>
     <!--STATISTIC (Just for admin)-->
     <button class="btn" [ngClass]="{'clicked': clickedButtonNumber === 4}"

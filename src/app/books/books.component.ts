@@ -11,6 +11,7 @@ export class BooksComponent implements OnInit {
   title;
   avgStar;
   type_of_book;
+  is_digital;
   id;
   countOfVotes;
   image;
@@ -25,6 +26,7 @@ export class BooksComponent implements OnInit {
     this.id = this.book.id;
     this.type_of_book = this.book.type_of_book;
     this.avgStar = this.book.avgStar;
+    this.is_digital = this.book.is_digital;
     this.countOfVotes = this.book.countOfVotes;
     this.image = Hosts.API_HOST + this.book.image;
   }

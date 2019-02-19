@@ -8,6 +8,7 @@ export interface BookInfo {
   tags?: string;
   title: string;
   is_digital: boolean;
+  is_delaying: boolean;
   type_of_content?: any;
   type_of_file?: any;
   user_id: number;

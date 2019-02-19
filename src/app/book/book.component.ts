@@ -8,6 +8,7 @@ import {BookInfo} from "../models/BookInfo";
 import {Digital} from "../models/Digital";
 import {Hosts} from "../models/Hosts";
 import {UserService} from "../services/user.service";
+import {take} from "rxjs/operators";
 
 
 @Component({
@@ -24,6 +25,7 @@ export class BookComponent implements OnInit {
   //info about book
   is_digital: boolean;
   is_reading: boolean;
+  is_delaying: boolean;
   userIdWhoRead;
   image: any;
   timeToEnd?: string;
@@ -37,6 +39,7 @@ export class BookComponent implements OnInit {
   subject: string;
   countOfComments: number;
   commentLimit: number = 5;
+  commentPaginationCount: number = 5;
   isLogged = !!localStorage.getItem('token');
 
   userId;
@@ -81,6 +84,7 @@ export class BookComponent implements OnInit {
       this.tags = this.book.tags.split(' ');
       this.is_digital = this.book.is_digital;
       this.is_reading = this.book.is_reading;
+      this.is_delaying = this.book.is_delaying;
       this.userIdWhoRead = this.book.userIdWhoRead;
       this.title = this.book.title;
       this.author = this.book.author;
@@ -91,9 +95,9 @@ export class BookComponent implements OnInit {
       if (this.book.is_digital) {
         this.downloadBook();
       }
-      this.commentService.getNewestCommentsComments(this.id, this.commentLimit);
-      this.commentService.showComments().subscribe((comm: any) => {
-        console.log(comm);
+      this.commentService.getNewestComments(this.id, this.commentLimit);
+      this.commentService.showComments()
+        .subscribe((comm: any) => {
         this.comments = comm;
       })
     });
@@ -102,23 +106,23 @@ export class BookComponent implements OnInit {
 
   allBookComments() {
     // new limit of comments
-    this.commentLimit = this.commentLimit + 5;
-    this.commentService.getNewestCommentsComments(this.id, this.commentLimit)
+    this.commentLimit = this.commentLimit + this.commentPaginationCount;
+    this.commentService.getNewestComments(this.id, this.commentLimit)
   }
 
   createComment(comment) {
     this.commentService.createComment(comment, this.id)
   }
 
-  readThisBook() {
-    this.bookService.readBook(this.id).subscribe(value => {
-      console.log(value);
-    })
-  }
-
   downloadBook() {
     this.bookService.download(this.id).subscribe((resp: Response) => {
       this.links = resp.message;
+    })
+  }
+
+  readThisBook() {
+    this.bookService.readBook(this.id).subscribe(value => {
+      console.log(value);
     })
   }
 
@@ -129,6 +133,8 @@ export class BookComponent implements OnInit {
   }
 
   returnBook(bookId) {
+    this.isReadingClicked = false;
+
     this.bookService.returnBook(bookId).subscribe((value: Response) => {
       console.log(value);
     })
