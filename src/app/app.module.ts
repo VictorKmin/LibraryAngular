@@ -23,6 +23,8 @@ import { StatisticComponent } from './statistic/statistic.component';
 
 import {Hosts} from "./models/Hosts";
 import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
+import { SubjectComponent } from './subject/subject.component';
+import { SubjectsComponent } from './subjects/subjects.component';
 const config: SocketIoConfig = {url: Hosts.API_HOST, options: {}};
 
 @NgModule({
@@ -38,6 +40,8 @@ const config: SocketIoConfig = {url: Hosts.API_HOST, options: {}};
     UploadBookComponent,
     BookStatisticComponent,
     StatisticComponent,
+    SubjectComponent,
+    SubjectsComponent,
   ],
   imports: [
     BrowserModule,

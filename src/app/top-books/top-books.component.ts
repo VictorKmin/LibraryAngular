@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {BookService} from '../services/book.service';
-import {Response} from '../models/Response';
-import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-top-books',

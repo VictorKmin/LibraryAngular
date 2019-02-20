@@ -1,7 +1,9 @@
 <div class="book" routerLink='/book/{{id}}'>
+  <i class="fas fa-book" *ngIf="!is_digital">
+    <span class="tooltiptext">Handbook</span>
+  </i>
   <span class="title">
     {{title}}
-    <i class="fas fa-book" *ngIf="!is_digital" style="float: right"></i>
   </span>
   <br>
   {{type_of_book}}

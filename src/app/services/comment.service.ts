@@ -16,7 +16,6 @@ export class CommentService {
 
   getNewestComments(bookId, limit) {
     this.commentLimit = limit;
-    console.log(this.commentLimit);
     this.socket.emit('getComments', {bookId, limit});
   }
 

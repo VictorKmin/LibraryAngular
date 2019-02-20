@@ -15,9 +15,10 @@ export class AppComponent implements OnInit {
 
   isLoginClicked: boolean = false;
   isErrorPresent: any;
-  clickedButtonNumber: number = 1;
   isToken = !!localStorage.getItem('token');
   isAuth = new BehaviorSubject<boolean>(this.isToken);
+  clickedButtonNumber: any = localStorage.getItem('mainClicked');
+  mainClicked = new BehaviorSubject<string>(this.clickedButtonNumber);
   whatClicked = localStorage.getItem('topClicked');
   whatTopClicked = new BehaviorSubject<string>(this.whatClicked);
 
@@ -72,7 +73,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(this.router.url);
+    if (!this.clickedButtonNumber) {
+      this.mainClicked.next('1');
+      this.clickedButtonNumber = 1;
+    }
     this.isAuth.subscribe(isLogged => {
       console.log(this.userInfo);
       if (isLogged) {
@@ -92,7 +96,9 @@ export class AppComponent implements OnInit {
   }
 
   mainButtonClick(buttonNumber) {
-    this.clickedButtonNumber = buttonNumber;
+    localStorage.setItem('mainClicked', buttonNumber);
+    this.mainClicked.next(buttonNumber);
+
   }
 
   topByComments() {
@@ -111,5 +117,15 @@ export class AppComponent implements OnInit {
     localStorage.setItem('topClicked', 'rating');
     this.whatTopClicked.next('rating');
     this.bookService.getTopByRating(1);
+  }
+
+  test() {
+    console.log('TEST')
+    console.log('TEST')
+    console.log('TEST')
+    console.log('TEST')
+    console.log('TEST')
+    console.log('TEST')
+    console.log('TEST')
   }
 }

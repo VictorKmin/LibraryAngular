@@ -26,11 +26,37 @@
 
 .image {
   height: 150px;
-  max-width: 100%;
+  max-width: 150px;
 }
 
 .commentCount {
   margin: 0 auto;
+}
+
+.fa-book {
+  position: absolute;
+  float: left;
+  display: block;
+  margin-left: 180px;
+  margin-top: 5px;
+}
+
+.fa-book:hover .tooltiptext{
+  visibility: visible;
+}
+
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #5c5c5c;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size: 15px;
+  position: absolute;
+  z-index: 1;
 }
 
 fieldset, label {

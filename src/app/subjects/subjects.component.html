@@ -1,0 +1,12 @@
+<button (click)="addClick()">Add new subject</button>
+<br>
+
+<form #createForm="ngForm" *ngIf="isAddClicked" (ngSubmit)="createSubject(createForm.value)">
+  <input type="text" name="subject" required ngModel
+         placeholder="Education">
+</form>
+<br>
+<app-subject
+  *ngFor="let subject of subjects"
+  [subject] = 'subject'
+></app-subject>

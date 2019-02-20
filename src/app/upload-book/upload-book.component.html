@@ -1,7 +1,7 @@
 <div class="container">
   <form class="upload-form" #bookForm="ngForm" (ngSubmit)="addBook(bookForm)">
 
-    <label>* Title:</label>
+    * Title:
     <input type="text" name="title" required ngModel #title='ngModel'
            placeholder="Robinson Crouse">
     <br>
@@ -17,9 +17,12 @@
     <br>
 
     <label>* Summary:</label>
-    <input type="text" name="summary" required ngModel #summary='ngModel'
-           placeholder="Epistolary, confessional, and didactic in form, the book is presented as an autobiography of the title character...">
+    <!--<input type="text" name="summary" required ngModel #summary='ngModel'-->
+           <!--placeholder="Epistolary, confessional, and didactic in form, the book is presented as an autobiography of the title character...">-->
     <br>
+
+    <textarea name="summary" required ngModel #summary='ngModel'> </textarea>
+
 
     <label>*Tags:</label>
     <input type="text" name="tags" required ngModel #tags='ngModel'
@@ -55,7 +58,7 @@
     </span>
     <br>
     <br>
-    <input type="submit" value="Add book" style="width: 200px;" [disabled]="!bookForm.valid">
+    <input class="btn" type="submit" value="Add book" style="width: 200px;" [disabled]="!bookForm.valid">
   </form>
 </div>
 
