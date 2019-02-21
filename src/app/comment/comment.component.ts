@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Comment} from "../models/Comment";
 import {UserService} from "../services/user.service";
 import {CommentService} from "../services/comment.service";
+import {Roles} from "../models/Roles";
 
 @Component({
   selector: 'app-comment',
@@ -17,7 +18,7 @@ export class CommentComponent implements OnInit {
   user;
   isLogged = !!localStorage.getItem('token');
   userId;
-  userRole;
+  isAdmin: boolean;
 
   isDeleteClicked = false;
   isUpdateClicked = false;
@@ -33,7 +34,8 @@ export class CommentComponent implements OnInit {
       this.userService.userDetail.subscribe(user => {
         if (user.success) {
           this.userId = user.message.id;
-          this.userRole = user.message.role;
+          this.isAdmin = Roles.ADMIN_ROLES.includes(user.message.role);
+
         }
       });
     }

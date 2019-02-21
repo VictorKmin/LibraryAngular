@@ -7,9 +7,8 @@ import {Response} from "../models/Response";
 import {BookInfo} from "../models/BookInfo";
 import {Digital} from "../models/Digital";
 import {Hosts} from "../models/Hosts";
+import {Roles} from "../models/Roles";
 import {UserService} from "../services/user.service";
-import {take} from "rxjs/operators";
-
 
 @Component({
   selector: 'app-book',
@@ -43,7 +42,7 @@ export class BookComponent implements OnInit {
   isLogged = !!localStorage.getItem('token');
 
   userId;
-  userRole;
+  isAdmin: boolean;
   comments: Array<any>;
   isTokenPreset = localStorage.getItem('token');
   API_HOST = Hosts.API_HOST;
@@ -71,7 +70,7 @@ export class BookComponent implements OnInit {
       this.userService.userDetail.subscribe(user => {
         if (user.success) {
           this.userId = user.message.id;
-          this.userRole = user.message.role;
+          this.isAdmin = Roles.ADMIN_ROLES.includes(user.message.role);
         }
       });
     }

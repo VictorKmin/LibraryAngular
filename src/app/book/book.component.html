@@ -3,7 +3,7 @@
 
 
     <!--THIS BLOCK OF CODE JUST FOR ADMIN USER-->
-    <div *ngIf="userRole == 1" class="admin-panel">
+    <div *ngIf="isAdmin" class="admin-panel">
       <button (click)="showDelete()" [ngClass]="{'active': isDeleteClicked}">DELETE BOOK</button>
 
       <button *ngIf="is_reading" (click)="showNotReading()"

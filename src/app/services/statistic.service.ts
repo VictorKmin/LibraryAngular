@@ -7,41 +7,54 @@ import {Hosts} from "../models/Hosts";
 })
 export class StatisticService {
 
-  headers = new HttpHeaders()
-    .set('authorization', localStorage.getItem('token'));
-
   constructor(private http: HttpClient) {
   }
 
   getReadingActivityById(bookId: number) {
-    return this.http.get(`${Hosts.API_HOST}/activity/reading/${bookId}`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/reading/${bookId}`, {headers})
   }
 
   getCommentActivityById(bookId: number) {
-    return this.http.get(`${Hosts.API_HOST}/activity/comment/${bookId}`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/comment/${bookId}`, {headers})
   }
 
   getRatingActivityById(bookId: number) {
-    return this.http.get(`${Hosts.API_HOST}/activity/rating/${bookId}`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/rating/${bookId}`, {headers})
   }
 
   getTopReadedBooks(limit) {
-    return this.http.get(`${Hosts.API_HOST}/activity/topbooks/${limit}`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/topbooks/${limit}`, {headers})
   }
 
   getTopUsers(limit) {
-    return this.http.get(`${Hosts.API_HOST}/activity/topusers/${limit}`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/topusers/${limit}`, {headers})
   }
 
   getAllReadingInfo() {
-    return this.http.get(`${Hosts.API_HOST}/activity/reading`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/reading`, {headers})
   }
 
   getAllCommentInfo() {
-    return this.http.get(`${Hosts.API_HOST}/activity/comment`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/comment`, {headers})
   }
 
   getAllRatingInfo() {
-    return this.http.get(`${Hosts.API_HOST}/activity/rating`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/activity/rating`, {headers})
   }
 }

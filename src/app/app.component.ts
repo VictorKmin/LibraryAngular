@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {BehaviorSubject} from "rxjs";
 import {UserService} from "./services/user.service";
 import {BookService} from "./services/book.service";
+import {Roles} from "./models/Roles";
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements OnInit {
   whatTopClicked = new BehaviorSubject<string>(this.whatClicked);
 
   userInfo = {};
-  userRole: number;
+  isBlocked = new BehaviorSubject<boolean>(false);
+  isAdmin = new BehaviorSubject<boolean>(false);
 
   constructor(
     private homeService: HomeService,
@@ -88,8 +90,8 @@ export class AppComponent implements OnInit {
 
     this.userService.userDetail.subscribe((res: Response) => {
       if (res.success) {
-        this.userRole = res.message.role;
-        console.log(res);
+        this.isAdmin.next(Roles.ADMIN_ROLES.includes(res.message.role));
+        this.isBlocked.next(Roles.BLOCKED_ROLES.includes(res.message.role));
         this.userInfo = res.message;
       }
     })
@@ -117,15 +119,5 @@ export class AppComponent implements OnInit {
     localStorage.setItem('topClicked', 'rating');
     this.whatTopClicked.next('rating');
     this.bookService.getTopByRating(1);
-  }
-
-  test() {
-    console.log('TEST')
-    console.log('TEST')
-    console.log('TEST')
-    console.log('TEST')
-    console.log('TEST')
-    console.log('TEST')
-    console.log('TEST')
   }
 }

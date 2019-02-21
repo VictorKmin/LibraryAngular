@@ -6,7 +6,7 @@
   {{commentText}}
 </div>
 
-<div *ngIf="userRole == 1">
+<div *ngIf="isAdmin">
   <button (click)="showDelete()">DELETE COMMENT</button>
   <button (click)="showUpdate()">CHANGE COMMENT</button>
 

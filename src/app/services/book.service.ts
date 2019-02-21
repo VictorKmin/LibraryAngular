@@ -8,9 +8,6 @@ import {Socket} from 'ngx-socket-io';
 })
 export class BookService {
 
-  headers = new HttpHeaders()
-    .set('authorization', localStorage.getItem('token'));
-
   constructor(private http: HttpClient, private socket: Socket) {
   }
 
@@ -48,11 +45,15 @@ export class BookService {
   }
 
   readBook(bookId) {
-    return this.http.post(`${Hosts.API_HOST}/book/read/${bookId}`, {}, {headers: this.headers});
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.post(`${Hosts.API_HOST}/book/read/${bookId}`, {}, {headers});
   }
 
   download(bookId) {
-    return this.http.get(`${Hosts.API_HOST}/book/download/${bookId}`, {headers: this.headers});
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.get(`${Hosts.API_HOST}/book/download/${bookId}`, {headers});
   }
 
   getAllBooks(page) {
@@ -61,33 +62,45 @@ export class BookService {
   }
 
   stillReadingBook(bookId) {
-    return this.http.patch(`${Hosts.API_HOST}/book`, {bookId}, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.patch(`${Hosts.API_HOST}/book`, {bookId}, {headers})
   }
 
   returnBook(bookId) {
-    return this.http.delete(`${Hosts.API_HOST}/book/return/${bookId}`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.delete(`${Hosts.API_HOST}/book/return/${bookId}`, {headers})
   }
 
   postFile(photoOfBook: File, fileOfBook: File, body) {
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+
     const formData: FormData = new FormData();
     formData.append('photo', photoOfBook);
     formData.append('file', fileOfBook);
     formData.append('info', JSON.stringify(body));
     return this.http
-      .post(`${Hosts.API_HOST}/book`, formData, {headers: this.headers})
+      .post(`${Hosts.API_HOST}/book`, formData, {headers})
   }
 
   //ADMIN METHODS
   deleteBook(bookId) {
-    return this.http.delete(`${Hosts.API_HOST}/book/${bookId}`, {headers: this.headers})
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+    return this.http.delete(`${Hosts.API_HOST}/book/${bookId}`, {headers})
   }
 
   updateBook(bookId, photoOfBook: File, fileOfBook: File, bookInfo) {
+    const headers = new HttpHeaders()
+      .set('authorization', localStorage.getItem('token'));
+
     const formData: FormData = new FormData();
     formData.append('photo', photoOfBook);
     formData.append('file', fileOfBook);
     formData.append('info', JSON.stringify(bookInfo));
-    this.http.put(`${Hosts.API_HOST}/book/${bookId}`, formData, {headers: this.headers}).subscribe(value => {
+    this.http.put(`${Hosts.API_HOST}/book/${bookId}`, formData, {headers}).subscribe(value => {
       console.log(value);
     })
   }

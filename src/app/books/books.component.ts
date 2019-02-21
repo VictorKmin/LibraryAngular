@@ -35,4 +35,7 @@ export class BooksComponent implements OnInit {
     this.image = Hosts.API_HOST + this.book.image;
   }
 
+  ckc() {
+    localStorage.setItem('mainClicked', "0");
+  }
 }
