@@ -35,7 +35,6 @@ export class CommentComponent implements OnInit {
         if (user.success) {
           this.userId = user.message.id;
           this.isAdmin = Roles.ADMIN_ROLES.includes(user.message.role);
-
         }
       });
     }

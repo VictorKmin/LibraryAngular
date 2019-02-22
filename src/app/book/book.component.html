@@ -48,7 +48,7 @@
         Subject:
         <input type="text" name="subject" ngModel placeholder="{{subject}}">
         Type
-        <select style="display:block;" ngModel name="typeOfBook"
+        <select ngModel name="typeOfBook"
                 (change)="changeBookType($event.target)">
           <option value="handbook"> handbook</option>
           <option value="digital"> digital</option>
@@ -57,11 +57,11 @@
         <input type="file" name="photo" ngModel
                (change)="photoInput($event)">
         <br>
-        File
+        <span *ngIf="isBookDigital">File</span>
         <input *ngIf="isBookDigital" type="file" name="file" ngModel
                (change)="fileInput($event)">
         <br>
-        <button type="submit" [disabled]="!newInfo.valid"> Submit</button>
+        <button class="btn" [disabled]="!newInfo.valid"> Submit</button>
       </form>
     </div>
     <!--FINISH OF ADMIN CODE-->

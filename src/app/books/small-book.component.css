@@ -45,6 +45,9 @@
   visibility: visible;
 }
 
+.title:hover .tooltiptext{
+  visibility: visible;
+}
 
 .tooltiptext {
   visibility: hidden;

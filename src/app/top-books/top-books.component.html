@@ -4,10 +4,10 @@
     <i class="fas fa-book"> TOP 5 BOOKS</i>
   </div>
   <div class="books-wrapper">
-    <app-books
+    <app-small-book
       *ngFor=" let book of books"
       [book]="book"
-    ></app-books>
+    ></app-small-book>
   </div>
   <div *ngFor="let page of pages" class="pagination">
     <button (click)="changePage(page)">{{page}}</button>

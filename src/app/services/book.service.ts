@@ -56,9 +56,8 @@ export class BookService {
     return this.http.get(`${Hosts.API_HOST}/book/download/${bookId}`, {headers});
   }
 
-  getAllBooks(page) {
-    // 10 - offset count
-    return this.http.get(`${Hosts.API_HOST}/book/${page}/10`);
+  getAllBooks(page, limit) {
+    return this.http.get(`${Hosts.API_HOST}/book/${page}/${limit}`);
   }
 
   stillReadingBook(bookId) {

@@ -1,12 +1,14 @@
-<button (click)="addClick()">Add new subject</button>
-<br>
+<div class="container">
+  <button class="btn" (click)="addClick()">Add new subject</button>
+  <br>
 
-<form #createForm="ngForm" *ngIf="isAddClicked" (ngSubmit)="createSubject(createForm.value)">
-  <input type="text" name="subject" required ngModel
-         placeholder="Education">
-</form>
-<br>
-<app-subject
-  *ngFor="let subject of subjects"
-  [subject] = 'subject'
-></app-subject>
+  <form #createForm="ngForm" *ngIf="isAddClicked" (ngSubmit)="createSubject(createForm.value)">
+    <input type="text" name="subject" required ngModel
+           placeholder="Education">
+  </form>
+  <br>
+  <app-subject
+    *ngFor="let subject of subjects"
+    [subject]='subject'
+  ></app-subject>
+</div>

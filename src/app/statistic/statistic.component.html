@@ -53,12 +53,12 @@
     <br>
     <button routerLink="/book/{{reading.book_id}}">Go to book info</button>
   </div>
+  <button (click)="moreInfo('reading')" *ngIf="isPaginationPresent">GET NEXT {{paginationLimit}} VALUES</button>
 </div>
 
 <!--ALL COMMENT ACTIVITY-->
 <div *ngIf="(whatStatClicked | async) === 'comment'">
   <div *ngFor="let comment of commentStatistic" class="single-info">
-    <!--{{comment | json}}-->
     User <b>{{comment.User.name}}</b>
     <!--When comment is created-->
     <span *ngIf="comment.is_create"> <b> create new</b>  comment </span>
@@ -70,6 +70,7 @@
     <br>
     <button routerLink="/book/{{comment.book_id}}">Go to book info</button>
   </div>
+  <button (click)="moreInfo('comment')"  *ngIf="isPaginationPresent">GET NEXT {{paginationLimit}} VALUES</button>
 </div>
 
 <!--ALL RATING ACTIVITY-->
@@ -82,4 +83,5 @@
     <br>
     <button routerLink="/book/{{rating.book_id}}">Go to book info</button>
   </div>
+  <button (click)="moreInfo('rating')" *ngIf="isPaginationPresent">GET NEXT {{paginationLimit}} VALUES</button>
 </div>

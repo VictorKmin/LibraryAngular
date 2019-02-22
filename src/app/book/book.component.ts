@@ -180,11 +180,6 @@ export class BookComponent implements OnInit {
     this.fileOfBook = file.target.files[0];
   }
 
-  bookReturned() {
-    console.log('TODO')
-    // TODO return book admin method
-  }
-
   showStat() {
     this.isShowStat = !this.isShowStat
   }

@@ -35,7 +35,7 @@
     <br>
 
     <label>*Type of book:</label>
-    <select style="display:inline-block; height: 30px"
+    <select
             required ngModel name="typeOfBook" #type="ngModel"
             (change)="changeBookType($event.target)">
       <option *ngFor="let type of types">

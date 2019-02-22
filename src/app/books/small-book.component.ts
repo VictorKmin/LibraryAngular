@@ -2,13 +2,14 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Hosts} from "../models/Hosts";
 
 @Component({
-  selector: 'app-books',
-  templateUrl: './books.component.html',
-  styleUrls: ['./books.component.css']
+  selector: 'app-small-book',
+  templateUrl: './small-book.component.html',
+  styleUrls: ['./small-book.component.css']
 })
-export class BooksComponent implements OnInit {
+export class SmallBookComponent implements OnInit {
 
   title;
+  hoveredTitle;
   avgStar;
   type_of_book;
   is_digital;
@@ -22,6 +23,7 @@ export class BooksComponent implements OnInit {
   @Input() book: any;
 
   ngOnInit() {
+    this.hoveredTitle = this.book.title;
     if (this.book.title.length > 15) {
       this.title = this.book.title.slice(0, 12) + '...';
     } else {

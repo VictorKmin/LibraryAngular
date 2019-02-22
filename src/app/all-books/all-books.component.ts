@@ -16,7 +16,7 @@ export class AllBooksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bookService.getAllBooks(1).subscribe((books: Response) => {
+    this.bookService.getAllBooks(1, 10).subscribe((books: Response) => {
       console.log(books.message);
       this.books = books.message.books;
       const pageCount = books.message.pageCount;
@@ -28,7 +28,7 @@ export class AllBooksComponent implements OnInit {
   }
 
   changePage(page: number) {
-    this.bookService.getAllBooks(page).subscribe((books: Response) => {
+    this.bookService.getAllBooks(page, 10).subscribe((books: Response) => {
       this.books = books.message.books;
     })
   }

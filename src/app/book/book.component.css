@@ -68,6 +68,14 @@
   padding: 10px;
   background-color: #eeeeee;
 }
+.btn {
+  margin-top: 20px;
+}
+
+select {
+  display: block;
+  height: 34px;
+}
 
 .active {
   -webkit-box-shadow: 0px 0px 46px -1px rgba(58,167,186,1);

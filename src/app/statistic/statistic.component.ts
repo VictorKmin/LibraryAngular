@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StatisticService} from "../services/statistic.service";
 import {Response} from "../models/Response";
 import {BehaviorSubject} from "rxjs";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Component({
   selector: 'app-statistic',
@@ -18,11 +19,18 @@ export class StatisticComponent implements OnInit {
   readStatistic;
   commentStatistic;
   ratingStatistic;
+  readingLimit: number = 10;
+  commentLimit: number = 10;
+  ratingLimit: number = 10;
+  isPaginationPresent: boolean = false;
+
+  paginationLimit = 10;
 
   constructor(private statisticService: StatisticService) {
   }
 
   ngOnInit() {
+
     if (this.whatClicked === 'topBooks') {
       this.showTopReadedBooks()
     }
@@ -43,8 +51,8 @@ export class StatisticComponent implements OnInit {
   showTopReadedBooks() {
     localStorage.setItem('statisticClicked', 'topBooks');
     this.whatStatClicked.next('topBooks');
-    // 10 is hardcoded limit of books from database
-    this.statisticService.getTopReadedBooks(10).subscribe((resp: Response) => {
+    // 20 is hardcoded limit of books from database
+    this.statisticService.getTopReadedBooks(20).subscribe((resp: Response) => {
       if (resp.success) {
         this.topBooks = resp.message
       }
@@ -54,8 +62,8 @@ export class StatisticComponent implements OnInit {
   showTopUsers() {
     localStorage.setItem('statisticClicked', 'topUsers');
     this.whatStatClicked.next('topUsers');
-    // 10 is hardcoded limit of users from database
-    this.statisticService.getTopUsers(10).subscribe((resp: Response) => {
+    // 20 is hardcoded limit of users from database
+    this.statisticService.getTopUsers(20).subscribe((resp: Response) => {
       if (resp.success) {
         this.topUsers = resp.message
       }
@@ -65,27 +73,52 @@ export class StatisticComponent implements OnInit {
   showAllReadingInfo() {
     localStorage.setItem('statisticClicked', 'reading');
     this.whatStatClicked.next('reading');
-    this.statisticService.getAllReadingInfo().subscribe((resp: Response) => {
-      console.log(resp.message);
-      this.readStatistic = resp.message
+    this.statisticService.getMoreReadingInfo(this.readingLimit);
+    this.statisticService.getReadingInfo().subscribe((resp: Array<object>) => {
+      this.isPaginationPresent = resp.length === this.readingLimit;
+      this.readStatistic = resp
     })
   }
 
   showAllCommentInfo() {
     localStorage.setItem('statisticClicked', 'comment');
     this.whatStatClicked.next('comment');
-    this.statisticService.getAllCommentInfo().subscribe((resp: Response) => {
-      console.log(resp.message);
-      this.commentStatistic = resp.message;
+    this.statisticService.getMoreCommentInfo(this.commentLimit);
+    this.statisticService.getCommentInfo().subscribe((resp: Array<object>) => {
+      this.isPaginationPresent = resp.length === this.commentLimit;
+      this.commentStatistic = resp
     })
   }
 
   showAllRatingInfo() {
     localStorage.setItem('statisticClicked', 'rating');
     this.whatStatClicked.next('rating');
-    this.statisticService.getAllRatingInfo().subscribe((resp: Response) => {
-      console.log(resp.message);
-      this.ratingStatistic = resp.message;
+    console.log(this.readingLimit);
+
+    this.statisticService.getMoreRatingInfo(this.ratingLimit);
+    this.statisticService.getRatingInfo().subscribe((resp: Array<object>) => {
+      this.isPaginationPresent = resp.length === this.ratingLimit;
+      this.ratingStatistic = resp;
     })
+  }
+
+  moreInfo(param: string) {
+
+    switch (param) {
+      case 'reading':
+        this.readingLimit = this.readingLimit + this.paginationLimit;
+        console.log(this.readingLimit);
+        this.showAllReadingInfo();
+        break;
+      case 'comment':
+        this.commentLimit = this.commentLimit + this.paginationLimit;
+        this.showAllCommentInfo();
+        break;
+      case 'rating':
+        this.ratingLimit = this.ratingLimit + this.paginationLimit;
+        console.log(this.ratingLimit);
+        this.showAllRatingInfo();
+        break;
+    }
   }
 }

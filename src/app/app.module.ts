@@ -11,7 +11,7 @@ import {CommentService} from "./services/comment.service";
 import {SearchService} from "./services/search.service";
 import { AppComponent } from './app.component';
 import { TopBooksComponent } from './top-books/top-books.component';
-import { BooksComponent } from './books/books.component';
+import { SmallBookComponent } from './books/small-book.component';
 import { BookComponent } from './book/book.component';
 import { CommentComponent } from './comment/comment.component';
 import { TagSearchComponent } from './tag-search/tag-search.component';
@@ -31,7 +31,7 @@ const config: SocketIoConfig = {url: Hosts.API_HOST, options: {}};
   declarations: [
     AppComponent,
     TopBooksComponent,
-    BooksComponent,
+    SmallBookComponent,
     BookComponent,
     CommentComponent,
     TagSearchComponent,

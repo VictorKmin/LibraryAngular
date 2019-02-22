@@ -1,0 +1,18 @@
+<div class="book" routerLink='/book/{{id}}' (click)="ckc()">
+  <i class="fas fa-book" *ngIf="!is_digital">
+    <span class="tooltiptext">Handbook</span>
+  </i>
+  <span class="title">
+    {{title}}
+    <span class="tooltiptext">{{hoveredTitle}}</span>
+  </span>
+  <br>
+  {{type_of_book}}
+  <br>
+  <img src="{{image}}" alt="{{title}}" class="image">
+  <div class="stars">
+    {{avgStar}} star
+    <br>
+    {{countOfVotes}} vote(s)
+  </div>
+</div>
