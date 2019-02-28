@@ -1,6 +1,5 @@
 .upload-form {
   width: 75%;
-  /*float: left;*/
   font-weight: bold;
   margin-top: 20px;
 }
@@ -11,13 +10,14 @@
 
 .btn {
   margin-right: 20px;
+  margin-bottom: 10px;
   background-color: #78b8fc;
   color: black;
   font-weight: bold;
-  border: 0px;
+  border: 0;
 }
 textarea {
-  border: 0px;
+  border: 0;
   border-bottom: 1px solid #9e9e9e;
 }
 

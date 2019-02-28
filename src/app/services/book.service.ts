@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Hosts} from "../models/Hosts";
 import {Socket} from 'ngx-socket-io';
+import {Response} from "../models/Response";
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,7 @@ export class BookService {
   }
 
   getBookInfo(id) {
-    // return this.http.get(`${Hosts.API_HOST}/book/${id}`);
     this.socket.emit('getBook', id);
-
   }
 
   bookInfo() {
@@ -25,29 +24,14 @@ export class BookService {
     return this.socket.fromEvent('topBooks')
   }
 
-  // Top 5 By Rating
-  getTopByRating(page) {
-   this.http.get(`${Hosts.API_HOST}/book/topByRating/${page}/5`).subscribe(value => {
-     // console.log(value);
-   })
+
+  getTop(page, topValue) {
+    this.socket.emit('getTop', {page, limit: 5, topValue})
   }
 
-  getTopByReading(page) {
-    this.http.get(`${Hosts.API_HOST}/book/topByReading/${page}/5`).subscribe(value => {
-      // console.log(value);
-    })
-  }
-
-  getTopByComments(page) {
-    this.http.get(`${Hosts.API_HOST}/book/topByComments/${page}/5`).subscribe(value => {
-      // console.log(value);
-    })
-  }
-
-  readBook(bookId) {
-    const headers = new HttpHeaders()
-      .set('authorization', localStorage.getItem('token'));
-    return this.http.post(`${Hosts.API_HOST}/book/read/${bookId}`, {}, {headers});
+  bookEvent(bookId, bookEv) {
+    const token = localStorage.getItem('token');
+    this.socket.emit('bookEvent', {bookId, token, bookEv})
   }
 
   download(bookId) {
@@ -58,18 +42,6 @@ export class BookService {
 
   getAllBooks(page, limit) {
     return this.http.get(`${Hosts.API_HOST}/book/${page}/${limit}`);
-  }
-
-  stillReadingBook(bookId) {
-    const headers = new HttpHeaders()
-      .set('authorization', localStorage.getItem('token'));
-    return this.http.patch(`${Hosts.API_HOST}/book`, {bookId}, {headers})
-  }
-
-  returnBook(bookId) {
-    const headers = new HttpHeaders()
-      .set('authorization', localStorage.getItem('token'));
-    return this.http.delete(`${Hosts.API_HOST}/book/return/${bookId}`, {headers})
   }
 
   postFile(photoOfBook: File, fileOfBook: File, body) {
@@ -99,8 +71,11 @@ export class BookService {
     formData.append('photo', photoOfBook);
     formData.append('file', fileOfBook);
     formData.append('info', JSON.stringify(bookInfo));
-    this.http.put(`${Hosts.API_HOST}/book/${bookId}`, formData, {headers}).subscribe(value => {
-      console.log(value);
+    this.http.put(`${Hosts.API_HOST}/book/${bookId}`, formData, {headers})
+      .subscribe((value: Response) => {
+      if (value.success) {
+        this.getBookInfo(bookId);
+      }
     })
   }
 }

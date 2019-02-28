@@ -3,9 +3,21 @@
   <div class="books-header-text">
     <i class="fas fa-book"> All the books what we have</i>
   </div>
+
+  <form style="margin-right: 80%">
+    <label>Books per page: <b>{{limit}}</b></label>
+    <select  [formControl]="limitForm" style="margin-left: -30px; opacity: 0"
+             (change)="changeBookSCount($event.target)">
+      <option *ngFor="let number of booksOnPage">
+        {{number}}
+      </option>
+    </select>
+  </form>
+
   <div *ngFor="let page of pages" class="pagination">
     <button (click)="changePage(page)">{{page}}</button>
   </div>
+
   <div class="books-wrapper">
     <app-small-book
       *ngFor=" let book of books"

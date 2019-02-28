@@ -5,6 +5,7 @@
   <form #createForm="ngForm" *ngIf="isAddClicked" (ngSubmit)="createSubject(createForm.value)">
     <input type="text" name="subject" required ngModel
            placeholder="Education">
+    <button> ADD </button>
   </form>
   <br>
   <app-subject

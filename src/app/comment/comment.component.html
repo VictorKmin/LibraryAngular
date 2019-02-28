@@ -17,7 +17,7 @@
   </div>
   <div *ngIf="isUpdateClicked">
     <form #newComment="ngForm" (ngSubmit)="updateComment(newComment.value)">
-      <input type="text" name="comment" ngModel placeholder="{{commentText}}">
+      <input type="text" name="comment" ngModel="{{commentText}}" placeholder="{{commentText}}">
       <button type="submit">OK</button>
     </form>
   </div>

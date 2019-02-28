@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {StatisticService} from "../services/statistic.service";
 import {Response} from '../models/Response'
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-book-statistic',
@@ -10,12 +11,10 @@ import {Response} from '../models/Response'
 })
 export class BookStatisticComponent implements OnInit {
   bookId;
-  isReadingClicked = false;
-  isCommentClicked = false;
-  isRatingClicked = false;
   readStatistic: any;
   commentStatistic: any;
   ratingStatistic: any;
+  activityButton = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -28,39 +27,44 @@ export class BookStatisticComponent implements OnInit {
   }
 
   showReadingActvt() {
-    this.isReadingClicked = true;
-    this.statisticService.getReadingActivityById(this.bookId).subscribe((resp: Response) => {
+    this.statisticService.getReadingActivityById(this.bookId)
+      .pipe(take(1))
+      .subscribe((resp: Response) => {
       console.log(resp.message);
       this.readStatistic = resp.message;
     })
   }
 
   showCommentActvt() {
-    this.isCommentClicked = true;
-    this.statisticService.getCommentActivityById(this.bookId).subscribe((resp: Response) => {
+    this.statisticService.getCommentActivityById(this.bookId)
+      .pipe(take(1))
+      .subscribe((resp: Response) => {
       console.log(resp.message);
       this.commentStatistic = resp.message;
     })
   }
 
   showRatingActvt() {
-    this.isRatingClicked = true;
-
-    this.statisticService.getRatingActivityById(this.bookId).subscribe((resp: Response) => {
+    this.statisticService.getRatingActivityById(this.bookId)
+      .pipe(take(1))
+      .subscribe((resp: Response) => {
       console.log(resp.message);
       this.ratingStatistic = resp.message;
     })
   }
 
-  hideCommentInfo() {
-    this.isCommentClicked = false;
-  }
+  activityClicked(value) {
+    // reading, comment, rating, null
+    this.activityButton = value;
 
-  hideReadingInfo() {
-    this.isReadingClicked = false;
-  }
-
-  hideRatingInfo() {
-    this.isRatingClicked = false;
+    if (value === 'reading') {
+      this.showReadingActvt()
+    }
+    if (value === 'comment') {
+      this.showCommentActvt()
+    }
+    if (value === 'rating') {
+      this.showRatingActvt()
+    }
   }
 }

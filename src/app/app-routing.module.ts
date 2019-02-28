@@ -9,6 +9,8 @@ import {UploadBookComponent} from "./upload-book/upload-book.component";
 import {BookStatisticComponent} from "./book-statistic/book-statistic.component";
 import {StatisticComponent} from "./statistic/statistic.component";
 import {SubjectsComponent} from "./subjects/subjects.component";
+import {MyInfoComponent} from "./my-info/my-info.component";
+import {InfoPageComponent} from "./info-page/info-page.component";
 
 const routes: Routes = [
   {path: '', component: TopBooksComponent},
@@ -20,6 +22,8 @@ const routes: Routes = [
   {path: 'bookstat/:id', component: BookStatisticComponent},
   {path: 'statistic', component: StatisticComponent},
   {path: 'subjects', component: SubjectsComponent},
+  {path: 'myinfo', component: MyInfoComponent},
+  {path: 'info', component: InfoPageComponent},
 ];
 
 @NgModule({

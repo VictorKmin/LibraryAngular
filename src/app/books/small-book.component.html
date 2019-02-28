@@ -4,15 +4,21 @@
   </i>
   <span class="title">
     {{title}}
-    <span class="tooltiptext">{{hoveredTitle}}</span>
+    <span class="tooltiptext" *ngIf="isTitleTooLong">{{hoveredTitle}}</span>
   </span>
   <br>
   {{type_of_book}}
   <br>
   <img src="{{image}}" alt="{{title}}" class="image">
-  <div class="stars">
-    {{avgStar}} star
+  <div class="stars" *ngIf="avgStar">
+    {{avgStar}} <i class="fas fa-star"></i>
     <br>
     {{countOfVotes}} vote(s)
+  </div>
+
+  <div *ngIf="!avgStar">
+    Not rated yet.
+    <br>
+    Be first !
   </div>
 </div>

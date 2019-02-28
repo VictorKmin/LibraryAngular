@@ -34,7 +34,7 @@
 .loginForm {
   text-align: center;
   width: 20%;
-  margin: auto;
+  margin: auto auto 20px;
 }
 
 .loginForm form input {
@@ -53,12 +53,14 @@
 }
 
 .fullSearch {
-  width: 250px;
-  margin-left: 75%;
+  width: 15%;
+  min-width: 50px;
+  margin-left: 85%;
 }
 
 .fullSearch form input {
-  width: 200px;
+  width: 70%;
+  min-width: 100px;
 }
 
 .fa-search {
@@ -72,6 +74,7 @@
 
 .btn {
   margin-right: 20px;
+  margin-bottom: 10px;
   background-color: #78b8fc;
   color: black;
   font-weight: bold;
@@ -107,3 +110,16 @@
   display: inline-block;
   background-image: url('new-logo.png');
 }
+
+.fa-question-circle:hover .tooltiptext {
+  visibility: visible;
+  font-size: 12px;
+}
+
+.fa-question-circle {
+  transition: .5s;
+}
+.fa-question-circle:hover {
+  transform: scale(1.3);
+}
+

@@ -12,3 +12,24 @@ body {
   font-size: 20px;
   color: #2f3435;
 }
+
+.books-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #5c5c5c;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size: 15px;
+  position: absolute;
+  z-index: 1;
+}

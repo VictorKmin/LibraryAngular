@@ -1,17 +1,22 @@
 <div class="container">
   <div class="main">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+          integrity="sha384-UHRtZLI+pbxtHCWp'1't77Bi'1'L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+          crossorigin="anonymous">
 
     <div routerLink="/" class="home-page-btn"></div>
+    <i class="far fa-question-circle loginButtons" routerLink="/info">
+      <span class="tooltiptext">How to use Library</span>
+    </i>
     <i class="fas fa-sign-in-alt loginButtons" *ngIf="!(isAuth | async)" (click)="signIn()"> SIGN IN</i>
     <i class="fas fa-sign-out-alt loginButtons" *ngIf="isAuth | async" (click)="signOut()"> SIGN OUT </i>
+
     <br>
     <!--{{userInfo | json}}-->
     <div class="fullSearch">
-      <form (ngSubmit)="search(word.value)">
-        <input type="text" name="word" ngModel #word="ngModel" placeholder="Search">
-        <i class="fas fa-search" (click)="search(word.value)"></i>
+      <form (ngSubmit)="search()">
+        <input type="text" [formControl]="word" placeholder="Search">
+        <i class="fas fa-search" (click)="search()"></i>
       </form>
     </div>
 
@@ -27,41 +32,61 @@
     </div>
 
     <!--TOP 5-->
-    <button class="btn" [ngClass]="{'clicked': (mainClicked | async) == 1}"
-            routerLink="/" *ngIf="!(isBlocked | async)" (click)="mainButtonClick(1)"> Top Five
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber == '1'}"
+            routerLink="/"
+            *ngIf="!(isBlocked | async)"
+            (click)="mainButtonClick('1')"> Top Five
     </button>
     <!--ALL BOOKS-->
-    <button class="btn" [ngClass]="{'clicked': (mainClicked | async) == 2}"
-            routerLink="/allbooks" *ngIf="!(isBlocked | async)" (click)="mainButtonClick(2)"> All Books
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber == '2'}"
+            routerLink="/allbooks"
+            *ngIf="!(isBlocked | async)"
+            (click)="mainButtonClick('2')"> All Books
     </button>
     <!--ADD NEW BOOK-->
-    <button class="btn" [ngClass]="{'clicked': (mainClicked | async) == 3}"
-            routerLink="/upload" *ngIf="!(isBlocked | async) && (isAuth | async)" (click)="mainButtonClick(3)">Add New Book
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber == '3'}"
+            routerLink="/upload"
+            *ngIf="!(isBlocked | async) && (isAuth | async)"
+            (click)="mainButtonClick('3')">Add New Book
+    </button>
+    <!--MY INFO PAGE-->
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber == '4'}"
+            routerLink="/myinfo"
+            *ngIf="!(isBlocked | async) && (isAuth | async)"
+            (click)="mainButtonClick('4')">Books that I am reading
     </button>
     <!--STATISTIC (Just for admin)-->
-    <button class="btn" [ngClass]="{'clicked': (mainClicked | async) == 4}"
-            routerLink="/statistic" *ngIf="isAdmin | async" (click)="mainButtonClick(4)">To statistic page
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber == '5'}"
+            routerLink="/statistic"
+            *ngIf="isAdmin | async"
+            (click)="mainButtonClick('5')">To statistic page
     </button>
     <!--SUBJECTS (just for admin)-->
-    <button class="btn" [ngClass]="{'clicked': (mainClicked | async) == 5}"
-            routerLink="/subjects" *ngIf="isAdmin | async" (click)="mainButtonClick(5)">Show subjects
+    <button class="btn" [ngClass]="{'clicked': clickedButtonNumber == '6'}"
+            routerLink="/subjects"
+            *ngIf="isAdmin | async"
+            (click)="mainButtonClick('6')">Show subjects
     </button>
-    <div *ngIf="(mainClicked | async) == 1">
+
+    <div *ngIf="clickedButtonNumber == '1'">
       <button class="small-btn"
               [ngClass]="{'small-clicked': (whatTopClicked | async) === 'rating'|| !(whatTopClicked | async) }"
-              (click)="topByRating()">Top 5 by rating</button>
+              (click)="getTopBy('rating')">Top 5 by rating
+      </button>
       <button class="small-btn"
               [ngClass]="{'small-clicked': (whatTopClicked | async) === 'comment'}"
-              (click)="topByComments()">Top 5 by comments</button>
+              (click)="getTopBy('comment')">Top 5 by comments
+      </button>
       <button class="small-btn"
               [ngClass]="{'small-clicked': (whatTopClicked | async) === 'reading'}"
-              (click)="topByReading()">Top 5 by reading</button>
+              (click)="getTopBy('reading')">Top 5 by reading
+      </button>
     </div>
     <br>
   </div>
   <router-outlet *ngIf="!(isBlocked | async)"></router-outlet>
 
   <div *ngIf="(isBlocked | async) && (isAuth | async)">
-    NO NO NO
+    Tou have not permissions
   </div>
 </div>

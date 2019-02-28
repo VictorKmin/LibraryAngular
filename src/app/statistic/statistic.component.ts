@@ -3,6 +3,7 @@ import {StatisticService} from "../services/statistic.service";
 import {Response} from "../models/Response";
 import {BehaviorSubject} from "rxjs";
 import {el} from "@angular/platform-browser/testing/src/browser_util";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-statistic',
@@ -52,7 +53,9 @@ export class StatisticComponent implements OnInit {
     localStorage.setItem('statisticClicked', 'topBooks');
     this.whatStatClicked.next('topBooks');
     // 20 is hardcoded limit of books from database
-    this.statisticService.getTopReadedBooks(20).subscribe((resp: Response) => {
+    this.statisticService.getTopReadedBooks(20)
+      .pipe(take(1))
+      .subscribe((resp: Response) => {
       if (resp.success) {
         this.topBooks = resp.message
       }
@@ -63,7 +66,9 @@ export class StatisticComponent implements OnInit {
     localStorage.setItem('statisticClicked', 'topUsers');
     this.whatStatClicked.next('topUsers');
     // 20 is hardcoded limit of users from database
-    this.statisticService.getTopUsers(20).subscribe((resp: Response) => {
+    this.statisticService.getTopUsers(20)
+      .pipe(take(1))
+      .subscribe((resp: Response) => {
       if (resp.success) {
         this.topUsers = resp.message
       }
@@ -74,7 +79,9 @@ export class StatisticComponent implements OnInit {
     localStorage.setItem('statisticClicked', 'reading');
     this.whatStatClicked.next('reading');
     this.statisticService.getMoreReadingInfo(this.readingLimit);
-    this.statisticService.getReadingInfo().subscribe((resp: Array<object>) => {
+    this.statisticService.getReadingInfo()
+      .pipe(take(1))
+      .subscribe((resp: Array<object>) => {
       this.isPaginationPresent = resp.length === this.readingLimit;
       this.readStatistic = resp
     })
@@ -84,7 +91,9 @@ export class StatisticComponent implements OnInit {
     localStorage.setItem('statisticClicked', 'comment');
     this.whatStatClicked.next('comment');
     this.statisticService.getMoreCommentInfo(this.commentLimit);
-    this.statisticService.getCommentInfo().subscribe((resp: Array<object>) => {
+    this.statisticService.getCommentInfo()
+      .pipe(take(1))
+      .subscribe((resp: Array<object>) => {
       this.isPaginationPresent = resp.length === this.commentLimit;
       this.commentStatistic = resp
     })
@@ -96,7 +105,9 @@ export class StatisticComponent implements OnInit {
     console.log(this.readingLimit);
 
     this.statisticService.getMoreRatingInfo(this.ratingLimit);
-    this.statisticService.getRatingInfo().subscribe((resp: Array<object>) => {
+    this.statisticService.getRatingInfo()
+      .pipe(take(1))
+      .subscribe((resp: Array<object>) => {
       this.isPaginationPresent = resp.length === this.ratingLimit;
       this.ratingStatistic = resp;
     })

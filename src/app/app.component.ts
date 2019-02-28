@@ -6,6 +6,8 @@ import {BehaviorSubject} from "rxjs";
 import {UserService} from "./services/user.service";
 import {BookService} from "./services/book.service";
 import {Roles} from "./models/Roles";
+import {FormControl} from "@angular/forms";
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -17,26 +19,31 @@ export class AppComponent implements OnInit {
   isLoginClicked: boolean = false;
   isErrorPresent: any;
   isToken = !!localStorage.getItem('token');
-  isAuth = new BehaviorSubject<boolean>(this.isToken);
-  clickedButtonNumber: any = localStorage.getItem('mainClicked');
-  mainClicked = new BehaviorSubject<string>(this.clickedButtonNumber);
+  clickedButtonNumber;
   whatClicked = localStorage.getItem('topClicked');
-  whatTopClicked = new BehaviorSubject<string>(this.whatClicked);
 
   userInfo = {};
   isBlocked = new BehaviorSubject<boolean>(false);
   isAdmin = new BehaviorSubject<boolean>(false);
+  isAuth = new BehaviorSubject<boolean>(this.isToken);
+  mainClicked;
+  whatTopClicked = new BehaviorSubject<string>(this.whatClicked);
+
+  word = new FormControl('');
+
 
   constructor(
     private homeService: HomeService,
     private userService: UserService,
     private bookService: BookService,
-    private router: Router
+    private router: Router,
+    private cdRef:ChangeDetectorRef
   ) {
   }
 
   signOut() {
-    this.homeService.logout().subscribe((value: Response) => {
+    this.homeService.logout()
+      .subscribe((value: Response) => {
       if (value.success) {
         localStorage.removeItem('token');
         localStorage.removeItem('refresh_token');
@@ -47,18 +54,23 @@ export class AppComponent implements OnInit {
         this.isErrorPresent = value.message;
       }
     });
+    this.word.setValue('')
   }
 
   signIn() {
     this.isLoginClicked = true;
+    this.word.setValue('')
   }
 
-  search(word: string) {
-    this.router.navigateByUrl(`/search/${word}`)
+  search() {
+    this.router.navigateByUrl(`/search/${this.word.value}`);
+    this.word.setValue('');
+    this.homeService.mainClicked.next('0')
   }
 
   loginUser(email, password) {
-    this.homeService.login(email, password).subscribe((value: Response) => {
+    this.homeService.login(email, password)
+      .subscribe((value: Response) => {
       if (value.success) {
 
         const {accessToken, refreshToken} = value.message;
@@ -73,51 +85,45 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  mainButtonClick(buttonNumber) {
+    console.log(buttonNumber);
+    localStorage.setItem('mainClicked', buttonNumber);
+    this.homeService.mainClicked.next(buttonNumber);
+    this.word.setValue('')
+  }
 
-    if (!this.clickedButtonNumber) {
-      this.mainClicked.next('1');
-      this.clickedButtonNumber = 1;
-    }
+  getTopBy(value: string) {
+    localStorage.setItem('topClicked', value);
+    this.whatTopClicked.next(value);
+    this.bookService.getTop(1, value);
+    this.word.setValue('')
+  }
+
+  ngOnInit(): void {
+    this.word.setValue('');
+
+    this.homeService.mainClicked.subscribe(value => {
+      this.clickedButtonNumber = value;
+      this.cdRef.detectChanges();
+    });
+
     this.isAuth.subscribe(isLogged => {
       console.log(this.userInfo);
       if (isLogged) {
-        this.userService.getUserInfo().subscribe(user => {
-          this.userService.userDetail.next(user)
-        });
+        this.userService.getUserInfo()
+          .subscribe(user => {
+            this.userService.userDetail.next(user)
+          });
       }
     });
 
-    this.userService.userDetail.subscribe((res: Response) => {
-      if (res.success) {
-        this.isAdmin.next(Roles.ADMIN_ROLES.includes(res.message.role));
-        this.isBlocked.next(Roles.BLOCKED_ROLES.includes(res.message.role));
-        this.userInfo = res.message;
-      }
-    })
-  }
-
-  mainButtonClick(buttonNumber) {
-    localStorage.setItem('mainClicked', buttonNumber);
-    this.mainClicked.next(buttonNumber);
-
-  }
-
-  topByComments() {
-    localStorage.setItem('topClicked', 'comment');
-    this.whatTopClicked.next('comment');
-    this.bookService.getTopByComments(1);
-  }
-
-  topByReading() {
-    localStorage.setItem('topClicked', 'reading');
-    this.whatTopClicked.next('reading');
-    this.bookService.getTopByReading(1);
-  }
-
-  topByRating() {
-    localStorage.setItem('topClicked', 'rating');
-    this.whatTopClicked.next('rating');
-    this.bookService.getTopByRating(1);
+    this.userService.userDetail
+      .subscribe((res: Response) => {
+        if (res.success) {
+          this.isAdmin.next(Roles.ADMIN_ROLES.includes(res.message.role));
+          this.isBlocked.next(Roles.BLOCKED_ROLES.includes(res.message.role));
+          this.userInfo = res.message;
+        }
+      })
   }
 }

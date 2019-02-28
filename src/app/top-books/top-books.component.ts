@@ -19,13 +19,13 @@ export class TopBooksComponent implements OnInit {
 
     // Check what button was clicked before i change page
     if (!whatIsClicked || whatIsClicked === 'rating') {
-      this.bookService.getTopByRating(1)
+      this.bookService.getTop(1, 'rating')
     }
     if (whatIsClicked === 'comment') {
-      this.bookService.getTopByComments(1)
+      this.bookService.getTop(1, 'comment')
     }
     if (whatIsClicked === 'reading') {
-      this.bookService.getTopByReading(1)
+      this.bookService.getTop(1, 'reading')
     }
 
     this.bookService.topBooks()
@@ -39,19 +39,5 @@ export class TopBooksComponent implements OnInit {
           this.pages.push(i)
         }
       });
-  }
-
-  changePage(page: number) {
-    const whatIsClicked = localStorage.getItem('topClicked');
-
-    if (!whatIsClicked || whatIsClicked === 'rating') {
-      this.bookService.getTopByRating(page)
-    }
-    if (whatIsClicked === 'comment') {
-      this.bookService.getTopByComments(page)
-    }
-    if (whatIsClicked === 'reading') {
-      this.bookService.getTopByReading(page)
-    }
   }
 }

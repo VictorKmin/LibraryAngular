@@ -16,6 +16,7 @@ export class SmallBookComponent implements OnInit {
   id;
   countOfVotes;
   image;
+  private isTitleTooLong = false;
 
   constructor() {
   }
@@ -26,6 +27,7 @@ export class SmallBookComponent implements OnInit {
     this.hoveredTitle = this.book.title;
     if (this.book.title.length > 15) {
       this.title = this.book.title.slice(0, 12) + '...';
+      this.isTitleTooLong = true;
     } else {
       this.title = this.book.title
     }

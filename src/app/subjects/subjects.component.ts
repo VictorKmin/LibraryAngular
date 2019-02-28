@@ -15,9 +15,10 @@ export class SubjectsComponent implements OnInit {
 
   ngOnInit() {
     this.subjectService.getAllSubject();
-    this.subjectService.allSubject().subscribe((subjects: any) => {
-      this.subjects = subjects
-    })
+    this.subjectService.allSubject()
+      .subscribe((subjects: any) => {
+        this.subjects = subjects
+      })
   }
 
   addClick() {

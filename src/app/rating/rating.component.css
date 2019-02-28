@@ -1,0 +1,21 @@
+div {
+  font-size: 17px;
+}
+
+.fa-star {
+  padding: 5px;
+}
+
+.rated {
+  color: #FE7;
+}
+
+.fa-star:hover {
+  transform: rotate(-15deg) scale(1.3);
+  color: #FE7;
+}
+.averageRating {
+  /*margin-bottom: 10px;*/
+  margin-top: 10px;
+  font-size: 15px;
+}

@@ -2,58 +2,58 @@
   <form class="upload-form" #bookForm="ngForm" (ngSubmit)="addBook(bookForm)">
 
     * Title:
-    <input type="text" name="title" required ngModel #title='ngModel'
+    <input type="text" name="title" required ngModel
            placeholder="Robinson Crouse">
     <br>
 
     <label>* Author:</label>
-    <input type="text" name="author" required ngModel #author='ngModel'
+    <input type="text" name="author" required ngModel
            placeholder="Daniel Defoe">
     <br>
 
     <label>* Publisher:</label>
-    <input type="text" name="publisher" required ngModel #publisher='ngModel'
+    <input type="text" name="publisher" required ngModel
            placeholder="William Taylor">
     <br>
-
     <label>* Summary:</label>
-    <!--<input type="text" name="summary" required ngModel #summary='ngModel'-->
-           <!--placeholder="Epistolary, confessional, and didactic in form, the book is presented as an autobiography of the title character...">-->
     <br>
-
-    <textarea name="summary" required ngModel #summary='ngModel'> </textarea>
-
+    <textarea name="summary" required ngModel> </textarea>
 
     <label>*Tags:</label>
-    <input type="text" name="tags" required ngModel #tags='ngModel'
+    <input type="text" name="tags" required ngModel
            placeholder="Friday Island Robinson">
     <br>
 
     <label>Subject:</label>
-    <input type="text" name="subject" ngModel #subject='ngModel'
-           placeholder="Adventure">
-    <br>
+    <select
+      required ngModel name="subject" #subject="ngModel"
+      (change)="changeSubject($event.target)">
+      <option *ngFor="let subject of subjects">
+        {{subject}}
+      </option>
+    </select>
 
     <label>*Type of book:</label>
     <select
-            required ngModel name="typeOfBook" #type="ngModel"
-            (change)="changeBookType($event.target)">
+      required ngModel name="typeOfBook" #type="ngModel"
+      (change)="changeBookType($event.target)">
       <option *ngFor="let type of types">
         {{type}}
       </option>
     </select>
+
     <br>
     <span *ngIf="bookType === 'handbook' || bookType === 'digital'">
       <label>* Photo:</label>
       <br>
-      <input type="file" required name="photo" ngModel #photo='ngModel'
+      <input type="file" required name="photo" ngModel
              (change)="photoInput($event)">
     </span>
     <br>
     <span *ngIf="bookType === 'digital'">
       <label> * File: </label>
       <br>
-      <input type="file" required name="file" ngModel #file='ngModel'
+      <input type="file" required name="file" ngModel
              (change)="fileInput($event)">
     </span>
     <br>

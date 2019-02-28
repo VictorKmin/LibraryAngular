@@ -1,15 +1,16 @@
-  <span class="subjectText" *ngIf="!isUpdateClicked">{{subjectText}}</span>
-  <div *ngIf="isUpdateClicked">
-    <form #updateForm="ngForm" (ngSubmit)="updateSubject(updateForm.value, id)">
-      <input type="text" name="subject" required ngModel
-             value="privet">
-    </form>
-  </div>
-  <br>
-  <button (click)="removeClicked()" > DELETE SUBJECT </button>
-  <button (click)="updateClicked()" > UPDATE SUBJECT </button>
-  <br>
-  <div *ngIf="isRemoveClicked">
-    <button (click)="removeSubj(id)">Do it !</button>
-    <button (click)="removeClicked()">No. Stay here</button>
-  </div>
+<span class="subjectText" *ngIf="!isUpdateClicked">{{subjectText}}</span>
+<div *ngIf="isUpdateClicked">
+  <form #updateForm="ngForm" (ngSubmit)="updateSubject(updateForm.value, id)">
+    <input type="text" name="subject" required ngModel="{{subjectText}}"
+           placeholder="{{subjectText}}">
+    <button> OK</button>
+  </form>
+</div>
+<br>
+<button (click)="removeClicked()"> DELETE SUBJECT</button>
+<button (click)="updateClicked()"> UPDATE SUBJECT</button>
+<br>
+<div *ngIf="isRemoveClicked">
+  <button (click)="removeSubj(id)">Do it !</button>
+  <button (click)="removeClicked()">No. Stay here</button>
+</div>

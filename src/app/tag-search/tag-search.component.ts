@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SearchService} from "../services/search.service";
 import {ActivatedRoute} from "@angular/router";
 import {Response} from "../models/Response";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-tag-search',
@@ -20,6 +21,7 @@ export class TagSearchComponent implements OnInit {
     this.tag = this.route.snapshot.paramMap.get("tag");
 
     this.searchService.searchByTag(this.tag)
+      .pipe(take(1))
       .subscribe((books: Response) => {
         this.books = books.message;
       })

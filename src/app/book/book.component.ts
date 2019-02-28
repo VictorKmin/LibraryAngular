@@ -9,6 +9,11 @@ import {Digital} from "../models/Digital";
 import {Hosts} from "../models/Hosts";
 import {Roles} from "../models/Roles";
 import {UserService} from "../services/user.service";
+import {SubjectService} from "../services/subject.service";
+import {Subject} from "../models/Subject";
+import {take} from "rxjs/operators";
+import {FormControl} from '@angular/forms';
+import {HomeService} from "../services/home.service";
 
 @Component({
   selector: 'app-book',
@@ -39,35 +44,37 @@ export class BookComponent implements OnInit {
   countOfComments: number;
   commentLimit: number = 5;
   commentPaginationCount: number = 5;
-  isLogged = !!localStorage.getItem('token');
+  isLogged;
 
   userId;
   isAdmin: boolean;
   comments: Array<any>;
-  isTokenPreset = localStorage.getItem('token');
   API_HOST = Hosts.API_HOST;
   photoOfBook: File = null;
   fileOfBook: File = null;
 
-  isUpdateClicked = false;
-  isDeleteClicked = false;
-  isReadingClicked = false;
-  isShowStat = false;
+  private subjects = [''];
+  name = new FormControl('');
+  private adminButton: string;
 
   constructor(
     private bookService: BookService,
     private commentService: CommentService,
     private userService: UserService,
+    private homeSevice: HomeService,
+    private subjectService: SubjectService,
     private activatedRouter: ActivatedRoute,
     private router: Router) {
   }
 
   ngOnInit() {
+    this.homeSevice.mainClicked.next('0');
+    this.isLogged = !!localStorage.getItem('token');
     // Get param from URL /book/:id
     this.id = this.activatedRouter.snapshot.paramMap.get("id");
 
     if (this.isLogged) {
-      this.userService.userDetail.subscribe(user => {
+      this.userService.userDetail.subscribe((user: Response) => {
         if (user.success) {
           this.userId = user.message.id;
           this.isAdmin = Roles.ADMIN_ROLES.includes(user.message.role);
@@ -75,97 +82,86 @@ export class BookComponent implements OnInit {
       });
     }
     this.bookService.getBookInfo(this.id);
-    this.bookService.bookInfo().subscribe((resp: any) => {
-      this.book = resp;
-      console.log(this.book);
-      this.image = this.API_HOST + this.book.image;
-      this.timeToEnd = new Date(this.book.backTime).toLocaleDateString();
-      this.tags = this.book.tags.split(' ');
-      this.is_digital = this.book.is_digital;
-      this.is_reading = this.book.is_reading;
-      this.is_delaying = this.book.is_delaying;
-      this.userIdWhoRead = this.book.userIdWhoRead;
-      this.title = this.book.title;
-      this.author = this.book.author;
-      this.publisher = this.book.publisher;
-      this.summary = this.book.summary;
-      this.subject = this.book.subject;
-      this.countOfComments = this.book.countOfComments;
-      if (this.book.is_digital) {
-        this.downloadBook();
-      }
-      this.commentService.getNewestComments(this.id, this.commentLimit);
-      this.commentService.showComments()
-        .subscribe((comm: any) => {
+    this.bookService.bookInfo()
+      .subscribe((resp: any) => {
+        this.book = resp;
+        console.log(this.book);
+        this.image = this.API_HOST + this.book.image;
+        this.timeToEnd = new Date(this.book.backTime).toLocaleDateString();
+        this.tags = this.book.tags.split(' ');
+        this.is_digital = this.book.is_digital;
+        this.is_reading = this.book.is_reading;
+        this.is_delaying = this.book.is_delaying;
+        this.userIdWhoRead = this.book.userIdWhoRead;
+        this.title = this.book.title;
+        this.author = this.book.author;
+        this.publisher = this.book.publisher;
+        this.summary = this.book.summary;
+        this.subject = this.book.subject;
+        this.countOfComments = this.book.countOfComments;
+      });
+    this.downloadBook();
+    this.commentService.getNewestComments(this.id, this.commentLimit);
+    this.getFirstComments();
+    this.getSubjects();
+  }
+
+  getFirstComments() {
+    this.commentService.showComments()
+      .subscribe((comm: any) => {
         this.comments = comm;
       })
-    });
   }
 
-
-  allBookComments() {
+  moreComments() {
     // new limit of comments
     this.commentLimit = this.commentLimit + this.commentPaginationCount;
-    this.commentService.getNewestComments(this.id, this.commentLimit)
+    this.commentService.getNewestComments(this.book.id, this.commentLimit)
   }
 
-  createComment(comment) {
-    this.commentService.createComment(comment, this.id)
+  createComment() {
+    this.commentService.createComment(this.name.value, this.book.id);
+    //reset reactive form after submit
+    this.name.setValue('')
   }
 
   downloadBook() {
-    this.bookService.download(this.id).subscribe((resp: Response) => {
-      this.links = resp.message;
-    })
+    this.bookService.download(this.id)
+      .pipe(take(1))
+      .subscribe((resp: Response) => {
+        this.links = resp.message;
+      })
   }
 
   readThisBook() {
-    this.bookService.readBook(this.id).subscribe(value => {
-      console.log(value);
-    })
+    this.bookService.bookEvent(this.book.id, "read");
   }
 
   sillRead(bookId) {
-    this.bookService.stillReadingBook(bookId).subscribe((value: Response) => {
-      console.log(value);
-    })
+    this.bookService.bookEvent(bookId, "continue");
   }
 
   returnBook(bookId) {
-    this.isReadingClicked = false;
-
-    this.bookService.returnBook(bookId).subscribe((value: Response) => {
-      console.log(value);
-    })
-  }
-
-  showNotReading() {
-    this.isReadingClicked = !this.isReadingClicked
-  }
-
-  showDelete() {
-    this.isDeleteClicked = !this.isDeleteClicked
+    this.bookService.bookEvent(bookId, "return");
+    this.adminButton = '';
   }
 
   deleteBook() {
-    this.bookService.deleteBook(this.book.id).subscribe((value: Response) => {
-      if (value.success) {
-        this.router.navigateByUrl('/')
-      }
-    })
-  }
-
-  showUpdate() {
-    this.isUpdateClicked = !this.isUpdateClicked;
+    this.bookService.deleteBook(this.book.id)
+      .pipe(take(1))
+      .subscribe((value: Response) => {
+        if (value.success) {
+          this.router.navigateByUrl('/')
+        }
+      })
   }
 
   updateBook(form) {
-    // console.log(form);
     if (!this.isBookDigital) {
       this.fileOfBook = null
     }
     this.bookService.updateBook(this.book.id, this.photoOfBook, this.fileOfBook, form);
-    this.isUpdateClicked = false;
+    this.adminButton = ''
   }
 
   changeBookType(target) {
@@ -180,7 +176,22 @@ export class BookComponent implements OnInit {
     this.fileOfBook = file.target.files[0];
   }
 
-  showStat() {
-    this.isShowStat = !this.isShowStat
+  getSubjects() {
+    this.subjectService.getAllSubject();
+    this.subjectService.allSubject()
+      .pipe(take(1))
+      .subscribe((resp: Array<Subject>) => {
+        this.subjects = [''];
+        resp.forEach(value => {
+          this.subjects.push(value.subject)
+        });
+        console.log(this.subjects);
+      });
+  }
+
+
+  adminClick(value) {
+  //  delete, update, stat, inOffice, null
+    this.adminButton = value
   }
 }

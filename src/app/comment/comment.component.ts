@@ -3,6 +3,7 @@ import {Comment} from "../models/Comment";
 import {UserService} from "../services/user.service";
 import {CommentService} from "../services/comment.service";
 import {Roles} from "../models/Roles";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-comment',
@@ -31,7 +32,9 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
 
     if (this.isLogged) {
-      this.userService.userDetail.subscribe(user => {
+      this.userService.userDetail
+        .pipe(take(1))
+        .subscribe(user => {
         if (user.success) {
           this.userId = user.message.id;
           this.isAdmin = Roles.ADMIN_ROLES.includes(user.message.role);

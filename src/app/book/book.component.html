@@ -1,97 +1,111 @@
 <div class="container">
   <div class="basicInfo">
+    <div style="width: 95%; float: left">
+      <!--THIS BLOCK OF CODE JUST FOR ADMIN USER-->
+      <div *ngIf="isAdmin" class="admin-panel">
 
+        <button (click)="adminClick('delete')"
+                [ngClass]="{'active': adminButton === 'delete'}">
+          DELETE BOOK
+        </button>
 
-    <!--THIS BLOCK OF CODE JUST FOR ADMIN USER-->
-    <div *ngIf="isAdmin" class="admin-panel">
-      <button (click)="showDelete()" [ngClass]="{'active': isDeleteClicked}">DELETE BOOK</button>
+        <button *ngIf="is_reading" (click)="adminClick('inOffice')"
+                [ngClass]="{'active': adminButton === 'inOffice'}">
+          Book not reading already
+        </button>
 
-      <button *ngIf="is_reading" (click)="showNotReading()"
-              [ngClass]="{'active': isReadingClicked}">Book not reading already
-      </button>
+        <button (click)="adminClick('update')"
+                [ngClass]="{'active': adminButton === 'update'}">
+          Change info
+        </button>
 
-      <button (click)="showUpdate()"
-              [ngClass]="{'active': isUpdateClicked}">Change info
-      </button>
+        <button (click)="adminClick('stat')"
+                [ngClass]="{'active': adminButton === 'stat'}">
+          Show book activity
+        </button>
+        <br>
+        <app-book-statistic *ngIf="adminButton === 'stat'"></app-book-statistic>
 
-      <button (click)="showStat()"
-              [ngClass]="{'active': isShowStat}">Show book activity
-      </button>
+        <!--Buttons for delete book-->
+        <div *ngIf="adminButton === 'delete'" class="admin-panel">
+          DELETE THIS BOOK ? <br>
+          <button (click)="deleteBook()"> YES. Destroy it!</button>
+          <button (click)="adminClick('')"> No. It's just miss click</button>
+        </div>
+
+        <div *ngIf="adminButton === 'inOffice'" class="admin-panel">
+          This book already in office ? <br>
+          <button (click)="returnBook(id)"> YES. Already here!</button>
+          <button (click)="adminClick('')"> No. Some man still read this</button>
+        </div>
+
+        <!--Form for updating book-->
+        <form #newInfo="ngForm" *ngIf="adminButton === 'update'" (ngSubmit)="updateBook(newInfo.value)">
+          Title:
+          <input type="text" name="title" ngModel="{{title}}">
+          Author:
+          <input type="text" name="author" ngModel="{{author}}">
+          Publisher:
+          <input type="text" name="publisher" ngModel="{{publisher}}">
+          Summary:
+          <textarea name="summary" required ngModel="{{summary}}"> </textarea>
+          Tags:
+          <input type="text" name="tags" ngModel="{{book.tags}}">
+          Subject:
+          <select
+            required ngModel name="subject" #subject="ngModel">
+            <option *ngFor="let subject of subjects">
+              {{subject}}
+            </option>
+          </select>
+          Type
+          <select name="typeOfBook"
+                  (change)="changeBookType($event.target)">
+            <option value="handbook"> handbook</option>
+            <option value="digital"> digital</option>
+          </select>
+          <span>Photo</span>
+          <br>
+          <input type="file" name="photo" ngModel
+                 (change)="photoInput($event)">
+          <br>
+          <span *ngIf="isBookDigital">File</span>
+          <br>
+          <input *ngIf="isBookDigital" type="file" name="file" ngModel
+                 (change)="fileInput($event)">
+          <br>
+          <button class="btn" [disabled]="!newInfo.valid"> Submit</button>
+        </form>
+      </div>
+      <!--FINISH OF ADMIN CODE-->
+
+      <h1> {{title}} </h1>
+      <b>Author: </b>{{author}}
       <br>
-      <app-book-statistic *ngIf="isShowStat"></app-book-statistic>
-
-      <!--Buttons for delete book-->
-      <div *ngIf="isDeleteClicked" class="admin-panel">
-        DELETE THIS BOOK ? <br>
-        <button (click)="deleteBook()"> YES. Destroy it!</button>
-        <button (click)="showDelete()"> No. It's just miss click</button>
+      <b>Publisher: </b>{{publisher}}
+      <br>
+      <b>Subject: </b>{{subject}}
+      <div class="summary">
+        {{summary}}
       </div>
-
-      <div *ngIf="isReadingClicked" class="admin-panel">
-        This book already in office ? <br>
-        <button (click)="returnBook(id)"> YES. Already here!</button>
-        <button (click)="showNotReading()"> No. Some man still read this</button>
-      </div>
-
-      <!--Form for updating book-->
-      <form #newInfo="ngForm" *ngIf="isUpdateClicked" (ngSubmit)="updateBook(newInfo.value)">
-        Title:
-        <input type="text" name="title" ngModel placeholder="{{title}}">
-        Author:
-        <input type="text" name="author" ngModel placeholder="{{author}}">
-        Publisher:
-        <input type="text" name="publisher" ngModel placeholder="{{publisher}}">
-        Summary:
-        <input type="text" name="summary" ngModel placeholder="{{summary}}">
-        Tags:
-        <input type="text" name="tags" ngModel placeholder="{{book.tags}}">
-        Subject:
-        <input type="text" name="subject" ngModel placeholder="{{subject}}">
-        Type
-        <select ngModel name="typeOfBook"
-                (change)="changeBookType($event.target)">
-          <option value="handbook"> handbook</option>
-          <option value="digital"> digital</option>
-        </select>
-        Photo
-        <input type="file" name="photo" ngModel
-               (change)="photoInput($event)">
-        <br>
-        <span *ngIf="isBookDigital">File</span>
-        <input *ngIf="isBookDigital" type="file" name="file" ngModel
-               (change)="fileInput($event)">
-        <br>
-        <button class="btn" [disabled]="!newInfo.valid"> Submit</button>
-      </form>
-    </div>
-    <!--FINISH OF ADMIN CODE-->
-
-    <h1> {{title}} </h1>
-    <b>Author: </b>{{author}}
-    <br>
-    <b>Publisher: </b>{{publisher}}
-    <br>
-    <b>Subject: </b>{{subject}}
-    <div class="summary">
-      {{summary}}
-    </div>
-    <br>
-    <div *ngIf="tags">
-      <b>Tags: </b>
-      <span *ngFor="let tag of tags">
+      <br>
+      <div *ngIf="tags">
+        <b>Tags: </b>
+        <span *ngFor="let tag of tags">
         <a style="cursor: pointer" routerLink='/search/tag/{{tag}}'>{{tag}}, </a>
       </span>
+      </div>
+      <br>
     </div>
-    <br>
   </div>
   <div class="statistic">
     <img src="{{image}}" alt="{{title}}" class="image">
 
-    <div *ngIf='isTokenPreset'>
+    <div *ngIf='isLogged'>
       <!--FOR DIGITAL BOOKS-->
       <div *ngIf="is_digital">
         <p *ngFor="let link of links">
-          <a href="{{API_HOST + link.location}}">Download {{link.type_of_file}}</a>
+          <a target="_blank" href="{{API_HOST + link.location}}">Download {{link.type_of_file}}</a>
         </p>
       </div>
       <!--FOR HAND BOOKS-->
@@ -107,6 +121,8 @@
           <button class="btn return-book" (click)="returnBook(id)">Return book</button>
         </div>
       </div>
+      <app-rating></app-rating>
+      <br>
       <div align="center" class="commentCount">
         This book have {{countOfComments}} comments
       </div>
@@ -114,24 +130,27 @@
     <br>
   </div>
 
-  <form #comment="ngForm" *ngIf="isTokenPreset">
-    <input type="text" name="comment" required ngModel #comment="ngModel" placeholder="You can leave comment here">
-    <button class="btn waves-effect waves-light" type="submit" name="action"
-            [disabled]="!comment.valid"
-            (click)="createComment(comment.value)">
+  <form *ngIf="isLogged" class="comment">
+    <!--FormControl is reactive form-->
+    <input type="text" required
+           [formControl]="name"
+           placeholder="You can leave comment here">
+    <button class="btn waves-effect waves-light"
+            [disabled]="!name.valid" (click)="createComment()">
       Submit
     </button>
   </form>
 
-  <div class="allComments">
+  <div class="allComments" *ngIf="isLogged">
     <app-comment
       *ngFor=" let comment of comments"
       [comment]="comment">
     </app-comment>
     <a class="btn waves-effect waves-green commentButton"
        *ngIf="(countOfComments > commentPaginationCount) && (countOfComments > commentLimit)"
-       (click)="allBookComments()">
+       (click)="moreComments()">
       Get next {{commentPaginationCount}} comments
     </a>
   </div>
+
 </div>

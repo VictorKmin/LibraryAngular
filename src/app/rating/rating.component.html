@@ -1,0 +1,19 @@
+<div *ngIf="isUserCanVote" align="center">
+  <i class="fas fa-star" (click)="rateBook(1)"></i>
+  <i class="fas fa-star" (click)="rateBook(2)"></i>
+  <i class="fas fa-star" (click)="rateBook(3)"></i>
+  <i class="fas fa-star" (click)="rateBook(4)"></i>
+  <i class="fas fa-star" (click)="rateBook(5)"></i>
+</div>
+
+<div *ngIf="!isUserCanVote">
+  You already rate this book on <b>{{votedStar}}</b> <i class="fas fa-star rated" (click)="deleteVote()"></i>
+</div>
+
+<div *ngIf="avgStar" class="averageRating">
+  Average rating {{avgStar}}<i class="fas fa-star rated"></i> of {{countOfVotes}} vote(s)
+</div>
+
+<div *ngIf="!avgStar" class="averageRating">
+  No votes yet. You can be first!
+</div>
